@@ -28,8 +28,10 @@
   "homepage": "https://github.com/trainerday/cycling-metrics#readme",
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/lodash": "^4.14.135",
     "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
+    "lodash": "^4.17.11",
     "mocha": "^6.1.4",
     "mocha-typescript": "^1.1.17",
     "nyc": "^14.1.1",

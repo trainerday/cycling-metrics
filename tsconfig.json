@@ -4,6 +4,8 @@
         "module": "commonjs",
         "sourceMap": true,
         "experimentalDecorators": true,
-        "lib": [ "es6" ]
+        "lib": [ "es6", "dom" ],
+        "resolveJsonModule": true,
+        "esModuleInterop": true 
     }
 }
