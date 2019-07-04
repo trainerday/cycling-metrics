@@ -23,7 +23,7 @@ describe("Strava to Cycling Metrics converter", () => {
         var time = [1,2];
         var power = [110];
         var hr = [90,92,93];
-        expect(StravaToCyclingMetricsConverter(time, power, hr))
+        expect(() => StravaToCyclingMetricsConverter(time, power, hr))
         .toThrow();
     })
   });

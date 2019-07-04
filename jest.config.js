@@ -4,7 +4,7 @@ module.exports = {
       "<rootDir>/test"
     ],
     "transform": {
-        ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+        ".(ts|tsx)": "ts-jest"
       },
       "testRegex": "(/test/.*|\\.(test|spec))\\.(ts|tsx)$",
       "moduleFileExtensions": ["ts", "tsx", "js"]
