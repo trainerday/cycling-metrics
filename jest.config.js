@@ -6,6 +6,6 @@ module.exports = {
     "transform": {
         ".(ts|tsx)": "ts-jest"
       },
-      "testRegex": "(/test/.*|\\.(test|spec))\\.(ts|tsx)$",
+      "testRegex": "(/src/workout/power/.*|\\.(test|spec))\\.(ts|tsx)$",
       "moduleFileExtensions": ["ts", "tsx", "js"]
   }

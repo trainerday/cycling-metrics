@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import {StravaToCyclingMetricsConverter, PowerDurationCurve} from "../src/index";
+import {StravaToCyclingMetricsConverter, PowerDurationCurve} from "./index";
 import data from './sampleResponseStream.json';
 
 describe("Strava to Cycling Metrics converter", () => {
