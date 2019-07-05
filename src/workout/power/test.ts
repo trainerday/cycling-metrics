@@ -97,12 +97,17 @@ describe("Strava to Cycling Metrics converter", () => {
 
   describe("Power Average", () => {
     test("should be average power", () => {
-        const time = [0,1,2,3,4,5,6,7,8,9,10];
+        const time = [1,2,3,4,5,6,7,8,9,10];
         const power = [110,110,110,110,110,120,120,120,120,120,120];
         const hr = [];
         const metrics = StravaToCyclingMetricsConverter(time, power, hr);
         expect(PowerDurationCurve(metrics))
-        .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
+        .toEqual([
+            {seconds:1,mma:120},
+            {seconds:2,mma:120},
+            {seconds:4,mma:120},
+            {seconds:10,mma:115}
+            ]);
     });
   });
 
