@@ -25,12 +25,22 @@ const getMaxPowerForInterval = (cycleMetrics: Array<MetricsPoint>, intervalLengt
 
 export const StravaToCyclingMetricsConverter = (secondsArr : Array<Number>, powerArr:Array<Number>, hrArray :Array<Number>) => {
     // prevent interpolating results array with undefined values
-    if( secondsArr.length !== powerArr.length || 
-        secondsArr.length !== hrArray.length ||
-        powerArr.length !== hrArray.length)
-        {
-            throw Error("All arrays must be of equal length");
-        }
+
+    if (secondsArr === null || secondsArr.length ===0){
+        throw Error("seconds array must be longer than 0");
+        return;
+    }
+
+    if(powerArr !== null && secondsArr.length !== powerArr.length){
+        throw Error("if power array is present it must be the same length as seconds array");
+        return;
+    }
+    
+    if(hrArray !== null && secondsArr.length !== hrArray.length){
+//        console.log(hrArray.length,secondsArr.length)
+        throw Error("if hr array is present it must be the same length as seconds array");
+        return;
+    }
     
     return zipWith<Number,Number,Number, MetricsPoint>(secondsArr, powerArr, hrArray, (s,p,h) => {return {time:s, power: p, heartRate:h}});
 }
