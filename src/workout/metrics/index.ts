@@ -6,7 +6,7 @@ export class MetricsPoint {
     public heartRate: number;
 }
 
-export const StravaToCyclingMetricsConverter = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
+export const convertStravaToCyclingMetrics = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
     // prevent interpolating results array with undefined values
 
     if (secondsArr === null || secondsArr.length ===0){

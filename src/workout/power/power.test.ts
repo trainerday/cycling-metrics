@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import {StravaToCyclingMetricsConverter} from "../metrics/index";
+import {convertStravaToCyclingMetrics} from "../metrics/index";
 import {getMeanMaxPower} from "./index";
 import data from './sampleResponseStream.json';
 
@@ -7,7 +7,7 @@ import data from './sampleResponseStream.json';
     test("should decrease linearly for linear power2", () => {
         const time = [0,1,2];
         const power = [120,140,160];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,160,150,140]);
     });
@@ -15,7 +15,7 @@ import data from './sampleResponseStream.json';
     test("should decrease linearly for linear power", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [120,118,116,114,112,110,108,106,104,102,100];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
@@ -23,7 +23,7 @@ import data from './sampleResponseStream.json';
     test("should be const for const power", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [110,110,110,110,110,110,110,110,110,110,110];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,110,110,110,110,110,110,110,110,110,110,110]);
     });
@@ -31,7 +31,7 @@ import data from './sampleResponseStream.json';
     test("should descrease gradually for bell-like power spike", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [102,106,110,114,118,120,116,112,108,104,100];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
@@ -39,7 +39,7 @@ import data from './sampleResponseStream.json';
     test("should interpolate undefined power value lineary", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [120,118,116,undefined,112,undefined,undefined,106,104,undefined,100];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
@@ -47,7 +47,7 @@ import data from './sampleResponseStream.json';
     test("should extrapolate boundary to const", () => {
         const time = [0,1,2];
         const power = [undefined, 120, undefined];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,120,120,120]);
     });
@@ -55,7 +55,7 @@ import data from './sampleResponseStream.json';
     test.skip("should interpolate missing Metrics points lineary", () => {
         const time = [0,10];
         const power = [110,100];
-        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
         .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
     });
@@ -64,7 +64,7 @@ import data from './sampleResponseStream.json';
         const time = data.filter( x => x.type === 'time')[0].data as number[];
         const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
         const power = data.filter( x => x.type === 'watts')[0].data as number[];
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = convertStravaToCyclingMetrics(time, power, hr);
         
         const powerCurve = getMeanMaxPower(metrics);
 
@@ -83,7 +83,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2,3,4,5,6,7,8,9];
         const power = [110,110,110,110,110,120,120,120,120,120];
         const hr = null;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = convertStravaToCyclingMetrics(time, power, hr);
         const pdCurve = getMeanMaxPower(metrics);
         expect(pdCurve[1]).toEqual(120);
         expect(pdCurve[2]).toEqual(120);

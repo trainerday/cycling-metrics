@@ -1,4 +1,4 @@
-import {StravaToCyclingMetricsConverter} from "../metrics/index";
+import {convertStravaToCyclingMetrics} from "../metrics/index";
 import data from "../power/sampleResponseStream.json";
 
 describe("Strava to Cycling Metrics converter", () => {
@@ -6,7 +6,7 @@ describe("Strava to Cycling Metrics converter", () => {
         const time = [1,2,3,4];
         const power = [110,120,130,140];
         const hr = [90,92,93,94];
-        expect(StravaToCyclingMetricsConverter(time, power, hr))
+        expect(convertStravaToCyclingMetrics(time, power, hr))
         .toEqual( [{time:1,power:110,heartRate:90}, 
                    {time:2,power:120,heartRate:92},
                    {time:3,power:130,heartRate:93},
@@ -17,7 +17,7 @@ describe("Strava to Cycling Metrics converter", () => {
         const time = data.filter( x => x.type === 'time')[0].data as number[];
         const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
         const power = data.filter( x => x.type === 'watts')[0].data as number[];
-        expect(StravaToCyclingMetricsConverter(time, power, hr))
+        expect(convertStravaToCyclingMetrics(time, power, hr))
         .toHaveLength(3125);
     });
     
@@ -25,7 +25,7 @@ describe("Strava to Cycling Metrics converter", () => {
         const time = [1,2];
         const power = [110];
         const hr = [90,92,93];
-        expect(() => StravaToCyclingMetricsConverter(time, power, hr))
+        expect(() => convertStravaToCyclingMetrics(time, power, hr))
         .toThrow();
     })
   });
@@ -35,14 +35,14 @@ describe("Null HR and Power Arrays for Strava Conversion", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [110,110,110,110,110,120,120,120,120,120,120];
         const hr = null;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = convertStravaToCyclingMetrics(time, power, hr);
         expect(metrics.length).toEqual(11)
     });
     test("Null Power should be fine", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = null;
         const hr = [0,1,2,3,4,5,6,7,8,9,10];
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = convertStravaToCyclingMetrics(time, power, hr);
         expect(metrics.length).toEqual(11)
     });
   });
