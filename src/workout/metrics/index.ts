@@ -1,12 +1,12 @@
 import { zipWith } from "lodash";
 
-export interface MetricsPoint {
-    time: Number;
-    power: Number;
-    heartRate: Number;
+export class MetricsPoint {
+    public time: number;
+    public power: number;
+    public heartRate: number;
 }
 
-export const StravaToCyclingMetricsConverter = (secondsArr : Array<Number>, powerArr:Array<Number>, hrArray :Array<Number>) => {
+export const StravaToCyclingMetricsConverter = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
     // prevent interpolating results array with undefined values
 
     if (secondsArr === null || secondsArr.length ===0){
@@ -25,5 +25,5 @@ export const StravaToCyclingMetricsConverter = (secondsArr : Array<Number>, powe
         return;
     }
     
-    return zipWith<Number,Number,Number, MetricsPoint>(secondsArr, powerArr, hrArray, (s,p,h) => {return {time:s, power: p, heartRate:h}});
+    return zipWith<number,number,number, MetricsPoint>(secondsArr, powerArr, hrArray, (s,p,h) => ({time: s, power: p, heartRate: h}));
 }

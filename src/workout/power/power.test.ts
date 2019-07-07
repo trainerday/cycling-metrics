@@ -61,9 +61,9 @@ import data from './sampleResponseStream.json';
     });
 
     test("sample response stream", () => {
-        const time = <number[]> data.filter( x => x.type === 'time')[0].data;
-        const hr = <number[]> data.filter( x => x.type === 'heartrate')[0].data;
-        const power = <number[]> data.filter( x => x.type === 'watts')[0].data;
+        const time = data.filter( x => x.type === 'time')[0].data;
+        const hr = data.filter( x => x.type === 'heartrate')[0].data;
+        const power = data.filter( x => x.type === 'watts')[0].data;
         const metrics = StravaToCyclingMetricsConverter(time, power, hr);
         
         const powerCurve = getMeanMaxPower(metrics);
@@ -71,9 +71,9 @@ import data from './sampleResponseStream.json';
         const min = Math.min.apply(null, power);
         const max = Math.max.apply(null, power);
 
-        powerCurve.forEach(power => {
-            expect(power).toBeLessThanOrEqual(max);
-            expect(power).toBeGreaterThanOrEqual(min);
+        powerCurve.forEach(pwr => {
+            expect(pwr).toBeLessThanOrEqual(max);
+            expect(pwr).toBeGreaterThanOrEqual(min);
         });
     });
   });
