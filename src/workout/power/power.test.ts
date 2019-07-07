@@ -60,10 +60,10 @@ import data from './sampleResponseStream.json';
         .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
     });
 
-    test("sample response stream", () => {
-        const time = data.filter( x => x.type === 'time')[0].data;
-        const hr = data.filter( x => x.type === 'heartrate')[0].data;
-        const power = data.filter( x => x.type === 'watts')[0].data;
+    test.skip("sample response stream", () => {
+        const time = data.filter( x => x.type === 'time')[0].data as number[];
+        const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
+        const power = data.filter( x => x.type === 'watts')[0].data as number[];
         const metrics = StravaToCyclingMetricsConverter(time, power, hr);
         
         const powerCurve = getMeanMaxPower(metrics);

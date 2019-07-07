@@ -14,9 +14,9 @@ describe("Strava to Cycling Metrics converter", () => {
     });
 
     test.skip("assert works on sample response stream", () => {
-        const time = data.filter( x => x.type === 'time')[0].data;
-        const hr = data.filter( x => x.type === 'heartrate')[0].data;
-        const power = data.filter( x => x.type === 'watts')[0].data;
+        const time = data.filter( x => x.type === 'time')[0].data as number[];
+        const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
+        const power = data.filter( x => x.type === 'watts')[0].data as number[];
         expect(StravaToCyclingMetricsConverter(time, power, hr))
         .toHaveLength(3125);
     });
