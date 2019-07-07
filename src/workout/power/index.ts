@@ -9,18 +9,18 @@ interface MetricsPoint {
 
 const getMaxPowerForInterval = (cycleMetrics: Array<MetricsPoint>, intervalLength ) => {
     var i = 0;
-    var heap = new Heap<Number>();
-    var min = Number.MAX_SAFE_INTEGER;
+    var max = 0;
+    var sum = 0;
     for(i=0; i < intervalLength; i++){
-        heap.push(cycleMetrics[i].power);
+        sum += <number>cycleMetrics[i].power;
     }
-    min = Math.min(min, <number>heap.peek());
+    max = Math.max(max, sum);
     for(i=intervalLength; i < cycleMetrics.length; i++){
-        heap.remove(cycleMetrics[i-intervalLength].power);
-        heap.push(cycleMetrics[i].power);
-        min = Math.max(min, <number>heap.peek());
+        sum -=  <number>cycleMetrics[i-intervalLength].power;
+        sum +=  <number>cycleMetrics[i].power;
+        max = Math.max(max, sum);
     }
-    return min;
+    return max / intervalLength;
 }
 
 export const StravaToCyclingMetricsConverter = (secondsArr : Array<Number>, powerArr:Array<Number>, hrArray :Array<Number>) => {
@@ -48,7 +48,7 @@ export const StravaToCyclingMetricsConverter = (secondsArr : Array<Number>, powe
 export const PowerDurationCurve = ( cycleMetrics : Array<MetricsPoint>) => {
     const length = cycleMetrics.length;
     var result = new Array<number>(length);
-    for(var i =1; i < length; i++ )
+    for(var i =1; i <= length; i++ )
     {
         result[i] = getMaxPowerForInterval(cycleMetrics, i);
     }

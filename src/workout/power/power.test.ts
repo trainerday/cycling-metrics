@@ -32,38 +32,41 @@ describe("Strava to Cycling Metrics converter", () => {
   });
 
   describe("Power duration curve", () => {
+    test("should decrease linearly for linear power2", () => {
+        const time = [0,1,2];
+        const power = [120,140,160];
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
+        expect(PowerDurationCurve(metrics))
+        .toEqual([undefined,160,150,140]);
+    });
+
     test("should decrease linearly for linear power", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
-        const power = [110,109,108,107,106,105,104,103,102,101,100];
-        const hr = new Array(11).fill(100);;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const power = [120,118,116,114,112,110,108,106,104,102,100];
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
         expect(PowerDurationCurve(metrics))
-        .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
+        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test("should be const for const power", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [110,110,110,110,110,110,110,110,110,110,110];
-        const hr = new Array(11).fill(100);;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
         expect(PowerDurationCurve(metrics))
-        .toEqual([undefined,110,110,110,110,110,110,110,110,110,110]);
+        .toEqual([undefined,110,110,110,110,110,110,110,110,110,110,110]);
     });
 
     test("should descrease gradually for bell-like power spike", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
-        const power = [110,110,112,112,114,116,114,112,112,110,110];
-        const hr = new Array(11).fill(100);;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const power = [102,106,110,114,118,120,116,112,108,104,100];
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
         expect(PowerDurationCurve(metrics))
-        .toEqual([undefined,116,114,114,112,112,112,112,110,110,110]);
+        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
-
     test.skip("should interpolate undefined power value lineary", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [undefined,110,112,112,undefined,116,undefined,112,112,110,undefined];
-        const hr = new Array(11).fill(100);;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
         expect(PowerDurationCurve(metrics))
         .toEqual([undefined,116,114,114,112,112,112,112,110,110,110]);
     });
@@ -71,8 +74,7 @@ describe("Strava to Cycling Metrics converter", () => {
     test.skip("should interpolate missing Metrics points lineary", () => {
         const time = [0,10];
         const power = [110,100];
-        const hr = new Array(2).fill(100);;
-        const metrics = StravaToCyclingMetricsConverter(time, power, hr);
+        const metrics = StravaToCyclingMetricsConverter(time, power, null);
         expect(PowerDurationCurve(metrics))
         .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
     });
@@ -115,13 +117,16 @@ describe("Strava to Cycling Metrics converter", () => {
 
   describe("Power Average", () => {
     test("should be average power", () => {
-        const time = [0,1,2,3,4,5,6,7,8,9,10];
-        const power = [110,110,110,110,110,120,120,120,120,120,120];
+        const time = [0,1,2,3,4,5,6,7,8,9];
+        const power = [110,110,110,110,110,120,120,120,120,120];
         const hr = null;
         const metrics = StravaToCyclingMetricsConverter(time, power, hr);
         const pdCurve = PowerDurationCurve(metrics);
-        expect(pdCurve.length).toEqual(11)
-//        .toEqual([{seconds:1,mma:120},{seconds:2,mma:120},{seconds:4,mma:120},{seconds:10,mma:115}]);
+        expect(pdCurve[1]).toEqual(120);
+        expect(pdCurve[2]).toEqual(120);
+        expect(pdCurve[4]).toEqual(120);
+        expect(pdCurve[10]).toEqual(115);
+       // .toEqual([{seconds:1,mma:120},{seconds:2,mma:120},{seconds:4,mma:120},{seconds:10,mma:115}]);
     });
   });
 
