@@ -35,9 +35,9 @@ test('21 days of 70tss should be 32 tss on day 31', () => {
 })
 
 function getDailyTss(){
-    const theDate = new Date(Date.parse('2019-10-07T00:00:00+0000'))
+    let theDate = new Date(Date.parse('2019-10-07T00:00:00+0000'))
     const dailyTss = []
-    for (const i = 0; i <= 27; i++) {
+    for (let i = 0; i <= 27; i++) {
         const woStats = new WorkoutStats()
         woStats.date = theDate
         woStats.tss = 70
