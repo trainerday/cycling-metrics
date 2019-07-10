@@ -1,7 +1,9 @@
 import * as _ from 'lodash'
 
-export const getTss = (segments: number[]) => {
+export const getTss = (segments: number[][]) => {
   if (segments.length === 0) {return 0}
+  if (segments[0].length !== 3) {throw 'must have 3 segments'}
+
   const seg30 = getSeg30(segments)
   const inFac = getIntensityFactor(seg30)
   const minutes = getMinutes(segments)
@@ -35,11 +37,10 @@ function getTssInt(minutes: number, intensityFactor: number) {
   return Math.round(tss)
 }
 
-function getMinutes(segments: number[]) {
-  if (!Array.isArray(segments)) {return 0}
+function getMinutes(segments: number[][]) {
   let minutes = 0
   segments.forEach((segment) => {
-    minutes = minutes + parseFloat(segment[0])
+    minutes = minutes + segment[0]
   })
   return minutes
 }
@@ -49,21 +50,23 @@ class Loop {
     public value: number
 }
 
-function getSeg30(segmentsIn: number[]) {
+function getSeg30(segmentsIn: number[][]) {
   const segments = JSON.parse(JSON.stringify(segmentsIn))
   const seg30 = []
   const next = new Loop()
+  next.remainder = 0
   let value = 0
 
   segments.forEach((segment) => {
-    if (next.remainder) {
+ 
+
+    if (next.remainder != 0) {
       segment[0] = segment[0] - next.remainder
       value = Math.pow((Math.pow(next.value, 4) + Math.pow(segment[2], 4)) / 2, 0.25)
       seg30.push(value)
       // not perfect but averages previous segment piece and current one.
     }
-
-    for (let i = 0; i < segment[0]; i = i + 0.5) {
+    for (let i = 0; i < segment[0]; i = i + 0.5) { //loops through 30 second
       value = (segment[1] + segment[2]) / 2
       const remainder = segment[0] - i
       if (remainder < 0.5) {
