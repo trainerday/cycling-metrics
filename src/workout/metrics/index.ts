@@ -45,8 +45,8 @@ function getMinutes(segments: number[]) {
 }
 
 class Loop {
-    private remainder: number
-    private value: number
+    public remainder: number
+    public value: number
 }
 
 function getSeg30(segmentsIn: number[]) {
