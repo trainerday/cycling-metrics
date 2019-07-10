@@ -1,5 +1,3 @@
-import * as _ from 'lodash'
-
 export const getTss = (segments: number[][]) => {
   if (segments.length === 0) {return 0}
   if (segments[0].length !== 3) {throw new Error ('must have 3 segments')}
