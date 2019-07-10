@@ -1,5 +1,4 @@
-import {convertStravaToCyclingMetrics} from "../metrics/index";
-import data from "../power/sampleResponseStream.json";
+import {convertStravaToCyclingMetrics} from "./index";
 
 describe("Strava to Cycling Metrics converter", () => {
     test("smoke test", () => {
@@ -11,14 +10,6 @@ describe("Strava to Cycling Metrics converter", () => {
                    {time:2,power:120,heartRate:92},
                    {time:3,power:130,heartRate:93},
                    {time:4,power:140,heartRate:94}]);
-    });
-
-    test.skip("assert works on sample response stream", () => {
-        const time = data.filter( x => x.type === 'time')[0].data as number[];
-        const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
-        const power = data.filter( x => x.type === 'watts')[0].data as number[];
-        expect(convertStravaToCyclingMetrics(time, power, hr))
-        .toHaveLength(3125);
     });
     
     test("different lenths should throw", () => {

@@ -1,5 +1,5 @@
 import { find, findLast } from "lodash";
-import { MetricsPoint } from "../metrics/index";
+import { MetricsPoint } from "../common/MetricsPoint";
 
 const getMaxPowerForInterval = (cycleMetrics: MetricsPoint[], intervalLength ) => {
     let max = 0;

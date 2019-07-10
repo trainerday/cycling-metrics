@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import {convertStravaToCyclingMetrics} from "../metrics/index";
+import {convertStravaToCyclingMetrics} from "../converter/index";
 import {getMeanMaxPower} from "./index";
 import data from './sampleResponseStream.json';
 
