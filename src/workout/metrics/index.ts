@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 export const getTss = (segments: number[][]) => {
   if (segments.length === 0) {return 0}
-  if (segments[0].length !== 3) {throw 'must have 3 segments'}
+  if (segments[0].length !== 3) {throw new Error ('must have 3 segments')}
 
   const seg30 = getSeg30(segments)
   const inFac = getIntensityFactor(seg30)
@@ -10,7 +10,6 @@ export const getTss = (segments: number[][]) => {
   const tss = getTssInt(minutes, inFac)
   return tss
 }
-
 
 function getIntensityFactor(segments: number[]) {
   const seg30power4 = []
@@ -60,13 +59,13 @@ function getSeg30(segmentsIn: number[][]) {
   segments.forEach((segment) => {
  
 
-    if (next.remainder != 0) {
+    if (next.remainder !== 0) {
       segment[0] = segment[0] - next.remainder
       value = Math.pow((Math.pow(next.value, 4) + Math.pow(segment[2], 4)) / 2, 0.25)
       seg30.push(value)
       // not perfect but averages previous segment piece and current one.
     }
-    for (let i = 0; i < segment[0]; i = i + 0.5) { //loops through 30 second
+    for (let i = 0; i < segment[0]; i = i + 0.5) { // loops through 30 second
       value = (segment[1] + segment[2]) / 2
       const remainder = segment[0] - i
       if (remainder < 0.5) {
