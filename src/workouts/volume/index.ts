@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
-import moment = require('moment');
 import {WorkoutStats} from '../common/WorkoutStats'
+import moment from 'moment';
 
 export const getCtl = (dailyTss:WorkoutStats[], startDate:Date, days:number, startCtl:number) => {
     const out = []
