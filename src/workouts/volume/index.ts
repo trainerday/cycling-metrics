@@ -1,34 +1,22 @@
-import * as _ from 'lodash'
 import {WorkoutStats} from '../common/WorkoutStats'
-import moment from 'moment';
 
-export const getCtl = (dailyTss:WorkoutStats[], startDate:Date, days:number, startCtl:number) => {
+export const getCtl = (dailyTss:number[], days:number, startCtl:number) => {
     const out = []
-    const start = moment(startDate)
-    let theDate = start.toDate()
 
     for (let i = 0; i <= days; i++) {
-        const tssDay = _.filter(dailyTss, day => moment(day.date).diff(theDate, 'days') === 0)
-
         let tss = 0
-        if (tssDay.length > 0){
-            tss = tssDay[0].tss
-        }
-
+        if (i < dailyTss.length) {tss = dailyTss[i]}
         let ctl = startCtl
         let yesterdayCtl = 0
         if (i > 0) {yesterdayCtl = out[i-1].ctl}
         ctl = (tss - yesterdayCtl) / 42 + yesterdayCtl
-
         const obj = new WorkoutStats()
-        obj.date = theDate
         obj.day = i
-        obj.ctl = ctl
+        obj.ctl = Math.round(ctl * 10)/10
         obj.tss = tss
         out.push(obj)
-        theDate = moment(theDate).add(1, 'days').toDate()
     }
-//  console.log(out)
+    
     return out
 }
 
