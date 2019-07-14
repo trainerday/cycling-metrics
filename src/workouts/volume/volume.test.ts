@@ -1,5 +1,3 @@
-import moment = require('moment');
-import {WorkoutStats} from '../common/workoutStats'
 import * as volume from './index'
 
 test('one day of 70tss should be 1.67 tss', () => {
