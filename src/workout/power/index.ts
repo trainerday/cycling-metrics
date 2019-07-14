@@ -1,4 +1,4 @@
-import { find, findLast } from "lodash";
+import { find, findLast,keyBy, maxBy } from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
 
 const getMaxPowerForInterval = (cycleMetrics: MetricsPoint[], intervalLength ) => {
@@ -16,7 +16,7 @@ const getMaxPowerForInterval = (cycleMetrics: MetricsPoint[], intervalLength ) =
     return max / intervalLength;
 }
 
-const interpolateMissingPowerValues  = (cycleMetrics : MetricsPoint[]) => {
+const interpolateMissingPowerValues = (cycleMetrics : MetricsPoint[]) => {
     const headValue = find(cycleMetrics, point => point.power !== undefined).power;
     const tailValue = findLast(cycleMetrics, point => point.power !== undefined).power;
     // extrapolate on the edges to a const
@@ -39,13 +39,31 @@ const interpolateMissingPowerValues  = (cycleMetrics : MetricsPoint[]) => {
     }
 }
 
+const interpolateMissingTimePoints = (cycleMetrics : MetricsPoint[]) => {
+    const maxTime = maxBy(cycleMetrics, m => m.time).time;
+    const metricsLookup = keyBy(cycleMetrics, m => m.time); 
+
+    const result = new Array<MetricsPoint>();
+    for(let i = 0; i <= maxTime; i++){
+        if( metricsLookup[i] !== undefined){
+            result.push(metricsLookup[i]);
+        }
+        else {
+            result.push(new MetricsPoint(i, undefined, undefined));
+        }
+    }
+    return result;
+}
+
 export const getMeanMaxPower = ( cycleMetrics : MetricsPoint[]) => {
-    interpolateMissingPowerValues(cycleMetrics);
-    const length = cycleMetrics.length;
+    const continousTime = interpolateMissingTimePoints(cycleMetrics);
+    interpolateMissingPowerValues(continousTime);
+
+    const length = continousTime.length;
     const result = new Array<number>(length);
     for(let i = 1; i <= length; i++ )
     {
-        result[i] = getMaxPowerForInterval(cycleMetrics, i);
+        result[i] = getMaxPowerForInterval(continousTime, i);
     }
     return result;
 }

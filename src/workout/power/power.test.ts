@@ -52,12 +52,12 @@ import data from './sampleResponseStream.json';
         .toEqual([undefined,120,120,120]);
     });
 
-    test.skip("should interpolate missing Metrics points lineary", () => {
+    test("should interpolate missing Metrics points lineary", () => {
         const time = [0,10];
-        const power = [110,100];
+        const power = [120,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(getMeanMaxPower(metrics))
-        .toEqual([undefined,110,109,108,107,106,105,104,103,102,101]);
+        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test.skip("sample response stream", () => {
