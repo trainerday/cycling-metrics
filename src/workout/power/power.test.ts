@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 import {convertStravaToCyclingMetrics} from "../converter/index";
-import {getMeanMaxPower} from "./index";
+import {MeanMaxPower} from "./index";
 import data from './sampleResponseStream.json';
 
   describe("Power duration curve", () => {
@@ -8,7 +8,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2];
         const power = [120,140,160];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,160,150,140]);
     });
 
@@ -16,7 +16,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
@@ -24,7 +24,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [110,110,110,110,110,110,110,110,110,110,110];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,110,110,110,110,110,110,110,110,110,110,110]);
     });
 
@@ -32,7 +32,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [102,106,110,114,118,120,116,112,108,104,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
@@ -40,7 +40,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [120,118,116,undefined,112,undefined,undefined,106,104,undefined,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
@@ -48,7 +48,7 @@ import data from './sampleResponseStream.json';
         const time = [0,1,2];
         const power = [undefined, 120, undefined];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,120,120,120]);
     });
 
@@ -56,7 +56,7 @@ import data from './sampleResponseStream.json';
         const time = [0,10];
         const power = [120,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
-        expect(getMeanMaxPower(metrics))
+        expect(new MeanMaxPower(metrics).Curve)
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
@@ -66,12 +66,12 @@ import data from './sampleResponseStream.json';
         const power = data.filter( x => x.type === 'watts')[0].data as number[];
         const metrics = convertStravaToCyclingMetrics(time, power, hr);
         
-        const powerCurve = getMeanMaxPower(metrics);
+        const powerCurve = new MeanMaxPower(metrics);
 
         const min = Math.min.apply(null, power);
         const max = Math.max.apply(null, power);
 
-        powerCurve.forEach(pwr => {
+        powerCurve.Curve.forEach(pwr => {
             expect(pwr).toBeLessThanOrEqual(max);
             expect(pwr).toBeGreaterThanOrEqual(min);
         });
@@ -84,7 +84,7 @@ import data from './sampleResponseStream.json';
         const power = [110,110,110,110,110,120,120,120,120,120];
         const hr = null;
         const metrics = convertStravaToCyclingMetrics(time, power, hr);
-        const pdCurve = getMeanMaxPower(metrics);
+        const pdCurve = new MeanMaxPower(metrics).Curve;
         expect(pdCurve[1]).toEqual(120);
         expect(pdCurve[2]).toEqual(120);
         expect(pdCurve[4]).toEqual(120);
