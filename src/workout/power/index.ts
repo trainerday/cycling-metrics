@@ -1,19 +1,32 @@
-import { find, findLast,keyBy, maxBy } from "lodash";
+import { dropWhile, find, findLast, first, keyBy, maxBy } from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
 
+
+class PowerCurvePoint{
+    public time : number;
+    public power : number;
+  }  
+
 export class MeanMaxPower {
-    private curve : number[];
+    private curve : PowerCurvePoint[];
+    private timeLength : number;
 
     constructor (cycleMetrics : MetricsPoint[]){
         const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
         this.interpolateMissingPowerValues(continousTime);
     
-        const length = continousTime.length;
-        this.curve = new Array<number>(length);
-        for(let i = 1; i <= length; i++)
+        this.timeLength = continousTime.length;
+        let prevValue = this.getMaxPowerForInterval(continousTime, 1);
+        this.curve = new Array<PowerCurvePoint>();
+        for(let i = 2; i <= this.timeLength; i++)
         {
-            this.curve[i] = this.getMaxPowerForInterval(continousTime, i);
+            let powerValue = this.getMaxPowerForInterval(continousTime, i);
+            if(prevValue !== powerValue){
+                this.curve.push({time: i-1, power: prevValue});
+              }
+            prevValue = powerValue;
         }
+        this.curve.push({time: this.timeLength, power: prevValue});
     }
 
     private getMaxPowerForInterval (cycleMetrics: MetricsPoint[], intervalLength: number) : number {
@@ -30,7 +43,6 @@ export class MeanMaxPower {
         }
         return max / intervalLength;
     }
-
 
     private interpolateMissingPowerValues (cycleMetrics : MetricsPoint[]): void {
         const headValue = find(cycleMetrics, point => point.power !== undefined).power;
@@ -70,7 +82,35 @@ export class MeanMaxPower {
         }
         return result;
     }
+
+  // private binaryGet(lo: number, hi: number, time: number){
+  //   while(lo < hi){
+  //     const mid = Math.floor((lo+hi) / 2);
+  //     if(this.curve[mid].time < time)
+  //       lo = mid + 1;
+  //     else if(this.curve[mid].time > time)
+  //       hi = mid - 1;
+  //     else return this.curve[mid].power;
+  //   }
+  //   return this.curve[lo].power;
+  // }
+
+    public get(time: number) {
+        if(time > this.timeLength || time < 0) {
+            return undefined;
+        }
+        const segment = first (dropWhile(this.curve, x => x.time <= time));
+        return segment.power;
+    }
     public get Curve(): number[] {
-        return this.curve;
+        const result = new Array<number>();
+        result.push(undefined);
+        var curr = 0;
+        for (let i = 1; i <= this.timeLength; i++) {
+            result.push(this.curve[curr].power);
+            if(i>=this.curve[curr].time)
+                curr++;
+        }
+        return result;
     }
 }
