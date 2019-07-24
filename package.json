@@ -16,13 +16,13 @@
     "url": "git+https://github.com/trainerday/cycling-metrics.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Artur Tadrala, Alex VanLaningham",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/trainerday/cycling-metrics/issues"
   },
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "homepage": "https://github.com/trainerday/cycling-metrics#readme",
   "devDependencies": {
@@ -41,5 +41,6 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "types": "./dist/index.d.ts"
 }

@@ -26,6 +26,12 @@ function getIntensityFactor(segments: number[]) {
   return Math.round(val) / 100
 }
 
+// Training Stress Score
+// The formula for TSS is:
+// TSS = [(s x NP x IF) / (FTP x 3,600)] x 100
+// where s is workout duration in seconds, NP is normalized power (or pace in running), 
+// IF is intensity factor, FTP is functional threshold power (or pace in running), 
+// and 3,600 is the number of seconds in an hour.
 function getTssInt(minutes: number, intensityFactor: number) {
   // from joe friel https://www.joefrielsblog.com/2011/06/oops-what-is-tss.html
   const NP = 100 * intensityFactor
@@ -55,8 +61,6 @@ function getSeg30(segmentsIn: number[][]) {
   let value = 0
 
   segments.forEach((segment) => {
- 
-
     if (next.remainder !== 0) {
       segment[0] = segment[0] - next.remainder
       value = Math.pow((Math.pow(next.value, 4) + Math.pow(segment[2], 4)) / 2, 0.25)
