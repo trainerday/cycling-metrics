@@ -1,5 +1,6 @@
-import { dropWhile, find, findLast, first, keyBy, maxBy } from "lodash";
+import { dropWhile, find, findLast, first, keyBy, maxBy, range } from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
+import { thisTypeAnnotation } from "@babel/types";
 
 
 class PowerCurvePoint{
@@ -7,26 +8,43 @@ class PowerCurvePoint{
     public power : number;
   }  
 
+export function generateLogScale (logscale: number, timeLength : number) {
+    const points = new Array<number>();
+    var current = 1;
+    while (current < timeLength) {
+        points.push(current);
+        current = Math.ceil(current * logscale);
+    }
+    return points;
+}
+
 export class MeanMaxPower {
     private curve : PowerCurvePoint[];
+    private timePoints : number[];
     private timeLength : number;
 
-    constructor (cycleMetrics : MetricsPoint[]){
+    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[]){
         const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
         this.interpolateMissingPowerValues(continousTime);
-    
         this.timeLength = continousTime.length;
+        this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
+        this.curve = this.buildCurve(continousTime);
+    }
+
+    private buildCurve(continousTime: MetricsPoint[]) {
         let prevValue = this.getMaxPowerForInterval(continousTime, 1);
-        this.curve = new Array<PowerCurvePoint>();
-        for(let i = 2; i <= this.timeLength; i++)
-        {
-            let powerValue = this.getMaxPowerForInterval(continousTime, i);
+        let prevTime = first (this.timePoints);
+        const result = new Array<PowerCurvePoint>();
+        this.timePoints.forEach(time => {
+            let powerValue = this.getMaxPowerForInterval(continousTime, time);
             if(prevValue !== powerValue){
-                this.curve.push({time: i-1, power: prevValue});
+                result.push({time: prevTime, power: prevValue});
               }
             prevValue = powerValue;
-        }
-        this.curve.push({time: this.timeLength, power: prevValue});
+            prevTime = time;
+        }) 
+        result.push({time: this.timeLength+1, power: prevValue});
+        return result;
     }
 
     private getMaxPowerForInterval (cycleMetrics: MetricsPoint[], intervalLength: number) : number {
@@ -99,18 +117,18 @@ export class MeanMaxPower {
         if(time > this.timeLength || time < 0) {
             return undefined;
         }
-        const segment = first (dropWhile(this.curve, x => x.time <= time));
+        const segment = first (dropWhile(this.curve, x => x.time < time));
         return segment.power;
     }
+
+    private getDefaultTimePoints(){
+        const logscale = 1.01;
+        const fixedPoints = range(1, Math.min(20, this.timeLength+1));
+        const logPoints = generateLogScale(logscale, this.timeLength);
+        return [...new Set([...fixedPoints, ...logPoints])].sort((n1,n2) => n1-n2);
+    }
+
     public get Curve(): number[] {
-        const result = new Array<number>();
-        result.push(undefined);
-        var curr = 0;
-        for (let i = 1; i <= this.timeLength; i++) {
-            result.push(this.curve[curr].power);
-            if(i>=this.curve[curr].time)
-                curr++;
-        }
-        return result;
+        return [undefined, ...this.timePoints.map(x => this.get(x))];
     }
 }

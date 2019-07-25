@@ -1,6 +1,7 @@
 /// <reference types="jest" />
 import {convertStravaToCyclingMetrics} from "../converter/index";
-import {MeanMaxPower} from "./index";
+import {MeanMaxPower, generateLogScale} from "./index";
+import {range, drop} from 'lodash';
 import data from './sampleResponseStream.json';
 
   describe("Power duration curve", () => {
@@ -60,21 +61,40 @@ import data from './sampleResponseStream.json';
         .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
     });
 
-    test.skip("sample response stream", () => {
+    test("sample response stream", () => {
         const time = data.filter( x => x.type === 'time')[0].data as number[];
         const hr = data.filter( x => x.type === 'heartrate')[0].data as number[];
         const power = data.filter( x => x.type === 'watts')[0].data as number[];
         const metrics = convertStravaToCyclingMetrics(time, power, hr);
         
-        const powerCurve = new MeanMaxPower(metrics);
+        const powerCurve = drop (new MeanMaxPower(metrics).Curve,1);
 
         const min = Math.min.apply(null, power);
         const max = Math.max.apply(null, power);
 
-        powerCurve.Curve.forEach(pwr => {
+        console.log(powerCurve.length);
+        powerCurve.forEach(pwr => {
             expect(pwr).toBeLessThanOrEqual(max);
             expect(pwr).toBeGreaterThanOrEqual(min);
         });
+    });
+  });
+
+  describe("Power curve intervals", () => {
+    test("should return values between interval", () => {
+        const time = [0,1,2,3,4,5,6,7,8,9,10];
+        const power = [120,118,116,114,112,110,108,106,104,102,100];
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
+        expect(new MeanMaxPower(metrics, range(1, time.length, 4)).Curve)
+        .toEqual([undefined,120,116,112]);
+    });
+
+    test.skip("should return values in log scale", () => {
+        const time = [0,1,2,3,4,5,6,7,8,9,10];
+        const power = [120,118,116,114,112,110,108,106,104,102,100];
+        const metrics = convertStravaToCyclingMetrics(time, power, null);
+        expect(new MeanMaxPower(metrics, generateLogScale(2, time.length)).Curve)
+        .toEqual([undefined,120,118,116,112]);
     });
   });
 
