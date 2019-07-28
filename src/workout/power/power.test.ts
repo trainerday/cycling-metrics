@@ -87,10 +87,10 @@ import { writeFile } from "fs";
     });
 
     test.skip("sample response stream 2", () => {
-        const metrics = data2.points.map( x => new MetricsPoint(x.second, parseInt(x.watts), 0));
+        const metrics = data2.points.map(x => new MetricsPoint(x.second, parseInt(x.watts), 0));
   
         const points = new Array<number>();
-        var current = 1;
+        let current = 1;
         while (current < 30*60) {
             points.push(Math.floor(current));
             current = current * 1.5;
@@ -99,7 +99,6 @@ import { writeFile } from "fs";
         const curve = new MeanMaxPower(metrics, points)
         const powerCurve = drop (curve.Curve, 1);
 
-        console.log(powerCurve.length);
         writeFile("logcurve2.json", JSON.stringify(powerCurve), x => {} );
         writeFile("logcurveTime2.json", JSON.stringify(points), x => {} );
     });
