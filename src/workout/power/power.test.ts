@@ -1,8 +1,11 @@
 /// <reference types="jest" />
+import {MetricsPoint} from "../common/metricsPoint";
 import {convertStravaToCyclingMetrics} from "../converter/index";
 import {MeanMaxPower, generateLogScale} from "./index";
 import {range, drop} from 'lodash';
 import data from './sampleResponseStream.json';
+import data2 from './bike3.json';
+import { writeFile } from "fs";
 
   describe("Power duration curve", () => {
     test("should decrease linearly for linear power2", () => {
@@ -67,16 +70,38 @@ import data from './sampleResponseStream.json';
         const power = data.filter( x => x.type === 'watts')[0].data as number[];
         const metrics = convertStravaToCyclingMetrics(time, power, hr);
         
-        const powerCurve = drop (new MeanMaxPower(metrics).Curve,1);
+        const curve = new MeanMaxPower(metrics)
+        const powerCurve = drop (curve.Curve, 1);
+        const points = drop (curve.TimePoints, 1);
 
         const min = Math.min.apply(null, power);
         const max = Math.max.apply(null, power);
 
-        console.log(powerCurve.length);
+        //console.log(powerCurve.length);
+        //writeFile("logcurve.json", JSON.stringify(powerCurve), x => {} );
+        //writeFile("logcurveTime.json", JSON.stringify(points), x => {} );
         powerCurve.forEach(pwr => {
             expect(pwr).toBeLessThanOrEqual(max);
             expect(pwr).toBeGreaterThanOrEqual(min);
         });
+    });
+
+    test.skip("sample response stream 2", () => {
+        const metrics = data2.points.map( x => new MetricsPoint(x.second, parseInt(x.watts), 0));
+  
+        const points = new Array<number>();
+        var current = 1;
+        while (current < 30*60) {
+            points.push(Math.floor(current));
+            current = current * 1.5;
+        }
+
+        const curve = new MeanMaxPower(metrics, points)
+        const powerCurve = drop (curve.Curve, 1);
+
+        console.log(powerCurve.length);
+        writeFile("logcurve2.json", JSON.stringify(powerCurve), x => {} );
+        writeFile("logcurveTime2.json", JSON.stringify(points), x => {} );
     });
   });
 
@@ -89,12 +114,12 @@ import data from './sampleResponseStream.json';
         .toEqual([undefined,120,116,112]);
     });
 
-    test.skip("should return values in log scale", () => {
+    test("should return values in log scale", () => {
         const time = [0,1,2,3,4,5,6,7,8,9,10];
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         const metrics = convertStravaToCyclingMetrics(time, power, null);
         expect(new MeanMaxPower(metrics, generateLogScale(2, time.length)).Curve)
-        .toEqual([undefined,120,118,116,112]);
+        .toEqual([undefined,120,119,117,113]);
     });
   });
 
@@ -109,8 +134,29 @@ import data from './sampleResponseStream.json';
         expect(pdCurve[2]).toEqual(120);
         expect(pdCurve[4]).toEqual(120);
         expect(pdCurve[10]).toEqual(115);
-       // .toEqual([{seconds:1,mma:120},{seconds:2,mma:120},{seconds:4,mma:120},{seconds:10,mma:115}]);
-    });
+   });
+  });
+
+  describe("Power curve merge", () => {
+    test("gets max for each time point", () => {
+        const time = [0,1,2,3,4,5,6,7,8,9];
+        const power1 = [130,130,130,130,130,120,120,120,120,120];
+        const power2 = [160,150,140,130,120,110,100,100,100,100];
+        const curve1 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power1, null));
+        const curve2 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power2, null));
+
+        debugger;
+        const mergeCurve = MeanMaxPower.Merge(curve1,curve2);
+        
+        expect(mergeCurve.get(1)).toEqual(160);
+        expect(mergeCurve.get(2)).toEqual(155);
+        expect(mergeCurve.get(4)).toEqual(145);
+        expect(mergeCurve.get(10)).toEqual(125);
+
+        expect(mergeCurve.TimePoints).toEqual(curve1.TimePoints);
+        expect(mergeCurve.TimePoints).toEqual(curve2.TimePoints);
+
+    })
   });
 
 

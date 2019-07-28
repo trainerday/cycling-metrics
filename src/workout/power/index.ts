@@ -1,4 +1,4 @@
-import { dropWhile, find, findLast, first, keyBy, maxBy, range } from "lodash";
+import { dropWhile, find, findLast, first, keyBy, maxBy, range, uniq } from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
 import { thisTypeAnnotation } from "@babel/types";
 
@@ -113,6 +113,43 @@ export class MeanMaxPower {
   //   return this.curve[lo].power;
   // }
 
+    static Merge(curve1: MeanMaxPower, curve2: MeanMaxPower) : MeanMaxPower {
+        const curve1Iter = curve1.curve.values();
+        const curve2Iter = curve2.curve.values();
+        var value1 = curve1Iter.next();
+        var value2 = curve2Iter.next();
+
+        const result = new Array<PowerCurvePoint>();
+        do {
+           if(value1.value.time === value2.value.time) {
+               result.push(value1.value.power > value2.value.power ? value1.value : value2.value);
+               value1 = curve1Iter.next();
+               value2 = curve2Iter.next();
+           }        
+           else if(value1.value.time < value2.value.time){
+                if(value1.value.power > value2.value.power){
+                    result.push(value1.value);
+                }
+                value1 = curve1Iter.next();
+           }
+           else if(value1.value.time > value2.value.time){
+                if(value1.value.power < value2.value.power) {
+                    result.push(value2.value);
+                }
+                value2 = curve2Iter.next();
+            }   
+        } while(!value1.done && !value2.done);
+        while(!value1.done){ result.push(value1.value); value1 = curve1Iter.next(); }
+        while(!value2.done){ result.push(value2.value); value2 = curve2Iter.next(); }
+
+        const timePoints = uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1,n2) => n1-n2);
+        let curve = new MeanMaxPower([new MetricsPoint(0,0,0)]);
+        curve.curve = result;
+        curve.timePoints = timePoints;
+        curve.timeLength = timePoints.length;
+        return curve;
+    } 
+
     public get(time: number) {
         if(time > this.timeLength || time < 0) {
             return undefined;
@@ -122,13 +159,16 @@ export class MeanMaxPower {
     }
 
     private getDefaultTimePoints(){
-        const logscale = 1.01;
+        const logscale = 1.5;
         const fixedPoints = range(1, Math.min(20, this.timeLength+1));
         const logPoints = generateLogScale(logscale, this.timeLength);
-        return [...new Set([...fixedPoints, ...logPoints])].sort((n1,n2) => n1-n2);
+        return uniq ([...fixedPoints, ...logPoints]).sort((n1,n2) => n1-n2);
     }
 
     public get Curve(): number[] {
         return [undefined, ...this.timePoints.map(x => this.get(x))];
+    }
+    public get TimePoints() : number[] {
+        return this.timePoints;
     }
 }
