@@ -138,24 +138,30 @@ import { writeFile } from "fs";
   });
 
   describe("Power curve merge", () => {
+    const time = [0,1,2,3,4,5,6,7,8,9];
+    const power1 = [130,130,130,130,130,120,120,120,120,120];
+    const power2 = [160,150,140,130,120,110,100,100,100,100];
+    const curve1 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power1, null), undefined, "training1");
+    const curve2 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power2, null), undefined, "training2");
+
     test("gets max for each time point", () => {
-        const time = [0,1,2,3,4,5,6,7,8,9];
-        const power1 = [130,130,130,130,130,120,120,120,120,120];
-        const power2 = [160,150,140,130,120,110,100,100,100,100];
-        const curve1 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power1, null));
-        const curve2 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power2, null));
-
-        debugger;
         const mergeCurve = MeanMaxPower.Merge(curve1,curve2);
-        
-        expect(mergeCurve.get(1)).toEqual(160);
-        expect(mergeCurve.get(2)).toEqual(155);
-        expect(mergeCurve.get(4)).toEqual(145);
-        expect(mergeCurve.get(10)).toEqual(125);
 
+        expect(mergeCurve.get(1).power).toEqual(160);
+        expect(mergeCurve.get(2).power).toEqual(155);
+        expect(mergeCurve.get(4).power).toEqual(145);
+        expect(mergeCurve.get(10).power).toEqual(125);
         expect(mergeCurve.TimePoints).toEqual(curve1.TimePoints);
         expect(mergeCurve.TimePoints).toEqual(curve2.TimePoints);
+    })
 
+    test("label segments according to source", () => {
+        const mergeCurve = MeanMaxPower.Merge(curve1,curve2);
+
+        expect(mergeCurve.get(1).label).toEqual("training2");
+        expect(mergeCurve.get(2).label).toEqual("training2");
+        expect(mergeCurve.get(4).label).toEqual("training2");
+        expect(mergeCurve.get(10).label).toEqual("training1");
     })
   });
 

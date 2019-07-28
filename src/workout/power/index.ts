@@ -6,6 +6,7 @@ import { thisTypeAnnotation } from "@babel/types";
 class PowerCurvePoint{
     public time : number;
     public power : number;
+    public label : string;
   }  
 
 export function generateLogScale (logscale: number, timeLength : number) {
@@ -23,27 +24,28 @@ export class MeanMaxPower {
     private timePoints : number[];
     private timeLength : number;
 
-    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[]){
+    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[], label? : string){
+        const labelValue = label === undefined ? "defaultLabel" : label;
         const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
         this.interpolateMissingPowerValues(continousTime);
         this.timeLength = continousTime.length;
         this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
-        this.curve = this.buildCurve(continousTime);
+        this.curve = this.buildCurve(continousTime, labelValue);
     }
 
-    private buildCurve(continousTime: MetricsPoint[]) {
+    private buildCurve(continousTime: MetricsPoint[], label: string) {
         let prevValue = this.getMaxPowerForInterval(continousTime, 1);
         let prevTime = first (this.timePoints);
         const result = new Array<PowerCurvePoint>();
         this.timePoints.forEach(time => {
             let powerValue = this.getMaxPowerForInterval(continousTime, time);
             if(prevValue !== powerValue){
-                result.push({time: prevTime, power: prevValue});
+                result.push({time: prevTime, power: prevValue, label: label});
               }
             prevValue = powerValue;
             prevTime = time;
         }) 
-        result.push({time: this.timeLength+1, power: prevValue});
+        result.push({time: this.timeLength+1, power: prevValue, label: label});
         return result;
     }
 
@@ -154,8 +156,7 @@ export class MeanMaxPower {
         if(time > this.timeLength || time < 0) {
             return undefined;
         }
-        const segment = first (dropWhile(this.curve, x => x.time < time));
-        return segment.power;
+        return first (dropWhile(this.curve, x => x.time < time));
     }
 
     private getDefaultTimePoints(){
@@ -166,7 +167,7 @@ export class MeanMaxPower {
     }
 
     public get Curve(): number[] {
-        return [undefined, ...this.timePoints.map(x => this.get(x))];
+        return [undefined, ...this.timePoints.map(x => this.get(x).power)];
     }
     public get TimePoints() : number[] {
         return this.timePoints;
