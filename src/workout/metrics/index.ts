@@ -56,74 +56,65 @@ function getIntensityFactor2(arr){
 
 function getNormalizedPower(arr){
   const res = getOneSecondIntervals(arr)
-  if (res.length<120) {
-    return {np:0,seconds:0}
-  }
+  if (res.length<120) {return {np:0,seconds:0}}
 
   const mov = movingAvg(res,30)
-
-
-  const filtered = mov.filter(el =>{
+  const filtered = mov.filter(el => {
     return el != null
   })
 
-  const pow4=[]
+  const pow4 = []
   filtered.forEach(item=>{
     pow4.push(Math.pow(item,4))
   })
-
-  const avgPow4=average(pow4)
-  const avg=Math.round(Math.pow(avgPow4,.25)*100)/100
+  const avgPow4 = average(pow4)
+  const avg = Math.round(Math.pow(avgPow4,.25)*100)/100
   return {np:avg,seconds:res.length} 
 }
 
-function average(list){
-  const averageLoc = list => list.reduce((prev, curr) => prev + curr) / list.length
-  return Math.round(averageLoc(list)*100)/100
-}
 
+function average(list){
+  const averageLoc = list2 => list2.reduce((prev, curr) => prev + curr) / list2.length;
+  return Math.round(averageLoc(list)*100)/100;
+}
 
 function getOneSecondIntervals(arr){
-  const out=[]
+  const out = [];
   arr.forEach(segment=>{
-    const min=segment[0]
-    const pStart=segment[1]
-    const pEnd=segment[2]
-    const seconds=min*60
-    const adder=(pEnd-pStart)/seconds
-    let first=pStart
-    for (let i = 0;i < seconds;i++) {
-      out.push(Math.round(first*100)/100)
-        first +=adder
-      }
+  const min=segment[0]
+  const pStart=segment[1]
+  const pEnd=segment[2]
+  const seconds=min*60
+  const adder=(pEnd-pStart)/seconds
+  let first=pStart
+  for (let i = 0; i<seconds; i++) {
+    out.push(Math.round(first*100)/100)
+      first +=adder
+    }
   })
-    return out
-}
-
-function getAvg(array){
-  let sum = 0, count = 0, val
-  for (const i in array){
-    val = array[i]
-    sum += val
-    count++
-    console.log(count)
-  }
-  return sum / count
+  return out
 }
 
 function movingAvg(array, count){
+  const avg = (array2) =>{
+    let sum = 0
+    array2.forEach(item=>{
+      sum += item
+    })
+    return sum / array2.length
+  }
+
   const result = []
   let val
 
-  for (let i = 0; i < count-1; i++) {
-    result.push(null)
-  }
-
-  for (let i = 0; i <= result.length; i++){
-    val = getAvg(array.slice(i, i + count))
+  for (let i = 0; i < count - 1; i++) {result.push(null)}
+  const len = array.length - count
+  for (let i = 0; i <= len; i++){
+    val = avg(array.slice(i, i + count))
     if (isNaN(val)) {result.push(null)}
     else {result.push(Math.round(val*100)/100)}
   }
 
-  return result
+  return result;
 }
+
