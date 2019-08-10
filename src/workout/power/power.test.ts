@@ -140,9 +140,11 @@ import data from './sampleResponseStream.json';
     const time = [0,1,2,3,4,5,6,7,8,9];
     const power1 = [130,130,130,130,130,120,120,120,120,120];
     const power2 = [160,150,140,130,120,110,100,100,100,100];
+    const power3 = [125.1,125.1,125.1,125.1,125.1,125.1,125.1,125.10,125.1,125.1];
     const curve1 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power1, null), undefined, "training1");
     const curve2 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power2, null), undefined, "training2");
-
+    const curve3 = new MeanMaxPower(convertStravaToCyclingMetrics(time, power3, null), undefined, "training3");
+ 
     test("gets max for each time point", () => {
         const mergeCurve = MeanMaxPower.Merge(curve1,curve2);
 
@@ -163,13 +165,26 @@ import data from './sampleResponseStream.json';
         expect(mergeCurve.get(10).label).toEqual("training1");
     })
 
-    test.skip("label can be overriden when merged", () => {
-        const mergeCurve = MeanMaxPower.Merge(curve1, curve2); // "curve1", "curve2");
+    test("label can be overriden when merged", () => {
+        const mergeCurve = MeanMaxPower.Merge(curve1, curve2, "curve1", "curve2");
 
         expect(mergeCurve.get(1).label).toEqual("curve2");
         expect(mergeCurve.get(2).label).toEqual("curve2");
         expect(mergeCurve.get(4).label).toEqual("curve2");
         expect(mergeCurve.get(10).label).toEqual("curve1");
+        console.log(mergeCurve)
+    })
+
+    test("can merge array of powerCurves", () => {
+        const mergeCurve = MeanMaxPower.MergeAll([curve1, curve2, curve3]);
+
+        expect(mergeCurve.get(1).label).toEqual("training2");
+        expect(mergeCurve.get(2).label).toEqual("training2");
+        expect(mergeCurve.get(4).label).toEqual("training2");
+        expect(mergeCurve.get(6).label).toEqual("training2");
+        expect(mergeCurve.get(9).label).toEqual("training1");
+        expect(mergeCurve.get(10).label).toEqual("training3");
+        console.log(mergeCurve)
     })
   });
 

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
-import { PowerCurvePoint } from "./PowerCurvePoint";
+import { PowerCurvePoint, WithLabel } from "./PowerCurvePoint";
 
 export function generateLogScale (logscale: number, timeLength : number) {
     const points = new Array<number>();
@@ -13,7 +13,10 @@ export function generateLogScale (logscale: number, timeLength : number) {
 }
 
 export class MeanMaxPower {
-    public static Merge(curve1: MeanMaxPower, curve2: MeanMaxPower) : MeanMaxPower {
+    public static MergeAll(curves: MeanMaxPower[]) : MeanMaxPower {
+        return curves.reduce((x1,x2) => MeanMaxPower.Merge(x1,x2));
+    }
+    public static Merge(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: string, label2?: string) : MeanMaxPower {
         const curve1Iter = curve1.curve.values();
         const curve2Iter = curve2.curve.values();
         let value1 = curve1Iter.next();
@@ -22,25 +25,27 @@ export class MeanMaxPower {
         const result = new Array<PowerCurvePoint>();
         do {
            if(value1.value.time === value2.value.time) {
-               result.push(value1.value.power > value2.value.power ? value1.value : value2.value);
+               result.push(value1.value.power > value2.value.power 
+                            ? WithLabel(value1.value, label1)
+                            : WithLabel(value2.value, label2));
                value1 = curve1Iter.next();
                value2 = curve2Iter.next();
            }        
            else if(value1.value.time < value2.value.time){
                 if(value1.value.power > value2.value.power){
-                    result.push(value1.value);
+                    result.push(WithLabel(value1.value, label1));
                 }
                 value1 = curve1Iter.next();
            }
            else if(value1.value.time > value2.value.time){
                 if(value1.value.power < value2.value.power) {
-                    result.push(value2.value);
+                    result.push(WithLabel(value2.value, label2));
                 }
                 value2 = curve2Iter.next();
             }   
         } while(!value1.done && !value2.done);
-        while(!value1.done){ result.push(value1.value); value1 = curve1Iter.next(); }
-        while(!value2.done){ result.push(value2.value); value2 = curve2Iter.next(); }
+        while(!value1.done){ result.push(WithLabel(value1.value, label1)); value1 = curve1Iter.next(); }
+        while(!value2.done){ result.push(WithLabel(value2.value, label2)); value2 = curve2Iter.next(); }
 
         const timePoints = _.uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1,n2) => n1-n2);
         const curve = new MeanMaxPower([new MetricsPoint(0,0,0)]);
@@ -148,18 +153,6 @@ export class MeanMaxPower {
         }
         return result;
     }
-
-  // private binaryGet(lo: number, hi: number, time: number){
-  //   while(lo < hi){
-  //     const mid = Math.floor((lo+hi) / 2);
-  //     if(this.curve[mid].time < time)
-  //       lo = mid + 1;
-  //     else if(this.curve[mid].time > time)
-  //       hi = mid - 1;
-  //     else return this.curve[mid].power;
-  //   }
-  //   return this.curve[lo].power;
-  // }
 
     private getDefaultTimePoints(){
         const logscale = 1.5;
