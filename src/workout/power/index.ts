@@ -13,8 +13,8 @@ export function generateLogScale (logscale: number, timeLength : number) {
 }
 
 export class MeanMaxPower {
-    public static MergeAll(curves: MeanMaxPower[]) : MeanMaxPower {
-        return curves.reduce((x1,x2) => MeanMaxPower.Merge(x1,x2));
+    public static MergeAll(curves: MeanMaxPower[], label?: string) : MeanMaxPower {
+        return curves.reduce((x1,x2) => MeanMaxPower.Merge(x1, x2, label, label));
     }
     public static Merge(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: string, label2?: string) : MeanMaxPower {
         const curve1Iter = curve1.curve.values();

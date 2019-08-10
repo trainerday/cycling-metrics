@@ -172,20 +172,24 @@ import data from './sampleResponseStream.json';
         expect(mergeCurve.get(2).label).toEqual("curve2");
         expect(mergeCurve.get(4).label).toEqual("curve2");
         expect(mergeCurve.get(10).label).toEqual("curve1");
-        console.log(mergeCurve)
     })
 
     test("can merge array of powerCurves", () => {
         const mergeCurve = MeanMaxPower.MergeAll([curve1, curve2, curve3]);
 
         expect(mergeCurve.get(1).label).toEqual("training2");
-        expect(mergeCurve.get(2).label).toEqual("training2");
-        expect(mergeCurve.get(4).label).toEqual("training2");
-        expect(mergeCurve.get(6).label).toEqual("training2");
         expect(mergeCurve.get(9).label).toEqual("training1");
         expect(mergeCurve.get(10).label).toEqual("training3");
-        console.log(mergeCurve)
     })
+
+    test("can override label while merging array", () => {
+        const mergeCurve = MeanMaxPower.MergeAll([curve1, curve2, curve3], "last week");
+
+        expect(mergeCurve.get(1).label).toEqual("last week");
+        expect(mergeCurve.get(9).label).toEqual("last week");
+        expect(mergeCurve.get(10).label).toEqual("last week");
+    })
+
   });
 
 
