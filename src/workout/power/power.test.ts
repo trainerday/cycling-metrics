@@ -162,6 +162,15 @@ import { writeFile } from "fs";
         expect(mergeCurve.get(4).label).toEqual("training2");
         expect(mergeCurve.get(10).label).toEqual("training1");
     })
+
+    test.skip("label can be overriden when merged", () => {
+        const mergeCurve = MeanMaxPower.Merge(curve1, curve2); // "curve1", "curve2");
+
+        expect(mergeCurve.get(1).label).toEqual("curve2");
+        expect(mergeCurve.get(2).label).toEqual("curve2");
+        expect(mergeCurve.get(4).label).toEqual("curve2");
+        expect(mergeCurve.get(10).label).toEqual("curve1");
+    })
   });
 
 

@@ -1,4 +1,4 @@
-import { dropWhile, find, findLast, first, keyBy, maxBy, range, uniq } from "lodash";
+import { dropWhile, find, findLast, first, last, keyBy, maxBy, range, uniq } from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
 
 class PowerCurvePoint{
@@ -69,7 +69,8 @@ export class MeanMaxPower {
     } 
 
     public get(time: number) {
-        if(time > this.timeLength || time < 0) {
+        let max = last(this.timePoints);
+        if(time > max || time < 0) {
             return undefined;
         }
         return first (dropWhile(this.curve, x => x.time < time));
