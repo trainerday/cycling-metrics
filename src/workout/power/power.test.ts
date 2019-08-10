@@ -1,11 +1,11 @@
 /// <reference types="jest" />
+import {writeFile} from "fs";
+import {drop, range} from 'lodash';
 import {MetricsPoint} from "../common/metricsPoint";
 import {convertStravaToCyclingMetrics} from "../converter/index";
-import {MeanMaxPower, generateLogScale} from "./index";
-import {range, drop} from 'lodash';
-import data from './sampleResponseStream.json';
 import data2 from './bike3.json';
-import { writeFile } from "fs";
+import {generateLogScale, MeanMaxPower} from "./index";
+import data from './sampleResponseStream.json';
 
   describe("Power duration curve", () => {
     test("should decrease linearly for linear power2", () => {
@@ -77,9 +77,9 @@ import { writeFile } from "fs";
         const min = Math.min.apply(null, power);
         const max = Math.max.apply(null, power);
 
-        //console.log(powerCurve.length);
-        //writeFile("logcurve.json", JSON.stringify(powerCurve), x => {} );
-        //writeFile("logcurveTime.json", JSON.stringify(points), x => {} );
+        // console.log(powerCurve.length);
+        // writeFile("logcurve.json", JSON.stringify(powerCurve), x => {} );
+        // writeFile("logcurveTime.json", JSON.stringify(points), x => {} );
         powerCurve.forEach(pwr => {
             expect(pwr).toBeLessThanOrEqual(max);
             expect(pwr).toBeGreaterThanOrEqual(min);
@@ -87,7 +87,7 @@ import { writeFile } from "fs";
     });
 
     test.skip("sample response stream 2", () => {
-        const metrics = data2.points.map(x => new MetricsPoint(x.second, parseInt(x.watts), 0));
+        const metrics = data2.points.map(x => new MetricsPoint(x.second, parseInt(x.watts, 10), 0));
   
         const points = new Array<number>();
         let current = 1;
@@ -99,8 +99,8 @@ import { writeFile } from "fs";
         const curve = new MeanMaxPower(metrics, points)
         const powerCurve = drop (curve.Curve, 1);
 
-        writeFile("logcurve2.json", JSON.stringify(powerCurve), x => {} );
-        writeFile("logcurveTime2.json", JSON.stringify(points), x => {} );
+        writeFile("logcurve2.json", JSON.stringify(powerCurve), x => undefined );
+        writeFile("logcurveTime2.json", JSON.stringify(points), x => undefined );
     });
   });
 

@@ -1,11 +1,6 @@
-import { dropWhile, find, findLast, first, last, keyBy, maxBy, range, uniq } from "lodash";
+import _ from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
-
-class PowerCurvePoint{
-    public time : number;
-    public power : number;
-    public label : string;
-  }  
+import { PowerCurvePoint } from "./PowerCurvePoint";
 
 export function generateLogScale (logscale: number, timeLength : number) {
     const points = new Array<number>();
@@ -18,19 +13,6 @@ export function generateLogScale (logscale: number, timeLength : number) {
 }
 
 export class MeanMaxPower {
-    private curve : PowerCurvePoint[];
-    private timePoints : number[];
-    private timeLength : number;
-
-    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[], label? : string){
-        const labelValue = label === undefined ? "defaultLabel" : label;
-        const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
-        this.interpolateMissingPowerValues(continousTime);
-        this.timeLength = continousTime.length;
-        this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
-        this.curve = this.buildCurve(continousTime, labelValue);
-    }
-
     public static Merge(curve1: MeanMaxPower, curve2: MeanMaxPower) : MeanMaxPower {
         const curve1Iter = curve1.curve.values();
         const curve2Iter = curve2.curve.values();
@@ -60,7 +42,7 @@ export class MeanMaxPower {
         while(!value1.done){ result.push(value1.value); value1 = curve1Iter.next(); }
         while(!value2.done){ result.push(value2.value); value2 = curve2Iter.next(); }
 
-        const timePoints = uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1,n2) => n1-n2);
+        const timePoints = _.uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1,n2) => n1-n2);
         const curve = new MeanMaxPower([new MetricsPoint(0,0,0)]);
         curve.curve = result;
         curve.timePoints = timePoints;
@@ -68,12 +50,25 @@ export class MeanMaxPower {
         return curve;
     } 
 
+    private curve : PowerCurvePoint[];
+    private timePoints : number[];
+    private timeLength : number;
+
+    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[], label? : string){
+        const labelValue = label === undefined ? "defaultLabel" : label;
+        const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
+        this.interpolateMissingPowerValues(continousTime);
+        this.timeLength = continousTime.length;
+        this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
+        this.curve = this.buildCurve(continousTime, labelValue);
+    }
+
     public get(time: number) {
-        let max = last(this.timePoints);
+        const max = _.last(this.timePoints);
         if(time > max || time < 0) {
             return undefined;
         }
-        return first (dropWhile(this.curve, x => x.time < time));
+        return _.first (_.dropWhile(this.curve, x => x.time < time));
     }
 
     public get Curve(): number[] {
@@ -86,7 +81,7 @@ export class MeanMaxPower {
 
     private buildCurve(continousTime: MetricsPoint[], label: string) {
         let prevValue = this.getMaxPowerForInterval(continousTime, 1);
-        let prevTime = first (this.timePoints);
+        let prevTime = _.first (this.timePoints);
         const result = new Array<PowerCurvePoint>();
         this.timePoints.forEach(time => {
             const powerValue = this.getMaxPowerForInterval(continousTime, time);
@@ -116,8 +111,8 @@ export class MeanMaxPower {
     }
 
     private interpolateMissingPowerValues (cycleMetrics : MetricsPoint[]): void {
-        const headValue = find(cycleMetrics, point => point.power !== undefined).power;
-        const tailValue = findLast(cycleMetrics, point => point.power !== undefined).power;
+        const headValue = _.find(cycleMetrics, point => point.power !== undefined).power;
+        const tailValue = _.findLast(cycleMetrics, point => point.power !== undefined).power;
         // extrapolate on the edges to a const
         for (let i = 0; cycleMetrics[i].power === undefined; i++) {
             cycleMetrics[i].power = headValue;   
@@ -139,8 +134,8 @@ export class MeanMaxPower {
     }
 
     private interpolateMissingTimePoints (cycleMetrics : MetricsPoint[]): MetricsPoint[] {
-        const maxTime = maxBy(cycleMetrics, m => m.time).time;
-        const metricsLookup = keyBy(cycleMetrics, m => m.time); 
+        const maxTime = _.maxBy(cycleMetrics, m => m.time).time;
+        const metricsLookup = _.keyBy(cycleMetrics, m => m.time); 
 
         const result = new Array<MetricsPoint>();
         for(let i = 0; i <= maxTime; i++){
@@ -168,8 +163,8 @@ export class MeanMaxPower {
 
     private getDefaultTimePoints(){
         const logscale = 1.5;
-        const fixedPoints = range(1, Math.min(20, this.timeLength+1));
+        const fixedPoints = _.range(1, Math.min(20, this.timeLength+1));
         const logPoints = generateLogScale(logscale, this.timeLength);
-        return uniq ([...fixedPoints, ...logPoints]).sort((n1,n2) => n1-n2);
+        return _.uniq ([...fixedPoints, ...logPoints]).sort((n1,n2) => n1-n2);
     }
 }
