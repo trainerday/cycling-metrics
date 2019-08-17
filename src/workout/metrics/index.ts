@@ -2,20 +2,26 @@ import _ from 'lodash';
 import * as utils from '../common/utils'
 
 class WorkoutInterval {
-  Seconds: number;
-  StartPower: number;
-  EndPower: number;
+  public Seconds: number;
+  public StartPower: number;
+  public EndPower: number;
 }
 
 export class Workout {
+  public static FromArray(segements : Array<[number,number,number]>) {
+    const workoutSegments = _.map(segements, ([Minutes,StartPower,EndPower]) => ({ Seconds: Minutes*60, StartPower, EndPower }))
+    return new Workout(workoutSegments);
+  }
+
   // <start_second, end_second, segment> array
   private segments: Array<[number,number,WorkoutInterval]>;
   private length: number;
 
-  constructor (segments: Array<WorkoutInterval>) {
-    if (segments.length === 0)
-      throw "Segments cannot be empty";
-    var time = 0;
+  constructor (segments: WorkoutInterval[]) {
+    if (segments.length === 0){
+      throw new Error("Segments cannot be empty");
+    }
+    let time = 0;
     this.segments = Array<[number,number,WorkoutInterval]>();
     _.forEach(segments, s => {
       this.segments.push ([time, time + s.Seconds, s]);
@@ -30,18 +36,13 @@ export class Workout {
   }
 
   public Length = () => this.length; 
-
-  public static FromArray(segements : Array<[number,number,number]>) {
-    let workoutSegments = _.map(segements, ([Minutes,StartPower,EndPower]) => {return { Seconds: Minutes*60, StartPower, EndPower }})
-    return new Workout(workoutSegments);
-  }
 }
 
 export function getIntensityFactor2(workout: Workout){
   const FTP=100// we are not using power we are using percent of FTP.
   const {np:NP, seconds:seconds} = getNormalizedPower(workout)
   const IF = (NP/FTP)
-  return {if:IF, seconds:seconds, np:NP}
+  return {if:IF, seconds, np:NP}
 }
 
 export function getTss(workout:Workout){

@@ -1,5 +1,5 @@
-import * as metrics from "./index"
 import * as utils from "../common/utils"
+import * as metrics from "./index"
 
 describe("Workout", () => {
     test("Moving average on the ramp", () =>{
