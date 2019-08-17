@@ -1,10 +1,20 @@
 import * as metrics from "./index"
+import * as utils from "../common/utils"
 
+describe("Workout", () => {
+    test("Moving average on the ramp", () =>{
+        const workout = metrics.Workout.FromArray([[2, 10, 250]]);
+        const avg = utils.movingAverage(x => workout.getValue(x), workout.Length(), 10);
+        expect(avg[0]).toEqual((10+12+14+16+18+20+22+24+26+28)/10);
+        expect(avg[1]).toEqual((12+14+16+18+20+22+24+26+28+30)/10);
+        expect(avg[2]).toEqual((14+16+18+20+22+24+26+28+30+32)/10);        
+    })
+})
 
 describe("TSS", () => {
-    test("zero length array should be 0", () => {
-        //const res = metrics.getTss([])
-        //expect(res).toEqual(0)
+    test.skip("zero length array should be 0", () => {
+        const res = metrics.getTss(metrics.Workout.FromArray([]))
+        expect(res).toEqual(0)
     })    
     test("60min @ 100% of FTP should be 100 tss points", () => {
         const res = metrics.getTss(metrics.Workout.FromArray([[60,100,100]]))

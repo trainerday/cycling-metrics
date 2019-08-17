@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
+import * as utils from "../common/utils";
 import { PowerCurvePoint, WithLabel } from "./PowerCurvePoint";
 
 export function generateLogScale (logscale: number, timeLength : number) {
@@ -101,18 +102,8 @@ export class MeanMaxPower {
     }
 
     private getMaxPowerForInterval (cycleMetrics: MetricsPoint[], intervalLength: number) : number {
-        let max = 0;
-        let sum = 0;
-        for(let i=0; i < intervalLength; i++){
-            sum += cycleMetrics[i].power;
-        }
-        max = Math.max(max, sum);
-        for(let i=intervalLength; i < cycleMetrics.length; i++){
-            sum -=  cycleMetrics[i-intervalLength].power;
-            sum +=  cycleMetrics[i].power;
-            max = Math.max(max, sum);
-        }
-        return max / intervalLength;
+        const avgs = utils.movingAverage( x => cycleMetrics[x].power, cycleMetrics.length, intervalLength)
+        return _.max(avgs)
     }
 
     private interpolateMissingPowerValues (cycleMetrics : MetricsPoint[]): void {

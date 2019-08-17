@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as utils from '../common/utils'
 
 class WorkoutInterval {
   Seconds: number;
@@ -7,6 +8,7 @@ class WorkoutInterval {
 }
 
 export class Workout {
+  // <start_second, end_second, segment> array
   private segments: Array<[number,number,WorkoutInterval]>;
   private length: number;
 
@@ -22,7 +24,7 @@ export class Workout {
     this.length = time; 
   }
   
-  private getValue(second:number) {
+  public getValue(second:number) {
     const [start, end, segment] = _.first(_.dropWhile(this.segments, s => s[1] <= second))
     return segment.StartPower + (second - start) * (segment.EndPower - segment.StartPower) / segment.Seconds;
   }
@@ -33,53 +35,32 @@ export class Workout {
     let workoutSegments = _.map(segements, ([Minutes,StartPower,EndPower]) => {return { Seconds: Minutes*60, StartPower, EndPower }})
     return new Workout(workoutSegments);
   }
-
-  public MovingAverage(intervalLength: number) {
-    var results = Array<number>();
-    var sum = _.sumBy(_.range(0,intervalLength), t => this.getValue(t));
-    results.push(sum / intervalLength);
-    for(var i = intervalLength+1; i < this.length; i++){
-      sum += this.getValue(i);
-      sum -= this.getValue(i-intervalLength-1);
-     results.push(sum / intervalLength);
-    };
-    return results;
-  }
 }
 
 export function getIntensityFactor2(workout: Workout){
   const FTP=100// we are not using power we are using percent of FTP.
-  const np = getNormalizedPower(workout)
-  const NP = np.np
+  const {np:NP, seconds:seconds} = getNormalizedPower(workout)
   const IF = (NP/FTP)
-  const out = {if:IF,seconds:np.seconds,np:NP}
-//  console.log(out)
-  return out
+  return {if:IF, seconds:seconds, np:NP}
 }
 
 export function getTss(workout:Workout){
   const FTP = 100// we are not using power we are using percent of FTP.
-  debugger;
-  const ifObj = getIntensityFactor2(workout)
-  console.log(ifObj)
-  const IF = ifObj.if
-  const NP = ifObj.np
-  const t = ifObj.seconds
-  const TSS = Math.round(((t * NP * IF) / (FTP * 3600)) * 100) 
-  return TSS
+  const {if:IF, seconds:t, np:NP} = getIntensityFactor2(workout)
+  return Math.round(((t * NP * IF) / (FTP * 3600)) * 100) 
 }
 
 function getIntensityFactorInt(workout: Workout){
-  const if2= getIntensityFactor2(workout).if
-  return Math.floor(if2 * 100)/100
+  const if2 = getIntensityFactor2(workout).if
+  return utils.floor2(if2)
 }
 
 function getNormalizedPower(workout: Workout){
   if (workout.Length() < 120) {
     return {np:0, seconds:0}
   }
-  const mvAvg = workout.MovingAverage(30)
-  const avgPow4 = _.sumBy(mvAvg, x => Math.round(Math.pow(x,4)*100)/100) / mvAvg.length
-  const avg = Math.round(Math.pow(avgPow4,.25)*100)/100
+  const mvAvg =  utils.movingAverage(x => workout.getValue(x), workout.Length(), 30)
+  const avgPow4 = _.sumBy(mvAvg, x => utils.round2(Math.pow(x,4))) / mvAvg.length
+  const avg = utils.round2(Math.pow(avgPow4,.25))
   return {np:avg, seconds:workout.Length()} 
 }
