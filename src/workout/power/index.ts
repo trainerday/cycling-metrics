@@ -102,7 +102,7 @@ export class MeanMaxPower {
     }
 
     private getMaxPowerForInterval (cycleMetrics: MetricsPoint[], intervalLength: number) : number {
-        const avgs = utils.movingAverage( x => cycleMetrics[x].power, cycleMetrics.length, intervalLength)
+        const avgs = utils.movingAverage(cycleMetrics.map(x => x.power), intervalLength)
         return _.max(avgs)
     }
 

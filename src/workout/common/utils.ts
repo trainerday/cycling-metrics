@@ -1,12 +1,13 @@
 import _ from 'lodash';
 
-export const movingAverage = (getValue, length, intervalLength: number)  => {
-    const results = Array<number>();
-    let sum = _.sumBy(_.range(0,intervalLength), t => getValue(t));
+export const movingAverage = (values: Iterable<number>, intervalLength: number)  => {
+    const valuesArr = [...values];
+    const results = [];
+    let sum = _.sumBy(_.range(0,intervalLength), t => valuesArr[t]);
     results.push(sum / intervalLength);
-    for(let i = intervalLength; i < length; i++){
-        sum += getValue(i);
-        sum -= getValue(i-intervalLength);
+    for(let i = intervalLength; i < valuesArr.length; i++){
+        sum += valuesArr[i];
+        sum -= valuesArr[i-intervalLength];
         results.push(sum / intervalLength);
     };
     return results;

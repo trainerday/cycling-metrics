@@ -7,7 +7,7 @@ class WorkoutInterval {
   public EndPower: number;
 }
 
-export class Workout {
+export class Workout implements Iterable<number> {
   public static FromArray(segements : Array<[number,number,number]>) {
     const workoutSegments = _.map(segements, ([Minutes,StartPower,EndPower]) => ({ Seconds: Minutes*60, StartPower, EndPower }))
     return new Workout(workoutSegments);
@@ -16,6 +16,14 @@ export class Workout {
   // <start_second, end_second, segment> array
   private segments: Array<[number,number,WorkoutInterval]>;
   private length: number;
+
+  public iterateValues = function* () {
+    for (let [start,end, interval] of this.segments) {
+      for(let i=0; i < interval.Seconds; i++){
+        yield interval.StartPower + (i / interval.Seconds) * (interval.EndPower-interval.StartPower);
+      }
+    }
+  }
 
   constructor (segments: WorkoutInterval[]) {
     if (segments.length === 0){
@@ -27,7 +35,7 @@ export class Workout {
       this.segments.push ([time, time + s.Seconds, s]);
       time = time + s.Seconds;
     })
-    this.length = time; 
+    this.length = time;
   }
   
   public getValue(second:number) {
@@ -36,6 +44,10 @@ export class Workout {
   }
 
   public Length = () => this.length; 
+
+  [Symbol.iterator]() {
+    return this.iterateValues()
+  }
 }
 
 export function getIntensityFactor2(workout: Workout){
@@ -60,7 +72,8 @@ function getNormalizedPower(workout: Workout){
   if (workout.Length() < 120) {
     return {np:0, seconds:0}
   }
-  const mvAvg =  utils.movingAverage(x => workout.getValue(x), workout.Length(), 30)
+  workout[Symbol.iterator] = workout.iterateValues;
+  const mvAvg =  utils.movingAverage(workout, 30)
   const avgPow4 = _.sumBy(mvAvg, x => utils.round2(Math.pow(x,4))) / mvAvg.length
   const avg = utils.round2(Math.pow(avgPow4,.25))
   return {np:avg, seconds:workout.Length()} 

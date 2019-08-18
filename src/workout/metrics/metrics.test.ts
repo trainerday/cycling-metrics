@@ -4,7 +4,8 @@ import * as metrics from "./index"
 describe("Workout", () => {
     test("Moving average on the ramp", () =>{
         const workout = metrics.Workout.FromArray([[2, 10, 250]]);
-        const avg = utils.movingAverage(x => workout.getValue(x), workout.Length(), 10);
+        debugger;
+        const avg = utils.movingAverage(workout, 10);
         expect(avg[0]).toEqual((10+12+14+16+18+20+22+24+26+28)/10);
         expect(avg[1]).toEqual((12+14+16+18+20+22+24+26+28+30)/10);
         expect(avg[2]).toEqual((14+16+18+20+22+24+26+28+30+32)/10);        
