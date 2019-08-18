@@ -60,12 +60,12 @@ export function getIntensityFactor2(workout: Workout){
 export function getTss(workout:Workout){
   const FTP = 100// we are not using power we are using percent of FTP.
   const {if:IF, seconds:t, np:NP} = getIntensityFactor2(workout)
-  return Math.round(((t * NP * IF) / (FTP * 3600)) * 100) 
+  return _.round(((t * NP * IF) / (FTP * 3600)) * 100)
 }
 
 function getIntensityFactorInt(workout: Workout){
   const if2 = getIntensityFactor2(workout).if
-  return utils.floor2(if2)
+  return _.floor(if2,2)
 }
 
 function getNormalizedPower(workout: Workout){
@@ -74,7 +74,7 @@ function getNormalizedPower(workout: Workout){
   }
   workout[Symbol.iterator] = workout.iterateValues;
   const mvAvg =  utils.movingAverage(workout, 30)
-  const avgPow4 = _.sumBy(mvAvg, x => utils.round2(Math.pow(x,4))) / mvAvg.length
-  const avg = utils.round2(Math.pow(avgPow4,.25))
+  const avgPow4 = _.sumBy(mvAvg, x => _.round(Math.pow(x,4),2)) / mvAvg.length
+  const avg = _.round(Math.pow(avgPow4,.25),2)
   return {np:avg, seconds:workout.Length()} 
 }

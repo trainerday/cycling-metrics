@@ -3,7 +3,7 @@ import _ from 'lodash';
 export const movingAverage = (values: Iterable<number>, intervalLength: number)  => {
     const valuesArr = [...values];
     const results = [];
-    let sum = _.sumBy(_.range(0,intervalLength), t => valuesArr[t]);
+    let sum = _.sum(_.take(valuesArr, intervalLength));
     results.push(sum / intervalLength);
     for(let i = intervalLength; i < valuesArr.length; i++){
         sum += valuesArr[i];
@@ -12,7 +12,3 @@ export const movingAverage = (values: Iterable<number>, intervalLength: number) 
     };
     return results;
 }
-
-export const round2 = (x: number) => Math.round(x*100)/100;
-
-export const floor2 = (x: number) => Math.floor(x*100)/100;
