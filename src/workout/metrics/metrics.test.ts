@@ -35,3 +35,19 @@ describe("TSS", () => {
     })  
 })
 
+describe("GetTimeInZone", () => {
+    test("should return 1h for ftp const ride", () => {
+        const workout = common.Workout.FromArray([[60,200,200]])
+        const results = metrics.GetTimeInZone(200, [...workout])
+        expect(results.z4).toEqual(3600)
+    })
+})
+
+describe("GetDominantZone", () => {
+    test("Should return zone 4 for ftp ride", () => {
+        const workout = common.Workout.FromArray([[60,200,200]])
+        const results = metrics.GetDominantZone(200, [...workout])
+        expect(results).toEqual(4)
+    })
+})
+
