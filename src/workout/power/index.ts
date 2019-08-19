@@ -49,7 +49,7 @@ export class MeanMaxPower {
         while(!value2.done){ result.push(WithLabel(value2.value, label2)); value2 = curve2Iter.next(); }
 
         const timePoints = _.uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1,n2) => n1-n2);
-        const curve = new MeanMaxPower([new MetricsPoint(0,0,0)]);
+        const curve = new MeanMaxPower([0]);
         curve.curve = result;
         curve.timePoints = timePoints;
         curve.timeLength = timePoints.length;
@@ -60,13 +60,11 @@ export class MeanMaxPower {
     private timePoints : number[];
     private timeLength : number;
 
-    constructor (cycleMetrics : MetricsPoint[], timePoints? : number[], label? : string){
+    constructor (powerValues : number[], timePoints? : number[], label? : string){
         const labelValue = label === undefined ? "defaultLabel" : label;
-        const continousTime = this.interpolateMissingTimePoints(cycleMetrics);
-        this.interpolateMissingPowerValues(continousTime);
-        this.timeLength = continousTime.length;
+        this.timeLength = powerValues.length;
         this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
-        this.curve = this.buildCurve(continousTime, labelValue);
+        this.curve = this.buildCurve(powerValues, labelValue);
     }
 
     public get(time: number) {
@@ -85,12 +83,12 @@ export class MeanMaxPower {
         return this.timePoints;
     }
 
-    private buildCurve(continousTime: MetricsPoint[], label: string) {
-        let prevValue = this.getMaxPowerForInterval(continousTime, 1);
+    private buildCurve(powerValues: number[], label: string) {
+        let prevValue = this.getMaxPowerForInterval(powerValues, 1);
         let prevTime = _.first (this.timePoints);
         const result = new Array<PowerCurvePoint>();
         this.timePoints.forEach(time => {
-            const powerValue = this.getMaxPowerForInterval(continousTime, time);
+            const powerValue = this.getMaxPowerForInterval(powerValues, time);
             if(prevValue !== powerValue){
                 result.push({time: prevTime, power: prevValue, label});
               }
@@ -101,48 +99,9 @@ export class MeanMaxPower {
         return result;
     }
 
-    private getMaxPowerForInterval (cycleMetrics: MetricsPoint[], intervalLength: number) : number {
-        const avgs = utils.movingAverage(cycleMetrics.map(x => x.power), intervalLength)
+    private getMaxPowerForInterval (powerValues: number[], intervalLength: number) : number {
+        const avgs = utils.movingAverage(powerValues, intervalLength)
         return _.max(avgs)
-    }
-
-    private interpolateMissingPowerValues (cycleMetrics : MetricsPoint[]): void {
-        const headValue = _.find(cycleMetrics, point => point.power !== undefined).power;
-        const tailValue = _.findLast(cycleMetrics, point => point.power !== undefined).power;
-        // extrapolate on the edges to a const
-        for (let i = 0; cycleMetrics[i].power === undefined; i++) {
-            cycleMetrics[i].power = headValue;   
-        }
-        for (let i = cycleMetrics.length - 1; cycleMetrics[i].power === undefined; i--) {
-            cycleMetrics[i].power = tailValue;     
-        }
-        // interpolate holes lineary
-        for (let i = 1; i < cycleMetrics.length - 1; i++) {
-            if(cycleMetrics[i].power === undefined) {
-                const lidx = i - 1;
-                let ridx = i + 1;          
-                while ( cycleMetrics[ridx].power === undefined) { ridx++; }
-                const lvalue = cycleMetrics[lidx].power;
-                const rvalue = cycleMetrics[ridx].power;
-                cycleMetrics[i].power =  lvalue + (rvalue - lvalue) / (ridx - lidx);
-            }    
-        }
-    }
-
-    private interpolateMissingTimePoints (cycleMetrics : MetricsPoint[]): MetricsPoint[] {
-        const maxTime = _.maxBy(cycleMetrics, m => m.time).time;
-        const metricsLookup = _.keyBy(cycleMetrics, m => m.time); 
-
-        const result = new Array<MetricsPoint>();
-        for(let i = 0; i <= maxTime; i++){
-            if( metricsLookup[i] !== undefined){
-                result.push(metricsLookup[i]);
-            }
-            else {
-                result.push(new MetricsPoint(i, undefined, undefined));
-            }
-        }
-        return result;
     }
 
     private getDefaultTimePoints(){

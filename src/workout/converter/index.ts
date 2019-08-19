@@ -1,5 +1,6 @@
-import { zipWith } from "lodash";
-import { MetricsPoint } from "../common/metricsPoint";
+import { zipWith } from "lodash"
+import { MetricsPoint } from "../common/metricsPoint"
+import { WorkoutMetrics } from "../common/index"
 
 export const convertStravaToCyclingMetrics = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
     // prevent interpolating results array with undefined values
@@ -21,4 +22,8 @@ export const convertStravaToCyclingMetrics = (secondsArr : number[], powerArr: n
     }
     
     return zipWith<number,number,number, MetricsPoint>(secondsArr, powerArr, hrArray, (s,p,h) => ({time: s, power: p, heartRate: h}));
+}
+
+export const convertStravaToWorkoutMetrics = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
+    return new WorkoutMetrics( convertStravaToCyclingMetrics(secondsArr, powerArr, hrArray))
 }
