@@ -1,21 +1,19 @@
 import _ from 'lodash';
 import * as utils from '../common/utils'
 
-export function getIntensityFactor2(powerValues: number[]){
-  const FTP=100// we are not using power we are using percent of FTP.
+export function getIntensityFactor2(ftp: number, powerValues: number[]){
   const {np:NP, seconds:seconds} = getNormalizedPower(powerValues)
-  const IF = (NP/FTP)
+  const IF = (NP/ftp)
   return {if:IF, seconds, np:NP}
 }
 
-export function getTss(powerValues: number[]){
-  const FTP = 100// we are not using power we are using percent of FTP.
-  const {if:IF, seconds:t, np:NP} = getIntensityFactor2(powerValues)
-  return _.round(((t * NP * IF) / (FTP * 3600)) * 100)
+export function getTss(ftp: number, powerValues: number[]){
+  const {if:IF, seconds:t, np:NP} = getIntensityFactor2(ftp, powerValues)
+  return _.round(((t * NP * IF) / (ftp * 3600)) * 100)
 }
 
-function getIntensityFactorInt(powerValues: number[]){
-  const if2 = getIntensityFactor2(powerValues).if
+function getIntensityFactorInt(ftp:number, powerValues: number[]){
+  const if2 = getIntensityFactor2(ftp, powerValues).if
   return _.floor(if2,2)
 }
 
@@ -166,7 +164,7 @@ export const GetTimeInZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => power/ftp * 100)
   const zonesContrib = getZoneContributions(ftpPercents)
   const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
-  const getLength = x => (x === undefined) ? 0 : x.length;
+  const getLength = x => (x === undefined) ? 0 : x.length
   return {
     z1: getLength(groupedContrib[1]),
     z2: getLength(groupedContrib[2]),
@@ -180,17 +178,33 @@ export const GetTimeInZone = (ftp: number, powerValues: number[]) => {
 export const GetDominantZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => power/ftp * 100)
   const zonesContrib = getZoneContributions(ftpPercents)
-  const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
-  const results = _.map(groupedContrib, x => ({seconds: x.length, contrib: _.sumBy(x, x => x.timeMultiplier), zone: x[0].zone}))
+  const groupedContrib : _.Dictionary<{zone:number, timeMultiplier:number}[]> = _.groupBy(zonesContrib, x => x.zone)
+  let zoneResults = _.map(groupedContrib, x => ({seconds: x.length, contrib: _.sumBy(x, x => x.timeMultiplier), zone: x[0].zone}))
 
-  // if (
-  //   z3.seconds / 60 >= 10 ||
-  //   z4.seconds / 60 >= 6 ||
-  //   z5.seconds / 60 >= 2 ||
-  //   z6.seconds / 60 >= 1
-  // ) {
-  //   z1.contribution = 0
-  //   z2.contribution = 0
-  // }
-  return _.maxBy(results, x => x.contrib).zone
+  const higherZoneExists = _.some(zoneResults, ({seconds, zone}) => (seconds >= 600 && zone === 3) 
+                                                                  || (seconds >= 360 && zone === 4)
+                                                                  || (seconds >= 120 && zone === 5)
+                                                                  || (seconds >= 60  && zone === 6))
+  if (higherZoneExists) {
+    zoneResults = _.filter(zoneResults, x => x.zone > 2)
+  }
+  return _.maxBy(zoneResults, x => x.contrib).zone
+}
+
+export const GetWorkoutStats = (ftp: number, powerValues: number []) => {
+  let tts = getTss(ftp, powerValues)
+  let if_ = getIntensityFactor2(ftp, powerValues)
+  let timeInZones = GetTimeInZone(ftp, powerValues)
+  let dominantZone = GetDominantZone(ftp, powerValues)
+  return {
+    TotalMinutes : if_.seconds / 60,
+    TotalStress : tts,
+    Intensity: if_.if,
+    DominantZone: dominantZone,
+    TimeZone1_2: timeInZones.z1,
+    TimeZone3: timeInZones.z3,
+    TimeZone4: timeInZones.z4,
+    TimeZone5: timeInZones.z5,
+    TimeZone6: timeInZones.z6,
+  }
 }
