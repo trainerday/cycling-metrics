@@ -1,6 +1,6 @@
 import { zipWith } from "lodash"
-import { MetricsPoint } from "../common/metricsPoint"
 import { WorkoutMetrics } from "../common/index"
+import { MetricsPoint } from "../common/metricsPoint"
 
 export const convertStravaToCyclingMetrics = (secondsArr : number[], powerArr: number[], hrArray : number[]) => {
     // prevent interpolating results array with undefined values

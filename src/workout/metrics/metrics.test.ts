@@ -1,9 +1,9 @@
-import * as utils from "../common/utils"
-import * as common from "../common/index"
-import * as metrics from "./index"
 import * as _ from 'lodash'
+import * as common from "../common/index"
+import * as utils from "../common/utils"
 import { convertStravaToWorkoutMetrics } from "../converter";
-import { exportAllDeclaration } from "@babel/types";
+import * as metrics from "./index"
+
 
 describe("Workout", () => {
     test("Moving average on the ramp", () =>{
@@ -64,7 +64,7 @@ describe("GetDominantZone", () => {
 })
 
 describe("GetWorkoutStatistics", () => {
-    let spinnerData: Array<[number,number,number]> = [[1,50,50],[1,40,40],[1,70,70],[1,40,40],[1,60,60],[1,40,40],[1,90,90],[1,40,40],[1,80,80],[1,40,40],[1,110,110],[1,40,40],[1,100,100],[1,40,40],[1,130,130],[1,40,40],[1,120,120],[3,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[5-1/60,40,40],[1/60,40,40]]
+    const spinnerData: Array<[number,number,number]> = [[1,50,50],[1,40,40],[1,70,70],[1,40,40],[1,60,60],[1,40,40],[1,90,90],[1,40,40],[1,80,80],[1,40,40],[1,110,110],[1,40,40],[1,100,100],[1,40,40],[1,130,130],[1,40,40],[1,120,120],[3,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[5-1/60,40,40],[1/60,40,40]]
  
     test("spinner workout for 100 FTP", () => {
         const spinner = common.Workout.FromArray(spinnerData)
@@ -85,7 +85,7 @@ describe("GetWorkoutStatistics", () => {
     test("Can calculate workout on Strava output", () =>{
         const time = [];
         const power = [];
-        var sum = 0;
+        let sum = 0;
         spinnerData.forEach( x => {
             time.push(sum)
             power.push(x[1])

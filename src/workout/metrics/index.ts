@@ -130,7 +130,7 @@ function getTimeMultiplier(ftpPercent:number) {
     { PercentOfFtp: 0.55, TimeMultiplier: 0.11 },
     { PercentOfFtp: 0.51, TimeMultiplier: 0.1 }
   ]
-  for (var i = dominant.length - 1; i >= 0; i--) {
+  for (let i = dominant.length - 1; i >= 0; i--) {
     if (ftpPercent < dominant[i].PercentOfFtp) {
       return dominant[i].TimeMultiplier
     }
@@ -139,7 +139,7 @@ function getTimeMultiplier(ftpPercent:number) {
 }
 
 function getZoneNumber(avgPower) {
-  var zone = 0
+  let zone = 0
   if (avgPower <= 55) {
     zone = 1
   } else if (avgPower <= 75) {
@@ -178,8 +178,8 @@ export const GetTimeInZone = (ftp: number, powerValues: number[]) => {
 export const GetDominantZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => power/ftp * 100)
   const zonesContrib = getZoneContributions(ftpPercents)
-  const groupedContrib : _.Dictionary<{zone:number, timeMultiplier:number}[]> = _.groupBy(zonesContrib, x => x.zone)
-  let zoneResults = _.map(groupedContrib, x => ({seconds: x.length, contrib: _.sumBy(x, x => x.timeMultiplier), zone: x[0].zone}))
+  const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
+  let zoneResults = _.map(groupedContrib, x => ({seconds: x.length, contrib: _.sumBy(x, c => c.timeMultiplier), zone: x[0].zone}))
 
   const higherZoneExists = _.some(zoneResults, ({seconds, zone}) => (seconds >= 600 && zone === 3) 
                                                                   || (seconds >= 360 && zone === 4)
@@ -192,19 +192,19 @@ export const GetDominantZone = (ftp: number, powerValues: number[]) => {
 }
 
 export const GetWorkoutStats = (ftp: number, powerValues: number []) => {
-  let tts = getTss(ftp, powerValues)
-  let if_ = getIntensityFactor2(ftp, powerValues)
-  let timeInZones = GetTimeInZone(ftp, powerValues)
-  let dominantZone = GetDominantZone(ftp, powerValues)
+  const tts = getTss(ftp, powerValues)
+  const intensityFactor = getIntensityFactor2(ftp, powerValues)
+  const timeInZones = GetTimeInZone(ftp, powerValues)
+  const dominantZone = GetDominantZone(ftp, powerValues)
   return {
-    TotalMinutes : if_.seconds / 60,
-    TotalStress : tts,
-    Intensity: if_.if,
     DominantZone: dominantZone,
+    Intensity: intensityFactor.if,
     TimeZone1_2: timeInZones.z1,
     TimeZone3: timeInZones.z3,
     TimeZone4: timeInZones.z4,
     TimeZone5: timeInZones.z5,
     TimeZone6: timeInZones.z6,
+    TotalMinutes : intensityFactor.seconds / 60,
+    TotalStress : tts,
   }
 }

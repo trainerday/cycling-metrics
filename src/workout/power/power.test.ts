@@ -1,12 +1,12 @@
 /// <reference types="jest" />
-import {writeFile} from "fs";
-import {drop, range} from 'lodash';
-import {MetricsPoint} from "../common/metricsPoint";
+import {writeFile} from "fs"
+import {drop, range} from 'lodash'
 import {WorkoutMetrics} from "../common/index"
-import {convertStravaToWorkoutMetrics} from "../converter/index";
+import {MetricsPoint} from "../common/metricsPoint"
+import {convertStravaToWorkoutMetrics} from "../converter/index"
 import data2 from './bike3.json';
-import {generateLogScale, MeanMaxPower} from "./index";
-import data from './sampleResponseStream.json';
+import {generateLogScale, MeanMaxPower} from "./index"
+import data from './sampleResponseStream.json'
 
   describe("Power duration curve", () => {
     test("should decrease linearly for linear power2", () => {
