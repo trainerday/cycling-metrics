@@ -3,6 +3,7 @@ import * as common from "../common/index"
 import * as metrics from "./index"
 import * as _ from 'lodash'
 import { convertStravaToWorkoutMetrics } from "../converter";
+import { exportAllDeclaration } from "@babel/types";
 
 describe("Workout", () => {
     test("Moving average on the ramp", () =>{
@@ -62,8 +63,9 @@ describe("GetDominantZone", () => {
     })
 })
 
-describe.skip("GetWorkoutStatistics", () => {
-    let spinnerData: Array<[number,number,number]> = [[1,50,50],[1,40,40],[1,70,70],[1,40,40],[1,60,60],[1,40,40],[1,90,90],[1,40,40],[1,80,80],[1,40,40],[1,110,110],[1,40,40],[1,100,100],[1,40,40],[1,130,130],[1,40,40],[1,120,120],[3,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[5,40,40]]
+describe("GetWorkoutStatistics", () => {
+    let spinnerData: Array<[number,number,number]> = [[1,50,50],[1,40,40],[1,70,70],[1,40,40],[1,60,60],[1,40,40],[1,90,90],[1,40,40],[1,80,80],[1,40,40],[1,110,110],[1,40,40],[1,100,100],[1,40,40],[1,130,130],[1,40,40],[1,120,120],[3,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[1,30,30],[1,120,120],[5-1/60,40,40],[1/60,40,40]]
+ 
     test("spinner workout for 100 FTP", () => {
         const spinner = common.Workout.FromArray(spinnerData)
         const results = metrics.GetWorkoutStats (100, [...spinner])
@@ -75,16 +77,24 @@ describe.skip("GetWorkoutStatistics", () => {
             TimeZone4:60,
             TimeZone5:1080,
             TimeZone6:60,
-            TotalMinutes:50,
+            TotalMinutes:56,
             TotalStress:72,
         })
     })
+
     test("Can calculate workout on Strava output", () =>{
-        const time = _.range(0, spinnerData.length * 60, 60)
-        const power = _.map(spinnerData, x => x[1])
+        const time = [];
+        const power = [];
+        var sum = 0;
+        spinnerData.forEach( x => {
+            time.push(sum)
+            power.push(x[1])
+            sum += x[0] * 60
+            time.push(sum - 1)
+            power.push(x[2])
+        })   
         const workoutMetrics = convertStravaToWorkoutMetrics(time, power, null);
         const results = metrics.GetWorkoutStats (100, [...workoutMetrics])
-        debugger;
         expect(results).toEqual({
             DominantZone:5,
             Intensity:0.878,
