@@ -58,8 +58,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **TrainerDay** - *Sponsor*
-* **Alex VanLanbingham** - *Initial work*
 * **Artur Tadrala** - *Initial work*
+* **Alex VanLanbingham** - *Initial work*
 
 See also the list of [contributors](https://github.com/trainerday/cycling-metrics/contributors) who participated in this project.
 
