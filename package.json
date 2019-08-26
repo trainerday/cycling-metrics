@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
+    "strict": "tsc --strict",
     "pretest": "tsc",
     "test": "jest",
     "prepare": "tsc",
