@@ -76,7 +76,7 @@ export class MeanMaxPower {
     }
 
     public get Curve(): number[] {
-        return [undefined, ...this.timePoints.map(x => this.get(x).power)];
+        return this.timePoints.map(x => this.get(x).power);
     }
     
     public get TimePoints() : number[] {

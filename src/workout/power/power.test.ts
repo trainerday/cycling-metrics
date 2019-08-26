@@ -12,25 +12,25 @@ import data from './sampleResponseStream.json'
     test("should decrease linearly for linear power2", () => {
         const power = [120,140,160];
         expect(new MeanMaxPower(power).Curve)
-        .toEqual([undefined,160,150,140]);
+        .toEqual([160,150,140]);
     });
 
     test("should decrease linearly for linear power", () => {
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         expect(new MeanMaxPower(power).Curve)
-        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
+        .toEqual([120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test("should be const for const power", () => {
         const power = [110,110,110,110,110,110,110,110,110,110,110];
         expect(new MeanMaxPower(power).Curve)
-        .toEqual([undefined,110,110,110,110,110,110,110,110,110,110,110]);
+        .toEqual([110,110,110,110,110,110,110,110,110,110,110]);
     });
 
     test("should descrease gradually for bell-like power spike", () => {
         const power = [102,106,110,114,118,120,116,112,108,104,100];
         expect(new MeanMaxPower(power).Curve)
-        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
+        .toEqual([120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test("should interpolate undefined power value lineary", () => {
@@ -38,7 +38,7 @@ import data from './sampleResponseStream.json'
         const power = [120,118,116,undefined,112,undefined,undefined,106,104,undefined,100];
         const metrics = convertStravaToWorkoutMetrics(time, power, null);
         expect(new MeanMaxPower([...metrics]).Curve)
-        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
+        .toEqual([120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test("should extrapolate boundary to const", () => {
@@ -46,7 +46,7 @@ import data from './sampleResponseStream.json'
         const power = [undefined, 120, undefined];
         const metrics = convertStravaToWorkoutMetrics(time, power, null);
         expect(new MeanMaxPower([...metrics]).Curve)
-        .toEqual([undefined,120,120,120]);
+        .toEqual([120,120,120]);
     });
 
     test("should interpolate missing Metrics points lineary", () => {
@@ -54,7 +54,7 @@ import data from './sampleResponseStream.json'
         const power = [120,100];
         const metrics = convertStravaToWorkoutMetrics(time, power, null);
         expect(new MeanMaxPower([...metrics]).Curve)
-        .toEqual([undefined,120,119,118,117,116,115,114,113,112,111,110]);
+        .toEqual([120,119,118,117,116,115,114,113,112,111,110]);
     });
 
     test("sample response stream", () => {
@@ -101,13 +101,13 @@ import data from './sampleResponseStream.json'
     test("should return values between interval", () => {
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         expect(new MeanMaxPower(power, range(1, power.length, 4)).Curve)
-        .toEqual([undefined,120,116,112]);
+        .toEqual([120,116,112]);
     });
 
     test("should return values in log scale", () => {
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         expect(new MeanMaxPower(power, generateLogScale(2,power.length)).Curve)
-        .toEqual([undefined,120,119,117,113]);
+        .toEqual([120,119,117,113]);
     });
   });
 
@@ -115,10 +115,10 @@ import data from './sampleResponseStream.json'
     test("should be average power", () => {
         const power = [110,110,110,110,110,120,120,120,120,120];
         const pdCurve = new MeanMaxPower(power).Curve;
+        expect(pdCurve[0]).toEqual(120);
         expect(pdCurve[1]).toEqual(120);
-        expect(pdCurve[2]).toEqual(120);
-        expect(pdCurve[4]).toEqual(120);
-        expect(pdCurve[10]).toEqual(115);
+        expect(pdCurve[3]).toEqual(120);
+        expect(pdCurve[9]).toEqual(115);
    });
   });
 
