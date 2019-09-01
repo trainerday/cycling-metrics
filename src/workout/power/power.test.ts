@@ -1,6 +1,6 @@
 /// <reference types="jest" />
 import {writeFile} from "fs"
-import {drop, range} from 'lodash'
+import {drop, range, last} from 'lodash'
 import {WorkoutMetrics} from "../common/index"
 import {MetricsPoint} from "../common/metricsPoint"
 import {convertStravaToWorkoutMetrics} from "../converter/index"
@@ -108,6 +108,13 @@ import data from './sampleResponseStream.json'
         const power = [120,118,116,114,112,110,108,106,104,102,100];
         expect(new MeanMaxPower(power, generateLogScale(2,power.length)).Curve)
         .toEqual([120,119,117,113]);
+    });
+    test("should return values for last segment", () => {
+        const power = [120,118,116,114,112,110,108,106,104,102,100];
+        const meanMaxCurve = new MeanMaxPower(power, generateLogScale(2,power.length))
+        debugger;
+        const value = meanMaxCurve.get(11)
+        expect(value).not.toBeUndefined()
     });
   });
 

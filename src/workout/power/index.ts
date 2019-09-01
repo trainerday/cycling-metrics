@@ -2,6 +2,7 @@ import _ from "lodash";
 import { MetricsPoint } from "../common/metricsPoint";
 import * as utils from "../common/utils";
 import { PowerCurvePoint, WithLabel } from "./PowerCurvePoint";
+import { labeledStatement } from "@babel/types";
 
 export function generateLogScale (logscale: number, timeLength : number) {
     const points = new Array<number>();
@@ -52,7 +53,7 @@ export class MeanMaxPower {
         const curve = new MeanMaxPower([0]);
         curve.curve = result;
         curve.timePoints = timePoints;
-        curve.timeLength = timePoints.length;
+        curve.timeLength = _.maxBy(result, x => x.time).time;
         return curve;
     } 
 
@@ -63,16 +64,20 @@ export class MeanMaxPower {
     constructor (powerValues : number[], timePoints? : number[], label? : string){
         const labelValue = label === undefined ? "defaultLabel" : label;
         this.timeLength = powerValues.length;
-        this.timePoints = timePoints !== undefined ? timePoints : this.getDefaultTimePoints();
+        this.timePoints = timePoints !== undefined ? _.filter(timePoints, t => t <= this.timeLength) : this.getDefaultTimePoints();
         this.curve = this.buildCurve(powerValues, labelValue);
     }
 
     public get(time: number) {
-        const max = _.last(this.timePoints);
+        const max = this.timeLength;
         if(time > max || time < 0) {
             return undefined;
         }
-        return _.first (_.dropWhile(this.curve, x => x.time < time));
+        const tail = _.dropWhile(this.curve, x => x.time < time)
+        if(tail.length > 0 ) {
+            return _.first (tail);
+        }
+        return _.last(this.curve);
     }
 
     public get Curve(): number[] {
@@ -95,7 +100,7 @@ export class MeanMaxPower {
             prevValue = powerValue;
             prevTime = time;
         }) 
-        result.push({time: this.timeLength+1, power: prevValue, label});
+        result.push({time: prevTime, power: prevValue, label});
         return result;
     }
 
