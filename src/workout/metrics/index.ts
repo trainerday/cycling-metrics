@@ -1,34 +1,33 @@
 import _ from 'lodash';
-import * as utils from '../common/utils'
+import * as utils from '../common/utils';
 
-export function getIntensityFactor2(ftp: number, powerValues: number[]){
-  const {np:NP, seconds:seconds} = getNormalizedPower(powerValues)
-  const IF = (NP/ftp)
-  return {if:IF, seconds, np:NP}
+export function getIntensityFactor2(ftp: number, powerValues: number[]) {
+  const { np: NP, seconds: seconds } = getNormalizedPower(powerValues);
+  const IF = NP / ftp;
+  return { if: IF, seconds, np: NP };
 }
 
-export function getTss(ftp: number, powerValues: number[]){
-  const {if:IF, seconds:t, np:NP} = getIntensityFactor2(ftp, powerValues)
-  return _.round(((t * NP * IF) / (ftp * 3600)) * 100)
+export function getTss(ftp: number, powerValues: number[]) {
+  const { if: IF, seconds: t, np: NP } = getIntensityFactor2(ftp, powerValues);
+  return _.round(((t * NP * IF) / (ftp * 3600)) * 100);
 }
 
-function getIntensityFactorInt(ftp:number, powerValues: number[]){
-  const if2 = getIntensityFactor2(ftp, powerValues).if
-  return _.floor(if2,2)
+function getIntensityFactorInt(ftp: number, powerValues: number[]) {
+  const if2 = getIntensityFactor2(ftp, powerValues).if;
+  return _.floor(if2, 2);
 }
 
-function getNormalizedPower(powerValues: number[]){
+function getNormalizedPower(powerValues: number[]) {
   if (powerValues.length < 120) {
-    return {np:0, seconds:0}
+    return { np: 0, seconds: 0 };
   }
-  const mvAvg =  utils.movingAverage(powerValues, 30)
-  const avgPow4 = _.sumBy(mvAvg, x => _.round(Math.pow(x,4),2)) / mvAvg.length
-  const avg = _.round(Math.pow(avgPow4,.25),2)
-  return {np:avg, seconds:powerValues.length } 
+  const mvAvg = utils.movingAverage(powerValues, 30);
+  const avgPow4 = _.sumBy(mvAvg, x => _.round(Math.pow(x, 4), 2)) / mvAvg.length;
+  const avg = _.round(Math.pow(avgPow4, 0.25), 2);
+  return { np: avg, seconds: powerValues.length };
 }
 
-
-function getTimeMultiplier(ftpPercent:number) {
+function getTimeMultiplier(ftpPercent: number) {
   // domintant came from Mark at GoldenCheetah
   const dominant = [
     { PercentOfFtp: 4.17, TimeMultiplier: 3600 },
@@ -128,74 +127,82 @@ function getTimeMultiplier(ftpPercent:number) {
     { PercentOfFtp: 0.59, TimeMultiplier: 0.14 },
     { PercentOfFtp: 0.57, TimeMultiplier: 0.13 },
     { PercentOfFtp: 0.55, TimeMultiplier: 0.11 },
-    { PercentOfFtp: 0.51, TimeMultiplier: 0.1 }
-  ]
+    { PercentOfFtp: 0.51, TimeMultiplier: 0.1 },
+  ];
   for (let i = dominant.length - 1; i >= 0; i--) {
     if (ftpPercent < dominant[i].PercentOfFtp) {
-      return dominant[i].TimeMultiplier
+      return dominant[i].TimeMultiplier;
     }
   }
-  return null
+  return null;
 }
 
 function getZoneNumber(avgPower) {
-  let zone = 0
+  let zone = 0;
   if (avgPower <= 55) {
-    zone = 1
+    zone = 1;
   } else if (avgPower <= 75) {
-    zone = 2
+    zone = 2;
   } else if (avgPower <= 90) {
-    zone = 3
+    zone = 3;
   } else if (avgPower <= 105) {
-    zone = 4
+    zone = 4;
   } else if (avgPower <= 120) {
-    zone = 5
+    zone = 5;
   } else {
-    zone = 6
+    zone = 6;
   }
-  return zone
+  return zone;
 }
 
-function getZoneContributions(ftpPercents:number[]) {
-  return _.map (ftpPercents, f => ({timeMultiplier: getTimeMultiplier(f / 100), zone: getZoneNumber(f)}))
+function getZoneContributions(ftpPercents: number[]) {
+  return _.map(ftpPercents, f => ({ timeMultiplier: getTimeMultiplier(f / 100), zone: getZoneNumber(f) }));
 }
 
 export const GetTimeInZone = (ftp: number, powerValues: number[]) => {
-  const ftpPercents = _.map(powerValues, power => power/ftp * 100)
-  const zonesContrib = getZoneContributions(ftpPercents)
-  const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
-  const getLength = x => (x === undefined) ? 0 : x.length
+  const ftpPercents = _.map(powerValues, power => (power / ftp) * 100);
+  const zonesContrib = getZoneContributions(ftpPercents);
+  const groupedContrib = _.groupBy(zonesContrib, x => x.zone);
+  const getLength = x => (x === undefined ? 0 : x.length);
   return {
     z1: getLength(groupedContrib[1]),
     z2: getLength(groupedContrib[2]),
     z3: getLength(groupedContrib[3]),
     z4: getLength(groupedContrib[4]),
     z5: getLength(groupedContrib[5]),
-    z6: getLength(groupedContrib[6])
-  }
-}
+    z6: getLength(groupedContrib[6]),
+  };
+};
 
 export const GetDominantZone = (ftp: number, powerValues: number[]) => {
-  const ftpPercents = _.map(powerValues, power => power/ftp * 100)
-  const zonesContrib = getZoneContributions(ftpPercents)
-  const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
-  let zoneResults = _.map(groupedContrib, x => ({seconds: x.length, contrib: _.sumBy(x, c => c.timeMultiplier), zone: x[0].zone}))
+  const ftpPercents = _.map(powerValues, power => (power / ftp) * 100);
+  const zonesContrib = getZoneContributions(ftpPercents);
+  const groupedContrib = _.groupBy(zonesContrib, x => x.zone);
+  let zoneResults = _.map(groupedContrib, x => ({
+    seconds: x.length,
+    contrib: _.sumBy(x, c => c.timeMultiplier),
+    zone: x[0].zone,
+  }));
 
-  const higherZoneExists = _.some(zoneResults, ({seconds, zone}) => (seconds >= 600 && zone === 3) 
-                                                                  || (seconds >= 360 && zone === 4)
-                                                                  || (seconds >= 120 && zone === 5)
-                                                                  || (seconds >= 60  && zone === 6))
+  const higherZoneExists = _.some(
+    zoneResults,
+    ({ seconds, zone }) =>
+      (seconds >= 600 && zone === 3) ||
+      (seconds >= 360 && zone === 4) ||
+      (seconds >= 120 && zone === 5) ||
+      (seconds >= 60 && zone === 6),
+  );
   if (higherZoneExists) {
-    zoneResults = _.filter(zoneResults, x => x.zone > 2)
+    zoneResults = _.filter(zoneResults, x => x.zone > 2);
   }
-  return _.maxBy(zoneResults, x => x.contrib).zone
-}
+  return _.maxBy(zoneResults, x => x.contrib).zone;
+};
 
-export const GetWorkoutStats = (ftp: number, powerValues: number []) => {
-  const tts = getTss(ftp, powerValues)
-  const intensityFactor = getIntensityFactor2(ftp, powerValues)
-  const timeInZones = GetTimeInZone(ftp, powerValues)
-  const dominantZone = GetDominantZone(ftp, powerValues)
+export const GetWorkoutStats = (ftp: number, powerValues: number[]) => {
+  const tts = getTss(ftp, powerValues);
+  const intensityFactor = getIntensityFactor2(ftp, powerValues);
+  const timeInZones = GetTimeInZone(ftp, powerValues);
+  const dominantZone = GetDominantZone(ftp, powerValues);
   return {
     DominantZone: dominantZone,
     Intensity: intensityFactor.if,
@@ -204,7 +211,7 @@ export const GetWorkoutStats = (ftp: number, powerValues: number []) => {
     TimeZone4: timeInZones.z4,
     TimeZone5: timeInZones.z5,
     TimeZone6: timeInZones.z6,
-    TotalMinutes : intensityFactor.seconds / 60,
-    TotalStress : tts,
-  }
-}
+    TotalMinutes: intensityFactor.seconds / 60,
+    TotalStress: tts,
+  };
+};
