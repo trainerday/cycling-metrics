@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { MetricsPoint } from '../common/metricsPoint';
 import * as utils from '../common/utils';
-import { PowerCurvePoint, WithLabel } from './PowerCurvePoint';
+import { PowerCurvePoint, WithLabel } from './powerCurvePoint';
 import { labeledStatement } from '@babel/types';
 
 export function generateLogScale(logscale: number, timeLength: number) {
