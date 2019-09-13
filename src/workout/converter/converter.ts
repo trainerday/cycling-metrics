@@ -35,6 +35,6 @@ export const convertStravaToCyclingMetrics = (secondsArr: number[], powerArr?: n
   }))
 }
 
-export const convertStravaToWorkoutMetrics = (secondsArr: number[], powerArr?: any[], hrArray?: number[]) => {
-  return new WorkoutMetrics(convertStravaToCyclingMetrics(secondsArr, powerArr, hrArray))
+export const convertStravaToWorkoutMetrics = (secondsArr: number[], powerArr?: any[], hrArray?: number[]) :number[] => {
+  return new WorkoutMetrics(convertStravaToCyclingMetrics(secondsArr, powerArr, hrArray)).getPowerArray()
 }

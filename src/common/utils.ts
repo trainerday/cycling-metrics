@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export const movingAverage = (values: Iterable<number>, intervalLength: number) => {
+export const movingAverage = (values: Iterable<number>, intervalLength: number): number[] => {
   const valuesArr = [...values]
   const results = []
   let sum = _.sum(_.take(valuesArr, intervalLength))

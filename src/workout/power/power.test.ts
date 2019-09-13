@@ -39,7 +39,8 @@ describe('Power duration curve', () => {
     const time = [0, 1, 2]
     const power = [undefined, 120, undefined]
     const metrics = convertStravaToWorkoutMetrics(time, power)
-    expect(new MeanMaxPower([...metrics]).Curve).toEqual([120, 120, 120])
+    const mm = new MeanMaxPower([...metrics])
+    expect(mm.Curve).toEqual([120, 120, 120])
   })
 
   test('should interpolate missing Metrics points linearly', () => {
@@ -72,7 +73,7 @@ describe('Power duration curve', () => {
   })
 
   test.skip('sample response stream 2', () => {
-    const metrics = new WorkoutMetrics(data2.points.map((x:any) => new MetricsPoint(x.second, parseInt(x.watts, 10), 0)))
+    const metrics = new WorkoutMetrics(data2.points.map((x:any) => new MetricsPoint(x.second, parseInt(x.watts, 10), 0))).getPowerArray()
 
     const points = new Array<number>()
     let current = 1
@@ -81,7 +82,7 @@ describe('Power duration curve', () => {
       current = current * 1.5
     }
 
-    const curve = new MeanMaxPower([...metrics], points)
+    const curve = new MeanMaxPower(metrics, points)
     //const powerCurve = drop(curve.Curve, 1)
 
     //writeFile('logCurve2.json', JSON.stringify(powerCurve))

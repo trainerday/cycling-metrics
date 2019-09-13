@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import * as utils from '../../common/utils'
-import { PowerCurvePoint2 } from '../../models/powerCurvePoint2'
+import { PowerCurvePoint } from '../../models/powerCurvePoint'
 
 
 
@@ -15,7 +15,7 @@ export function generateLogScale(logScale: number, timeLength: number) {
 }
 
 export class MeanMaxPower {
-  public curve: PowerCurvePoint2[]
+  public curve: PowerCurvePoint[]
   public timePoints: number[]
   public timeLength: number
 
@@ -38,32 +38,32 @@ export class MeanMaxPower {
     let value1 = curve1Iter.next()
     let value2 = curve2Iter.next()
 
-    const result = new Array<PowerCurvePoint2>()
+    const result = new Array<PowerCurvePoint>()
     do {
       if (value1.value.time === value2.value.time) {
 
-        const temp = (value1.value.power! > value2.value.power! ? new PowerCurvePoint2(value1.value.power!,undefined, label1) : new PowerCurvePoint2(value2.value.power!,undefined, label2))
+        const temp = (value1.value.power! > value2.value.power! ? new PowerCurvePoint(value1.value.power!,undefined, label1) : new PowerCurvePoint(value2.value.power!,undefined, label2))
         result.push(temp)
         value1 = curve1Iter.next()
         value2 = curve2Iter.next()
       } else if (value1.value.time! < value2.value.time!) {
         if (value1.value.power! > value2.value.power!) {
-          result.push(new PowerCurvePoint2(value1.value.power!, undefined, label1))
+          result.push(new PowerCurvePoint(value1.value.power!, undefined, label1))
         }
         value1 = curve1Iter.next()
       } else if (value1.value.time! > value2.value.time!) {
         if (value1.value.power! < value2.value.power!) {
-          result.push(new PowerCurvePoint2(value2.value.power!, undefined, label1))
+          result.push(new PowerCurvePoint(value2.value.power!, undefined, label1))
         }
         value2 = curve2Iter.next()
       }
     } while (!value1.done && !value2.done)
     while (!value1.done) {
-      result.push(new PowerCurvePoint2(value1.value.power!, undefined, label1))
+      result.push(new PowerCurvePoint(value1.value.power!, undefined, label1))
       value1 = curve1Iter.next()
     }
     while (!value2.done) {
-      result.push(new PowerCurvePoint2(value2.value.power!, undefined, label1))
+      result.push(new PowerCurvePoint(value2.value.power!, undefined, label1))
       value2 = curve2Iter.next()
     }
 
@@ -101,16 +101,16 @@ export class MeanMaxPower {
   private buildCurve(powerValues: number[], label: string) {
     let prevValue = MeanMaxPower.getMaxPowerForInterval(powerValues, 1)
     let prevTime: number = _.first(this.timePoints!)!
-    const result = new Array<PowerCurvePoint2>()
+    const result = new Array<PowerCurvePoint>()
     this.timePoints.forEach(time => {
       const powerValue = MeanMaxPower.getMaxPowerForInterval(powerValues, time)
       if (prevValue !== powerValue) {
-        result.push(new PowerCurvePoint2(prevTime, prevValue, label))
+        result.push(new PowerCurvePoint(prevTime, prevValue, label))
       }
       prevValue = powerValue
       prevTime = time
     })
-    result.push(new PowerCurvePoint2(prevTime, prevValue, label))
+    result.push(new PowerCurvePoint(prevTime, prevValue, label))
     return result
   }
 

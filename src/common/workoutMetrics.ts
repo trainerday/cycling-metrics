@@ -1,22 +1,31 @@
 import _ from 'lodash'
 import { MetricsPoint } from './metricsPoint'
 
-export class WorkoutMetrics implements Iterable<number> {
+export class WorkoutMetrics {
   private readonly cycleMetrics: MetricsPoint[]
 
-  constructor(cycleMetrics: MetricsPoint[]) {
+  public constructor(cycleMetrics: MetricsPoint[]) {
     const continuousTime = this.interpolateMissingTimePoints(cycleMetrics)
     this.interpolateMissingPowerValues(continuousTime)
     this.cycleMetrics = continuousTime
   }
 
-  public [Symbol.iterator]() {
-    return _.map(this.cycleMetrics, x => x.power)[Symbol.iterator]()
+  public getPowerArray(): number[] {
+    const out = _.map(this.cycleMetrics, (x: MetricsPoint) => {
+      return x.power
+    })
+    if (out) return out as number[]
+    return []
   }
 
   private interpolateMissingPowerValues(cycleMetrics: MetricsPoint[]): void {
-    const headValue = _.find(cycleMetrics, point => point.power !== undefined)!.power
-    const tailValue = _.findLast(cycleMetrics, point => point.power !== undefined)!.power
+    const headValueObj = _.find(cycleMetrics, point => point.power !== undefined)
+    const tailValueObj = _.findLast(cycleMetrics, point => point.power !== undefined)
+    let headValue = 0
+    let tailValue = 0
+    if (headValueObj) headValue = headValueObj.power!
+    if (tailValueObj) tailValue = tailValueObj.power!
+
     // extrapolate on the edges to a const
     for (let i = 0; cycleMetrics[i].power === undefined; i++) {
       cycleMetrics[i].power = headValue

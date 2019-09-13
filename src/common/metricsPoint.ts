@@ -3,7 +3,7 @@ export class MetricsPoint {
   public power?: number
   public heartRate?: number
 
-  constructor(time: number, power?: number, heartRate?: number) {
+  public constructor(time: number, power?: number, heartRate?: number) {
     this.time = time
     this.power = power
     this.heartRate = heartRate
