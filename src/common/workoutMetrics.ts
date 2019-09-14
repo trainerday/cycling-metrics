@@ -1,17 +1,17 @@
 import _ from 'lodash'
-import { MetricsPoint } from './metricsPoint'
+import { MetricsPoint } from '../models/metricsPoint'
 
 export class WorkoutMetrics {
   private readonly cycleMetrics: MetricsPoint[]
 
   public constructor(cycleMetrics: MetricsPoint[]) {
-    const continuousTime = this.interpolateMissingTimePoints(cycleMetrics)
+    const continuousTime = WorkoutMetrics.interpolateMissingTimePoints(cycleMetrics)
     this.interpolateMissingPowerValues(continuousTime)
     this.cycleMetrics = continuousTime
   }
 
   public getPowerArray(): number[] {
-    const out = _.map(this.cycleMetrics, (x: MetricsPoint) => {
+    const out = _.map(this.cycleMetrics, (x: MetricsPoint): number => {
       return x.power
     })
     if (out) return out as number[]
@@ -19,12 +19,14 @@ export class WorkoutMetrics {
   }
 
   private interpolateMissingPowerValues(cycleMetrics: MetricsPoint[]): void {
+    /*eslint-disable */
     const headValueObj = _.find(cycleMetrics, point => point.power !== undefined)
     const tailValueObj = _.findLast(cycleMetrics, point => point.power !== undefined)
+    /*eslint-enable */
     let headValue = 0
     let tailValue = 0
-    if (headValueObj) headValue = headValueObj.power!
-    if (tailValueObj) tailValue = tailValueObj.power!
+    if (headValueObj && headValueObj.power) headValue = headValueObj.power
+    if (tailValueObj && tailValueObj.power) tailValue = tailValueObj.power
 
     // extrapolate on the edges to a const
     for (let i = 0; cycleMetrics[i].power === undefined; i++) {
@@ -43,21 +45,26 @@ export class WorkoutMetrics {
         }
         const lvalue = cycleMetrics[lidX].power
         const rvalue = cycleMetrics[ridX].power
-        cycleMetrics[i].power = lvalue! + (rvalue! - lvalue!) / (ridX - lidX)
+        // @ts-ignore
+        cycleMetrics[i].power = lvalue + (rvalue - lvalue) / (ridX - lidX)
       }
     }
   }
 
-  private interpolateMissingTimePoints(cycleMetrics: MetricsPoint[]): MetricsPoint[] {
-    const maxTime = _.maxBy(cycleMetrics, m => m.time)!.time
-    const metricsLookup = _.keyBy(cycleMetrics, m => m.time)
+  private static interpolateMissingTimePoints(cycleMetrics: MetricsPoint[]): MetricsPoint[] {
+    /*eslint-disable */
+    const maxTime = _.maxBy(cycleMetrics, (m: MetricsPoint) => m.time)
+    const metricsLookup = _.keyBy(cycleMetrics, (m: MetricsPoint) => m.time)
+    /*eslint-enable */
 
+    if (!maxTime) return []
     const result = new Array<MetricsPoint>()
-    for (let i = 0; i <= maxTime; i++) {
+    for (let i = 0; i <= maxTime.time; i++) {
       if (metricsLookup[i] !== undefined) {
         result.push(metricsLookup[i])
       } else {
-        result.push(new MetricsPoint(i, undefined, undefined))
+        // TODO ALEX not pushing undefined
+        //result.push(new MetricsPoint(i, undefined, undefined))
       }
     }
     return result
