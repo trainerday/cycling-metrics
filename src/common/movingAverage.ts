@@ -4,12 +4,12 @@ export const movingAverage = (values: (number)[], intervalLength: number): numbe
   const valuesArr = [...values]
   const results = []
   let sum = _.sum(_.take(valuesArr, intervalLength))
-  
+
   results.push(sum / intervalLength)
   for (let i = intervalLength; i < valuesArr.length; i++) {
-    if (valuesArr[i] && valuesArr){
-        sum += valuesArr[i]
-        sum -= valuesArr[i - intervalLength]
+    if (valuesArr[i] && valuesArr) {
+      sum += valuesArr[i]
+      sum -= valuesArr[i - intervalLength]
     }
     results.push(sum / intervalLength)
   }

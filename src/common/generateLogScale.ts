@@ -1,4 +1,4 @@
-export function generateLogScale(logScale: number, timeLength: number) {
+export function generateLogScale(logScale: number, timeLength: number): number[] {
   const points = new Array<number>()
   let current = 1
   while (current < timeLength) {

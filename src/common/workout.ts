@@ -30,12 +30,11 @@ export class Workout {
 
   public getSegments(): number[] {
     const segmentsOut = []
-    for (let [start,end, interval] of this.segments) {
-           for(let i=0; i < interval.seconds; i++){
-             segmentsOut.push(
-                interval.startPower + (i / interval.seconds) * (interval.endPower-interval.startPower))
-          }
-        }
+    for (let [, , interval] of this.segments) {
+      for (let i = 0; i < interval.seconds; i++) {
+        segmentsOut.push(interval.startPower + (i / interval.seconds) * (interval.endPower - interval.startPower))
+      }
+    }
     return segmentsOut
   }
 }

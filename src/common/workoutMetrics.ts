@@ -11,11 +11,12 @@ export class WorkoutMetrics {
   }
 
   public getPowerArray(): number[] {
-    const out = _.map(this.cycleMetrics, (x: MetricsPoint): number => {
-      return x.power!
+    return _.map(this.cycleMetrics, (x: MetricsPoint): number => {
+      if (x.power) {
+        return x.power
+      }
+      throw Error('Power value should be defined at this point')
     })
-    if (out) return out as number[]
-    return []
   }
 
   private interpolateMissingPowerValues(cycleMetrics: MetricsPoint[]): void {
