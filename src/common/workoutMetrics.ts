@@ -29,18 +29,18 @@ export class WorkoutMetrics {
     if (tailValueObj && tailValueObj.power) tailValue = tailValueObj.power
 
     // extrapolate on the edges to a const
-    for (let i = 0; cycleMetrics[i].power === undefined; i++) {
+    for (let i = 0; !cycleMetrics[i].power; i++) {
       cycleMetrics[i].power = headValue
     }
-    for (let i = cycleMetrics.length - 1; cycleMetrics[i].power === undefined; i--) {
+    for (let i = cycleMetrics.length - 1; !cycleMetrics[i].power; i--) {
       cycleMetrics[i].power = tailValue
     }
     // interpolate holes linearly
     for (let i = 1; i < cycleMetrics.length - 1; i++) {
-      if (cycleMetrics[i].power === undefined) {
+      if (!cycleMetrics[i].power) {
         const lidX = i - 1
         let ridX = i + 1
-        while (cycleMetrics[ridX].power === undefined) {
+        while (!cycleMetrics[ridX].power) {
           ridX++
         }
         const lvalue = cycleMetrics[lidX].power

@@ -19,7 +19,6 @@ describe('TSS', () => {
     expect(res).toEqual(0)
   })
   test('60min @ 100% of FTP should be 100 tss points', () => {
-    debugger
     const workout = Workout.fromArray([[60, 100, 100]])
     const res = metrics.getTss(100, [...workout.getSegments()])
     expect(res).toEqual(100)
