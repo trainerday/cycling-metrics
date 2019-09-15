@@ -3,7 +3,7 @@ import { convertStravaToWorkoutMetrics } from '../converter/converter'
 import * as metrics from './metrics'
 import { movingAverage } from '../../common/movingAverage'
 
-describe.skip('Workout', () => {
+describe('Workout', () => {
   test('Moving average on the ramp', () => {
     const workout = Workout.fromArray([[2, 10, 250]])
     const avg = movingAverage(workout.getSegments(), 10)
@@ -13,12 +13,13 @@ describe.skip('Workout', () => {
   })
 })
 
-describe.skip('TSS', () => {
+describe('TSS', () => {
   test('zero length array should be 0', () => {
     const res = metrics.getTss(100, [])
     expect(res).toEqual(0)
   })
   test('60min @ 100% of FTP should be 100 tss points', () => {
+    debugger
     const workout = Workout.fromArray([[60, 100, 100]])
     const res = metrics.getTss(100, [...workout.getSegments()])
     expect(res).toEqual(100)
@@ -86,7 +87,7 @@ describe.skip('TSS', () => {
   })
 })
 
-describe.skip('GetTimeInZone', () => {
+describe('GetTimeInZone', () => {
   test('should return 1h for ftp const ride', () => {
     const workout = Workout.fromArray([[60, 200, 200]])
     const results = metrics.GetTimeInZone(200, [...workout.getSegments()])
@@ -94,7 +95,7 @@ describe.skip('GetTimeInZone', () => {
   })
 })
 
-describe.skip('GetDominantZone', () => {
+describe('GetDominantZone', () => {
   test('Should return zone 4 for ftp ride', () => {
     const workout = Workout.fromArray([[60, 200, 200]])
     const results = metrics.GetDominantZone(200, [...workout.getSegments()])
@@ -112,7 +113,7 @@ describe.skip('GetDominantZone', () => {
   })
 })
 
-describe.skip('GetWorkoutStatistics', () => {
+describe('GetWorkoutStatistics', () => {
   const spinnerData: Array<[number, number, number]> = [
     [1, 50, 50],
     [1, 40, 40],

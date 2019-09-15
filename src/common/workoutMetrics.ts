@@ -12,7 +12,7 @@ export class WorkoutMetrics {
 
   public getPowerArray(): number[] {
     const out = _.map(this.cycleMetrics, (x: MetricsPoint): number => {
-      return x.power
+      return x.power!
     })
     if (out) return out as number[]
     return []
@@ -63,8 +63,7 @@ export class WorkoutMetrics {
       if (metricsLookup[i] !== undefined) {
         result.push(metricsLookup[i])
       } else {
-        // TODO ALEX not pushing undefined
-        //result.push(new MetricsPoint(i, undefined, undefined))
+        result.push(new MetricsPoint(i, undefined, undefined))
       }
     }
     return result
