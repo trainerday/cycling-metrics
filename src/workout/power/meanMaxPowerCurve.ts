@@ -3,8 +3,8 @@ import { PowerCurvePoint } from '../../models/powerCurvePoint'
 import { movingAverage } from '../../common/movingAverage'
 import { generateLogScale } from '../../common/generateLogScale'
 
-export const getPCurve = (timePoints: number[], timeLength: number, curvePoints: PowerCurvePoint[]): number[] =>{
-  return timePoints.map(x => getLastMeanMax2(x, timeLength, curvePoints)!.power!)
+export const getPowerDurationCurveSimple = (timePoints: number[], timeLength: number, curvePoints: PowerCurvePoint[]): number[] =>{
+  return timePoints.map(x => getLastPowerCurvePoint(x, timeLength, curvePoints)!.power!)
 }
 
 export const getDefaultTimePoints = (timeLength: number):number[] => {
@@ -14,7 +14,7 @@ export const getDefaultTimePoints = (timeLength: number):number[] => {
   return _.uniq([...fixedPoints, ...logPoints]).sort((n1: number, n2: number) => n1 - n2)
 }
 
-export const getLastMeanMax2 = (time: number, max: number, curvePoints: PowerCurvePoint[]): (PowerCurvePoint | undefined) => {
+export const getLastPowerCurvePoint = (time: number, max: number, curvePoints: PowerCurvePoint[]): (PowerCurvePoint | undefined) => {
   if (time > max || time < 0) {
     return undefined
   }
@@ -28,6 +28,12 @@ export const getLastMeanMax2 = (time: number, max: number, curvePoints: PowerCur
 export const getMaxPowerForInterval = (powerValues: number[], intervalLength: number): number => {
   const averages = movingAverage(powerValues, intervalLength)
   return <number>_.max(averages)
+}
+
+export const getTimePoints = (timeLength: number, timePoints?: number[]): number[] => {
+  return timePoints !== undefined
+    ? (_.filter(timePoints, (t: number) => t <= timeLength) as number[])
+    : getDefaultTimePoints(timeLength)
 }
 
 export const getPowerCurve = (powerValues: (number)[], label: string, timePoints: number[]) => {

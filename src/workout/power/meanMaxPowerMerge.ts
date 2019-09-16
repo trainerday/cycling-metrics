@@ -12,8 +12,8 @@ export function getMergedCurveFromTwoCurves(
   label1?: string,
   label2?: string,
 ): MeanMaxPower {
-  const curve1Iter = curve1.curvePoints.values()
-  const curve2Iter = curve2.curvePoints.values()
+  const curve1Iter = curve1.powerCurvePoints.values()
+  const curve2Iter = curve2.powerCurvePoints.values()
   let value1 = curve1Iter.next()
   let value2 = curve2Iter.next()
 
@@ -51,7 +51,7 @@ export function getMergedCurveFromTwoCurves(
 
   const timePoints = _.uniq([...curve1.timePoints, ...curve2.timePoints]).sort((n1, n2) => n1 - n2)
   const curve = new MeanMaxPower([0])
-  curve.curvePoints = result
+  curve.powerCurvePoints = result
   curve.timePoints = timePoints
   // @ts-ignore
   curve.timeLength = _.maxBy(result, x => x.time).time

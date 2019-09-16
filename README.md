@@ -8,12 +8,19 @@ npm install @trainerday/cycling-metrics --save
 
 
 ```
-var cm = require('cycling-metrics')
+var cm = require('@trainerday/cycling-metrics')
 
-var power = [120,118,116,114,112,110,108,106,104,102,100];
-var meanMaxPowerCurve = new cm.MeanMaxPower(power).Curve
-
+const power = [102, 106, 110, 114, 118, 120, 116, 112, 108, 104, 100]
+const mmp = cm.getMeanMaxPower(power)
+console.log(mmp)
 //120,119,118,117,116,115,114,113,112,111,110
+
+//we support power ramps, start at one percent and end at another 
+const power = [[60,100,100]] // minutes, ftpPercentStart, ftpPercentEnd
+const trainingStress = cm.getTrainingStress(power)
+console.log(trainingStress)
+//100  60 minutes @100 by definition is ts = 100
+
 
 ```
 
