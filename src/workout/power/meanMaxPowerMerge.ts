@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { PowerCurvePoint } from '../../models/powerCurvePoint'
-import { MeanMaxPower } from './meanMaxPower'
+import { MeanMaxPower } from '../../models/meanMaxPower'
 
 export function getMeanMaxPowerFromCurves(curves: MeanMaxPower[], label?: string): MeanMaxPower {
   return curves.reduce((x1, x2) => getMergedCurveFromTwoCurves(x1, x2, label, label))
@@ -12,8 +12,8 @@ export function getMergedCurveFromTwoCurves(
   label1?: string,
   label2?: string,
 ): MeanMaxPower {
-  const curve1Iter = curve1.CurvePoints.values()
-  const curve2Iter = curve2.CurvePoints.values()
+  const curve1Iter = curve1.curvePoints.values()
+  const curve2Iter = curve2.curvePoints.values()
   let value1 = curve1Iter.next()
   let value2 = curve2Iter.next()
 
@@ -49,7 +49,7 @@ export function getMergedCurveFromTwoCurves(
     value2 = curve2Iter.next()
   }
 
-  const timePoints = _.uniq([...curve1.TimePoints, ...curve2.TimePoints]).sort((n1, n2) => n1 - n2)
+  const timePoints = _.uniq([...curve1.timePoints, ...curve2.timePoints]).sort((n1, n2) => n1 - n2)
   const curve = new MeanMaxPower([0])
   curve.curvePoints = result
   curve.timePoints = timePoints
