@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/zones.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/zones.test.ts" afterDir="false" />
-    </list>
+    <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,17 +9,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/workout/metrics/zones.test.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -84,10 +72,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="425" />
-    <option name="y" value="81" />
-    <option name="width" value="2209" />
-    <option name="height" value="1275" />
+    <option name="x" value="354" />
+    <option name="y" value="370" />
+    <option name="width" value="1849" />
+    <option name="height" value="957" />
   </component>
   <component name="ProjectId" id="1QnRgIXvgjNBokyUAbdfGjTvm8R" />
   <component name="ProjectLevelVcsManager">
@@ -195,12 +183,12 @@
       <workItem from="1568465021071" duration="4144000" />
       <workItem from="1568576500324" duration="494000" />
       <workItem from="1568618922916" duration="13000" />
-      <workItem from="1568626411097" duration="4303000" />
+      <workItem from="1568626411097" duration="4417000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13662000" />
+    <option name="totallyTimeSpent" value="13776000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -212,15 +200,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="425" y="81" width="2209" height="1275" extended-state="0" />
-    <editor active="true" />
+    <frame x="1112" y="324" width="1849" height="957" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19744058" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23632385" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.28148773" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3849711" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.17430368" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -485,8 +472,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/metrics/zones.test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+        <state relative-caret-position="252">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
         </state>
       </provider>
     </entry>
