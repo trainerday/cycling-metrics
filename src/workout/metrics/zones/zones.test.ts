@@ -1,6 +1,6 @@
-import { getWorkoutFromSegments } from './getWorkoutsFromSegments';
+import { getWorkoutFromSegments } from '../getWorkoutsFromSegments';
 import { getDominantZone, getTimeInZone } from './zones';
-import { getSegmentsFromArray } from './getSegmentsFromArray';
+import { getSegmentsFromArray } from '../getSegmentsFromArray';
 
 describe('getTimeInZone', () => {
   test('should return 1h for ftp const ride', () => {

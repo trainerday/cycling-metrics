@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="" />
+    <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +11,20 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="e#0#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -52,8 +67,8 @@
         <option value="$PROJECT_DIR$/src/common/movingAverage.test.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/metrics.test.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/zones.test.js" />
-        <option value="$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts" />
+        <option value="$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts" />
       </list>
     </option>
   </component>
@@ -72,8 +87,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="354" />
-    <option name="y" value="370" />
+    <option name="x" value="299" />
+    <option name="y" value="301" />
     <option name="width" value="1849" />
     <option name="height" value="957" />
   </component>
@@ -184,11 +199,12 @@
       <workItem from="1568576500324" duration="494000" />
       <workItem from="1568618922916" duration="13000" />
       <workItem from="1568626411097" duration="4417000" />
+      <workItem from="1568640223845" duration="416000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13776000" />
+    <option name="totallyTimeSpent" value="14192000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -200,7 +216,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1112" y="324" width="1849" height="957" extended-state="0" />
+    <frame x="291" y="345" width="1849" height="957" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23632385" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -403,16 +420,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -474,6 +481,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

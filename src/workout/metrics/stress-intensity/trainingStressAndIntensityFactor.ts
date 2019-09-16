@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { movingAverage } from '../../common/movingAverage'
+import { movingAverage } from '../../../common/movingAverage'
 
 export function getTss(ftp: number, powerValues: number[]) {
   const { if: IF, seconds: t, np: NP } = getIntensityFactor(ftp, powerValues)

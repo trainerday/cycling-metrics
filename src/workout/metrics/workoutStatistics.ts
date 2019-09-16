@@ -1,5 +1,5 @@
-import { getDominantZone, getTimeInZone } from './zones'
-import { getIntensityFactor, getTss } from './trainingStressAndIntensityFactor'
+import { getDominantZone, getTimeInZone } from './zones/zones'
+import { getIntensityFactor, getTss } from './stress-intensity/trainingStressAndIntensityFactor'
 
 
 export const getWorkoutStats = (ftp: number, powerValues: number[]) => {
