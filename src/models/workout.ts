@@ -1,7 +1,6 @@
 import { WorkoutInterval } from './workoutInterval'
 
 export class Workout {
-  // <start_second, end_second, segment> array
   public readonly segments: [number, number, WorkoutInterval][]
   private readonly _length: number
 
