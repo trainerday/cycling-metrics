@@ -18,13 +18,6 @@ export class Workout {
     })
     this._length = time
   }
-  public static fromArray(segments: [number, number, number][]): Workout {
-    const workoutSegments: WorkoutInterval[] = _.map(
-      segments,
-      ([minutes, startPower, endPower]): WorkoutInterval => new WorkoutInterval(minutes * 60, startPower, endPower),
-    )
-    return new Workout(workoutSegments)
-  }
 
   public length = (): number => this._length
 

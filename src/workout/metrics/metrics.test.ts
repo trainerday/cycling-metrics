@@ -2,10 +2,11 @@ import { Workout } from '../../common/workout'
 import { convertStravaToWorkoutMetrics } from '../converter/converter'
 import * as metrics from './metrics'
 import { movingAverage } from '../../common/movingAverage'
+import { getWorkoutFromSegments } from './getWorkoutsFromSegments'
 
 describe('Workout', () => {
   test('Moving average on the ramp', () => {
-    const workout = Workout.fromArray([[2, 10, 250]])
+    const workout = getWorkoutFromSegments([[2, 10, 250]])
     const avg = movingAverage(workout.getSegments(), 10)
     expect(avg[0]).toEqual((10 + 12 + 14 + 16 + 18 + 20 + 22 + 24 + 26 + 28) / 10)
     expect(avg[1]).toEqual((12 + 14 + 16 + 18 + 20 + 22 + 24 + 26 + 28 + 30) / 10)
@@ -19,17 +20,17 @@ describe('TSS', () => {
     expect(res).toEqual(0)
   })
   test('60min @ 100% of FTP should be 100 tss points', () => {
-    const workout = Workout.fromArray([[60, 100, 100]])
+    const workout = getWorkoutFromSegments([[60, 100, 100]])
     const res = metrics.getTss(100, [...workout.getSegments()])
     expect(res).toEqual(100)
   })
   test('60min @ 20-100% of FTP should be 36 tss points', () => {
-    const workout = Workout.fromArray([[60, 20, 100]])
+    const workout = getWorkoutFromSegments([[60, 20, 100]])
     const res = metrics.getTss(100, [...workout.getSegments()])
     expect(res).toEqual(50)
   })
   test('spinner workout should be 72', () => {
-    const spinner = Workout.fromArray([
+    const spinner = getWorkoutFromSegments([
       [1, 50, 50],
       [1, 40, 40],
       [1, 70, 70],
@@ -88,7 +89,7 @@ describe('TSS', () => {
 
 describe('GetTimeInZone', () => {
   test('should return 1h for ftp const ride', () => {
-    const workout = Workout.fromArray([[60, 200, 200]])
+    const workout = getWorkoutFromSegments([[60, 200, 200]])
     const results = metrics.GetTimeInZone(200, [...workout.getSegments()])
     expect(results.z4).toEqual(3600)
   })
@@ -96,17 +97,17 @@ describe('GetTimeInZone', () => {
 
 describe('GetDominantZone', () => {
   test('Should return zone 4 for ftp ride', () => {
-    const workout = Workout.fromArray([[60, 200, 200]])
+    const workout = getWorkoutFromSegments([[60, 200, 200]])
     const results = metrics.GetDominantZone(200, [...workout.getSegments()])
     expect(results).toEqual(4)
   })
   test('Should ignore lower zones if time spent in higher is long enough', () => {
-    const workout = Workout.fromArray([[60, 120, 120], [1, 250, 250]])
+    const workout = getWorkoutFromSegments([[60, 120, 120], [1, 250, 250]])
     const results = metrics.GetDominantZone(200, [...workout.getSegments()])
     expect(results).toEqual(6)
   })
   test('Should return zone2 if time spent in higher is small', () => {
-    const workout = Workout.fromArray([[60, 120, 120], [1, 230, 230]])
+    const workout = getWorkoutFromSegments([[60, 120, 120], [1, 230, 230]])
     const results = metrics.GetDominantZone(200, [...workout.getSegments()])
     expect(results).toEqual(2)
   })
@@ -168,7 +169,7 @@ describe('GetWorkoutStatistics', () => {
   ]
 
   test('spinner workout for 100 FTP', () => {
-    const spinner = Workout.fromArray(spinnerData)
+    const spinner = getWorkoutFromSegments(spinnerData)
     const results = metrics.GetWorkoutStats(100, [...spinner.getSegments()])
     expect(results).toEqual({
       DominantZone: 5,
