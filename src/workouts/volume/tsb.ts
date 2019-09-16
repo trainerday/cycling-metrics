@@ -5,7 +5,6 @@ export const getTrainingStressBalance = (startingStress: number, weeklyStress: n
   const av = startingStress / 7
   const data = _.flatMap([startingStress, ...weeklyStress], x => [x / 3, 0, x / 3, 0, x / 3, 0, 0])
   const mAvg = movingAverage(data, 7)
-  console.log(mAvg.length,'length')
+  console.log(mAvg.length, 'length')
   return _.map(mAvg, x => av - x)
 }
-

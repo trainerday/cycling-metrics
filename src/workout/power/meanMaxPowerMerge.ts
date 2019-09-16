@@ -12,15 +12,14 @@ export function merge(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: strin
   let value1 = curve1Iter.next()
   let value2 = curve2Iter.next()
 
-  const clonePoint = (point:PowerCurvePoint, label?: string) => label ? new PowerCurvePoint( point.time, point.power, label) : point
+  const clonePoint = (point: PowerCurvePoint, label?: string) =>
+    label ? new PowerCurvePoint(point.time, point.power, label) : point
 
   const result = new Array<PowerCurvePoint>()
   do {
     if (value1.value.time === value2.value.time) {
-
-      const temp = value1.value.power > value2.value.power 
-                      ? clonePoint(value1.value, label1) 
-                      : clonePoint(value2.value, label2)
+      const temp =
+        value1.value.power > value2.value.power ? clonePoint(value1.value, label1) : clonePoint(value2.value, label2)
       result.push(temp)
       value1 = curve1Iter.next()
       value2 = curve2Iter.next()
@@ -53,4 +52,3 @@ export function merge(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: strin
   curve.timeLength = _.maxBy(result, x => x.time).time
   return curve
 }
-

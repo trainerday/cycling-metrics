@@ -158,7 +158,7 @@ export const GetTimeInZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => (power / ftp) * 100)
   const zonesContrib = getZoneContributions(ftpPercents)
   const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
-  const getLength = (x:any) => (x === undefined ? 0 : x.length)
+  const getLength = (x: any) => (x === undefined ? 0 : x.length)
   return {
     z1: getLength(groupedContrib[1]),
     z2: getLength(groupedContrib[2]),

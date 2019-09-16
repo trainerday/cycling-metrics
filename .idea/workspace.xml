@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/utils.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/metricsPoint.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/metricsPoint.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/metrics.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/metrics.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/metrics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/metrics.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/power/power.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/power/power.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPower.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workouts/volume/tsb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workouts/volume/tsb.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,53 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="144" selection-start-line="144" selection-end-line="144" />
-              <folding>
-                <element signature="e#0#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerGetCurve.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="498">
-              <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/common/movingAverage.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -118,10 +63,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="529" />
-    <option name="y" value="45" />
-    <option name="width" value="2737" />
-    <option name="height" value="1395" />
+    <option name="x" value="438" />
+    <option name="y" value="62" />
+    <option name="width" value="2648" />
+    <option name="height" value="1350" />
   </component>
   <component name="ProjectId" id="1QnRgIXvgjNBokyUAbdfGjTvm8R" />
   <component name="ProjectLevelVcsManager">
@@ -259,11 +204,13 @@
       <workItem from="1568387621511" duration="8015000" />
       <workItem from="1568404492529" duration="4263000" />
       <workItem from="1568465021071" duration="4144000" />
+      <workItem from="1568576500324" duration="494000" />
+      <workItem from="1568618922916" duration="13000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8852000" />
+    <option name="totallyTimeSpent" value="9359000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -276,7 +223,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="529" y="45" width="2737" height="1395" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15905744" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -288,7 +234,7 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" visible="true" weight="0.3292402" />
+      <window_info anchor="bottom" id="TODO" order="6" visible="true" weight="0.32847276" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="GraphQL" order="9" />
@@ -442,9 +388,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/power/getCurve.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/power/getCurve.ts" />
     <entry file="file://$PROJECT_DIR$/dist/common/movingAverage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -465,40 +409,25 @@
     <entry file="file://$PROJECT_DIR$/src/models/powerCurvePoint.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerGetCurve.ts" />
+    <entry file="file://$PROJECT_DIR$/src/common/movingAverage.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
-          <caret line="144" selection-start-line="144" selection-end-line="144" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
+          <caret line="122" selection-start-line="122" selection-end-line="122" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
-          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerGetCurve.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/movingAverage.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
         </state>
       </provider>
     </entry>

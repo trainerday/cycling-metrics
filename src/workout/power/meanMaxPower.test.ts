@@ -5,7 +5,6 @@ import { generateLogScale } from '../../common/generateLogScale'
 import { merge, mergeAll } from './meanMaxPowerMerge'
 import { data } from './meanMaxPowerTestData'
 
-
 describe('Power duration curve', () => {
   test('should decrease linearly for linear power2', () => {
     const power = [120, 140, 160]
@@ -16,7 +15,7 @@ describe('Power duration curve', () => {
   test('should decrease linearly for linear power', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
     const mmp = new MeanMaxPower(power)
-   expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
+    expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
   })
 
   test('should be const for const power', () => {
@@ -56,7 +55,6 @@ describe('Power duration curve', () => {
   })
 
   test('sample response stream', () => {
-   
     const time = data.filter(x => x.type === 'time')[0].data as number[]
     const hr = data.filter(x => x.type === 'heartrate')[0].data as number[]
     const power = data.filter(x => x.type === 'watts')[0].data as number[]
@@ -119,7 +117,7 @@ describe('Power curve merge', () => {
 
   test('gets max for each time point', () => {
     const mergeCurve = merge(curve1, curve2)
-    if (mergeCurve){
+    if (mergeCurve) {
       expect(mergeCurve.get(1)!.power).toEqual(160)
       expect(mergeCurve.get(2)!.power).toEqual(155)
       expect(mergeCurve.get(4)!.power).toEqual(145)
