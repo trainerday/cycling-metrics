@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/power/meanMaxPowerTestData.ts" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,25 +16,22 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/workout/metrics/zones/zones.test.ts">
+        <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+            <state relative-caret-position="632">
+              <caret line="67" selection-start-line="67" selection-end-line="67" />
               <folding>
-                <element signature="e#0#67#0" expanded="true" />
+                <element signature="e#0#36#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#90#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="116">
+              <caret line="4" column="28" lean-forward="true" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -62,14 +61,12 @@
         <option value="$PROJECT_DIR$/src/workouts/volume/tsb.test.ts" />
         <option value="$PROJECT_DIR$/src/common/utils.ts" />
         <option value="$PROJECT_DIR$/src/workouts/volume/tsb.ts" />
-        <option value="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" />
         <option value="$PROJECT_DIR$/src/workout/power/meanMaxPower.ts" />
         <option value="$PROJECT_DIR$/src/workout/power/meanMaxPowerGetCurve.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/getWorkoutsFromSegments.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/getSegmentsFromArray.ts" />
         <option value="$PROJECT_DIR$/src/common/workout.ts" />
         <option value="$PROJECT_DIR$/src/models/workout.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/workout/metrics/getZones.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/trainingStressAndIntensityFactor.ts" />
         <option value="$PROJECT_DIR$/src/workout/metrics/zones.ts" />
@@ -85,6 +82,9 @@
         <option value="$PROJECT_DIR$/src/common/movingAverage.test.ts" />
         <option value="$PROJECT_DIR$/.eslintrc.js" />
         <option value="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts" />
+        <option value="$PROJECT_DIR$/src/workout/power/meanMaxPowerTestData.ts" />
+        <option value="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -103,10 +103,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="670" />
-    <option name="y" value="307" />
-    <option name="width" value="1936" />
-    <option name="height" value="1007" />
+    <option name="x" value="556" />
+    <option name="y" value="159" />
+    <option name="width" value="1884" />
+    <option name="height" value="1132" />
   </component>
   <component name="ProjectId" id="1QnRgIXvgjNBokyUAbdfGjTvm8R" />
   <component name="ProjectLevelVcsManager">
@@ -265,12 +265,12 @@
       <workItem from="1568576500324" duration="494000" />
       <workItem from="1568618922916" duration="13000" />
       <workItem from="1568626411097" duration="4417000" />
-      <workItem from="1568640223845" duration="2439000" />
+      <workItem from="1568640223845" duration="3274000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16215000" />
+    <option name="totallyTimeSpent" value="17050000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -282,10 +282,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="670" y="307" width="1936" height="1007" extended-state="0" />
+    <frame x="556" y="159" width="1884" height="1132" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22558747" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23188406" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -360,20 +360,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerGetCurve.ts" />
-    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="122" selection-start-line="122" selection-end-line="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.prettierrc">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -411,13 +397,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/common/workoutMetrics.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
@@ -427,9 +406,6 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerTestData.ts">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/metrics/getSegmentsFromArray.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -442,16 +418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerMerge.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -486,16 +452,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/movingAverage.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.eslintrc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
@@ -513,29 +469,12 @@
     <entry file="file://$PROJECT_DIR$/src/models/powerCurvePoint.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/converter/convertStravaToCyclingMetrics.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/converter/convertStravaToCyclingMetrics.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-45">
           <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -550,6 +489,60 @@
     <entry file="file://$PROJECT_DIR$/src/models/workoutInterval.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="25" column="2" selection-start-line="25" selection-start-column="2" selection-end-line="25" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="649">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerMerge.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/movingAverage.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="12" column="2" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#83#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/converter/convertStravaToCyclingMetrics.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="19" column="39" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/metrics/zones/zones.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -560,13 +553,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts">
+    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerTestData.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+        <state relative-caret-position="632">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
           <folding>
-            <element signature="e#0#90#0" expanded="true" />
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="4" column="28" lean-forward="true" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
         </state>
       </provider>
     </entry>
