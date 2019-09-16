@@ -89,7 +89,7 @@ describe('getWorkoutStatistics', () => {
     const workoutMetrics = convertStravaToWorkoutMetrics(time, power)
     const results = metrics.getWorkoutStats(100, [...workoutMetrics])
     expect(results.DominantZone).toEqual(5)
-    expect(results.Intensity).toEqual(.878)
+    expect(results.Intensity).toEqual(0.878)
     expect(results.TimeZone1).toEqual(1920)
     expect(results.TimeZone2).toEqual(120)
     expect(results.TimeZone3).toEqual(120)

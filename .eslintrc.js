@@ -10,7 +10,6 @@ module.exports = {
     sourceType: 'module',  // Allows for the use of imports
   },
   rules: {
-    "semi": 0,
-    noImplicitAny: 0
+    "semi": 0
   },
 }

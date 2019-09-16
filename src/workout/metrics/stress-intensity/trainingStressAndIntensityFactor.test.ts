@@ -25,7 +25,7 @@ describe('TSS', () => {
   })
 })
 
-function getTestData(): [number,number,number][]{
+function getTestData(): [number, number, number][] {
   return [
     [1, 50, 50],
     [1, 40, 40],

@@ -6,7 +6,12 @@ export function getMeanMaxPowerFromCurves(curves: MeanMaxPower[], label?: string
   return curves.reduce((x1, x2) => getMergedCurveFromTwoCurves(x1, x2, label, label))
 }
 
-export function getMergedCurveFromTwoCurves(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: string, label2?: string): MeanMaxPower {
+export function getMergedCurveFromTwoCurves(
+  curve1: MeanMaxPower,
+  curve2: MeanMaxPower,
+  label1?: string,
+  label2?: string,
+): MeanMaxPower {
   const curve1Iter = curve1.CurvePoints.values()
   const curve2Iter = curve2.CurvePoints.values()
   let value1 = curve1Iter.next()
