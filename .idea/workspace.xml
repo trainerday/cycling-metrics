@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/admin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/admin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,14 +46,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="580">
+              <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="841">
+              <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="864">
+                <caret line="73" selection-start-line="73" selection-end-line="73" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -109,6 +129,7 @@
         <option value="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.ts" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -289,12 +310,12 @@
       <workItem from="1568576500324" duration="494000" />
       <workItem from="1568618922916" duration="13000" />
       <workItem from="1568626411097" duration="4417000" />
-      <workItem from="1568640223845" duration="3762000" />
+      <workItem from="1568640223845" duration="3965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17538000" />
+    <option name="totallyTimeSpent" value="17741000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -543,13 +564,6 @@
     <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPowerTestData.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="841">
-          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="632">
@@ -589,11 +603,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="580">
+          <caret line="20" column="3" lean-forward="true" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="841">
+          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="864">
+            <caret line="73" selection-start-line="73" selection-end-line="73" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

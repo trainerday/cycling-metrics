@@ -45,7 +45,7 @@ Add additional notes about how to deploy this on a live system
 
 * Type Script
 * Jest (Testing framework)
-* TSlint
+* ESlint
 
 ## Contributing
 
@@ -59,7 +59,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **TrainerDay** - *Sponsor*
 * **Artur Tadrala** - *Initial work*
-* **Alex VanLanbingham** - *Initial work*
+* **Alex VanLaningham** - *Initial work*
 
 See also the list of [contributors](https://github.com/trainerday/cycling-metrics/contributors) who participated in this project.
 
@@ -69,6 +69,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
+* Special thanks to 
+    - Mark from GoldenCheetah
+    - TrainingPeaks and Coggan for their leadership in volume based research
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
