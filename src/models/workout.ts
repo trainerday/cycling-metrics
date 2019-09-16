@@ -19,5 +19,4 @@ export class Workout {
   }
 
   public length = (): number => this._length
-
 }

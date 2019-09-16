@@ -1,6 +1,5 @@
 import _ from 'lodash'
 
-
 export const getTimeInZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => (power / ftp) * 100)
   const zonesContrib = getZoneContributions(ftpPercents)

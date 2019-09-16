@@ -2,8 +2,8 @@ import { getWorkoutFromSegments } from '../workout/metrics/getWorkoutsFromSegmen
 import { movingAverage } from './movingAverage'
 import { getSegmentsFromArray } from '../workout/metrics/getSegmentsFromArray'
 
-describe('moving average test', () => {
-  test('Moving average on the ramp', () => {
+describe('moving average test', (): void => {
+  test('Moving average on the ramp', (): void => {
     const workout = getWorkoutFromSegments([[2, 10, 250]])
     const avg = movingAverage(getSegmentsFromArray(workout.segments), 10)
     expect(avg[0]).toEqual((10 + 12 + 14 + 16 + 18 + 20 + 22 + 24 + 26 + 28) / 10)
