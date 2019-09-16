@@ -1,5 +1,5 @@
 import { drop, range } from 'lodash'
-import { convertStravaToWorkoutMetrics } from '../converter/converter'
+import { convertStravaToWorkoutMetrics } from '../converter/convertStravaToCyclingMetrics'
 import { MeanMaxPower } from './meanMaxPower'
 import { generateLogScale } from '../../common/generateLogScale'
 import { merge, mergeAll } from './meanMaxPowerMerge'

@@ -1,4 +1,4 @@
-import { convertStravaToCyclingMetrics } from './converter'
+import { convertStravaToCyclingMetrics } from './convertStravaToCyclingMetrics'
 
 describe('Strava to Cycling Metrics converter', () => {
   test('smoke test', () => {

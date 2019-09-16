@@ -1,5 +1,5 @@
 export { MetricsPoint } from './models/metricsPoint'
-export { convertStravaToCyclingMetrics } from './workout/converter/converter'
+export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
 export { MeanMaxPower } from './workout/power/meanMaxPower'
 export { WorkoutStats } from './models/workoutStats'
 export { getCtl } from './workouts/volume/clt'
