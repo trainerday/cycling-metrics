@@ -1,5 +1,5 @@
 import { getTrainingStress } from './trainingStressAndIntensityFactor'
-import { getWorkoutFromSegments } from '../getWorkoutsFromSegments'
+import { getWorkoutIntervalsFromSegments } from '../getWorkoutsFromSegments'
 import { getSegmentsFromArray } from '../getSegmentsFromArray'
 
 describe('TSS', () => {
@@ -8,19 +8,19 @@ describe('TSS', () => {
     expect(res).toEqual(0)
   })
   test('60min @ 100% of FTP should be 100 tss points', () => {
-    const segments = getWorkoutFromSegments([[60, 100, 100]]).segments
-    const res = getTrainingStress(100, [...getSegmentsFromArray(segments)])
+    const segments = getWorkoutIntervalsFromSegments([[60, 100, 100]])
+    const res = getTrainingStress(100, getSegmentsFromArray(segments))
     expect(res).toEqual(100)
   })
   test('60min @ 20-100% of FTP should be 36 tss points', () => {
-    const segments = getWorkoutFromSegments([[60, 20, 100]]).segments
-    const res = getTrainingStress(100, [...getSegmentsFromArray(segments)])
+    const segments = getWorkoutIntervalsFromSegments([[60, 20, 100]])
+    const res = getTrainingStress(100, getSegmentsFromArray(segments))
     expect(res).toEqual(50)
   })
   test('spinner workout should be 72', () => {
     const testData = getTestData()
-    const segments = getWorkoutFromSegments(testData).segments
-    const res = getTrainingStress(100, [...getSegmentsFromArray(segments)])
+    const segments = getWorkoutIntervalsFromSegments(testData)
+    const res = getTrainingStress(100, getSegmentsFromArray(segments))
     expect(res).toEqual(72)
   })
 })

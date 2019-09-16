@@ -10,7 +10,7 @@ describe('Index', () => {
     expect(curve).toEqual([120,119,118,117,116,115,114,113,112,111,110])
   })
   test('training stress', () => {
-    const intervals: [number, number, number] [] = [[30,100,100],[30,100,100]] // minutes, ftpPercentStart, ftpPercentEnd
+    const intervals: [number, number, number] [] = [[60,200,200]] // minutes, wattsStart, wattsEnd
     const trainingStress = getTrainingStress(200, intervals)
     expect(trainingStress).toEqual(100)
   })

@@ -5,7 +5,15 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/movingAverage.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/movingAverage.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/getSegmentsFromArray.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/getSegmentsFromArray.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/getWorkoutsFromSegments.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/getWorkoutsFromSegments.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/stress-intensity/trainingStressAndIntensityFactor.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/workoutStatistics.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/workout/metrics/zones/zones.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/metrics/zones/zones.test.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +116,7 @@
       <workItem from="1568657648688" duration="1972000" />
       <workItem from="1568659656797" duration="1517000" />
       <workItem from="1568664475078" duration="167000" />
-      <workItem from="1568664670491" duration="3438000" />
+      <workItem from="1568664670491" duration="4741000" />
     </task>
     <servers />
   </component>

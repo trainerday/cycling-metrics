@@ -17,10 +17,10 @@ console.log(mmp)
 
 //we support power ramps, start at one percent and end at another 
 
-const intervals = [[30,100,100],[30,100,100]] // minutes, ftpPercentStart, ftpPercentEnd
-const trainingStress = cm.getTrainingStress(intervals)
+const intervals = [[30,100,100],[30,100,100]] // minutes, wattsStart, wattsEnd
+const trainingStress = cm.getTrainingStress(100, intervals) //ftp watts + intervals
 console.log(trainingStress)
-//100  60 minutes @100 by definition is ts = 100
+//100  60 minutes @100w with 100w ftp by definition is ts = 100
 
 
 ```
