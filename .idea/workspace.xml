@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3028f9d-91a2-4acb-846b-2abd3ae5f4e7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPowerCurve.test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/meanMaxPower.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/meanMaxPower.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/power/meanMaxHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPowerCurve.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/power/meanMaxPower.test.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/workout/power/meanMaxPowerMerge.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/workout/power/meanMaxPowerMerge.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +105,7 @@
       <workItem from="1568657648688" duration="1972000" />
       <workItem from="1568659656797" duration="1517000" />
       <workItem from="1568664475078" duration="167000" />
-      <workItem from="1568664670491" duration="2277000" />
+      <workItem from="1568664670491" duration="2345000" />
     </task>
     <servers />
   </component>
