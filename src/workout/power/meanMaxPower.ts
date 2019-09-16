@@ -3,27 +3,6 @@ import { PowerCurvePoint } from '../../models/powerCurvePoint'
 import { generateLogScale } from '../../common/generateLogScale'
 import { movingAverage } from '../../common/movingAverage'
 
-const getMaxPowerForInterval = (powerValues: number[], intervalLength: number): number => {
-  const averages = movingAverage(powerValues, intervalLength)
-  return <number>_.max(averages)
-}
-
-const getPowerCurve = (powerValues: (number)[], label: string, timePoints: number[]) => {
-  let prevValue = getMaxPowerForInterval(powerValues, 1)
-  let prevTime: number = _.first(timePoints!)!
-  const result = new Array<PowerCurvePoint>()
-  timePoints.forEach(time => {
-    const powerValue = getMaxPowerForInterval(powerValues, time)
-    if (prevValue !== powerValue) {
-      result.push(new PowerCurvePoint(prevTime, prevValue, label))
-    }
-    prevValue = powerValue
-    prevTime = time
-  })
-  result.push(new PowerCurvePoint(prevTime, prevValue, label))
-  return result
-}
-
 export class MeanMaxPower {
   public curvePoints: PowerCurvePoint[]
   public timePoints: number[]
@@ -58,7 +37,7 @@ export class MeanMaxPower {
     return _.last(this.curvePoints)
   }
 
-  public get Curve(): number[] {
+  public get getPowerCurve(): number[] {
     return this.timePoints.map(x => this.get(x)!.power!)
   }
 
@@ -69,4 +48,25 @@ export class MeanMaxPower {
   public get CurvePoints(): PowerCurvePoint[] {
     return this.curvePoints
   }
+}
+
+const getMaxPowerForInterval = (powerValues: number[], intervalLength: number): number => {
+  const averages = movingAverage(powerValues, intervalLength)
+  return <number>_.max(averages)
+}
+
+const getPowerCurve = (powerValues: (number)[], label: string, timePoints: number[]) => {
+  let prevValue = getMaxPowerForInterval(powerValues, 1)
+  let prevTime: number = _.first(timePoints!)!
+  const result = new Array<PowerCurvePoint>()
+  timePoints.forEach(time => {
+    const powerValue = getMaxPowerForInterval(powerValues, time)
+    if (prevValue !== powerValue) {
+      result.push(new PowerCurvePoint(prevTime, prevValue, label))
+    }
+    prevValue = powerValue
+    prevTime = time
+  })
+  result.push(new PowerCurvePoint(prevTime, prevValue, label))
+  return result
 }

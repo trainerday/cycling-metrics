@@ -8,25 +8,25 @@ describe('Power duration curve', () => {
   test('should decrease linearly for linear power2', () => {
     const power = [120, 140, 160]
     const mmp = new MeanMaxPower(power)
-    expect(mmp.Curve).toEqual([160, 150, 140])
+    expect(mmp.getPowerCurve).toEqual([160, 150, 140])
   })
 
   test('should decrease linearly for linear power', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
     const mmp = new MeanMaxPower(power)
-    expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
+    expect(mmp.getPowerCurve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
   })
 
   test('should be const for const power', () => {
     const power = [110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110]
     const mmp = new MeanMaxPower(power)
-    expect(mmp.Curve).toEqual([110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110])
+    expect(mmp.getPowerCurve).toEqual([110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110])
   })
 
   test('should decrease gradually for bell-like power spike', () => {
     const power = [102, 106, 110, 114, 118, 120, 116, 112, 108, 104, 100]
     const mmp = new MeanMaxPower(power)
-    expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
+    expect(mmp.getPowerCurve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
   })
 
   test('should interpolate undefined power value linearly', () => {
@@ -34,7 +34,7 @@ describe('Power duration curve', () => {
     const powerReading = [120, 118, 116, undefined, 112, undefined, undefined, 106, 104, undefined, 100]
     const metrics = convertStravaToWorkoutMetrics(time, powerReading)
     const mmp = new MeanMaxPower(metrics)
-    expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
+    expect(mmp.getPowerCurve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
   })
 
   test('should extrapolate boundary to const', () => {
@@ -42,7 +42,7 @@ describe('Power duration curve', () => {
     const power = [undefined, 120, undefined]
     const metrics = convertStravaToWorkoutMetrics(time, power)
     const mm = new MeanMaxPower([...metrics])
-    expect(mm.Curve).toEqual([120, 120, 120])
+    expect(mm.getPowerCurve).toEqual([120, 120, 120])
   })
 
   test('should interpolate missing Metrics points linearly', () => {
@@ -50,7 +50,7 @@ describe('Power duration curve', () => {
     const power = [120, 100]
     const metrics = convertStravaToWorkoutMetrics(time, power)
     const mmp = new MeanMaxPower([...metrics])
-    expect(mmp.Curve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
+    expect(mmp.getPowerCurve).toEqual([120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110])
   })
 
   test('sample response stream', () => {
@@ -60,7 +60,7 @@ describe('Power duration curve', () => {
     const power = data.filter((x: any) => x.type === 'watts')[0].data as number[]
     const metrics = convertStravaToWorkoutMetrics(time, power, hr)
     const curve = new MeanMaxPower([...metrics])
-    const powerCurve = drop(curve.Curve, 1)
+    const powerCurve = drop(curve.getPowerCurve, 1)
     //const points = drop(curve.TimePoints, 1)
 
     const min = Math.min.apply(null, power)
@@ -79,12 +79,12 @@ describe('Power duration curve', () => {
 describe('Power curve intervals', () => {
   test('should return values between interval', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
-    expect(new MeanMaxPower(power, range(1, power.length, 4)).Curve).toEqual([120, 116, 112])
+    expect(new MeanMaxPower(power, range(1, power.length, 4)).getPowerCurve).toEqual([120, 116, 112])
   })
 
   test('should return values in log scale', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
-    expect(new MeanMaxPower(power, generateLogScale(2, power.length)).Curve).toEqual([120, 119, 117, 113])
+    expect(new MeanMaxPower(power, generateLogScale(2, power.length)).getPowerCurve).toEqual([120, 119, 117, 113])
   })
   test('should return values for last segment', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
@@ -97,7 +97,7 @@ describe('Power curve intervals', () => {
 describe('Power Average', () => {
   test('should be average power', () => {
     const power = [110, 110, 110, 110, 110, 120, 120, 120, 120, 120]
-    const pdCurve = new MeanMaxPower(power).Curve
+    const pdCurve = new MeanMaxPower(power).getPowerCurve
     expect(pdCurve[0]).toEqual(120)
     expect(pdCurve[1]).toEqual(120)
     expect(pdCurve[3]).toEqual(120)

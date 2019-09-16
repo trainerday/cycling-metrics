@@ -1,4 +1,4 @@
-import { WorkoutStats } from '../..'
+import { WorkoutStats } from '../../models/workoutStats'
 
 export const getCtl = (dailyTss: number[], days: number, startCtl: number) => {
   const out = []

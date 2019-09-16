@@ -1,6 +1,14 @@
-export { MetricsPoint } from './models/metricsPoint'
+import { MeanMaxPower } from './workout/power/meanMaxPower'
+export { getWorkoutStats } from './workout/metrics/workoutStatistics'
 export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
-export { MeanMaxPower } from './workout/power/meanMaxPower'
-export { WorkoutStats } from './models/workoutStats'
 export { getCtl } from './workouts/volume/clt'
 export { getTrainingStressBalance } from './workouts/volume/tsb'
+
+export const getMeanMaxPower = (powerPerSecond: number[]): number[] => {
+  const mmp = new MeanMaxPower(powerPerSecond)
+  return mmp.getPowerCurve
+}
+
+
+
+
