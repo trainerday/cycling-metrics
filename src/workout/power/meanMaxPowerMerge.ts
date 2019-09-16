@@ -2,11 +2,11 @@ import _ from 'lodash'
 import { PowerCurvePoint } from '../../models/powerCurvePoint'
 import { MeanMaxPower } from './meanMaxPower'
 
-export function mergeAll(curves: MeanMaxPower[], label?: string): MeanMaxPower {
-  return curves.reduce((x1, x2) => merge(x1, x2, label, label))
+export function getMeanMaxPowerFromCurves(curves: MeanMaxPower[], label?: string): MeanMaxPower {
+  return curves.reduce((x1, x2) => getMergedCurveFromTwoCurves(x1, x2, label, label))
 }
 
-export function merge(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: string, label2?: string): MeanMaxPower {
+export function getMergedCurveFromTwoCurves(curve1: MeanMaxPower, curve2: MeanMaxPower, label1?: string, label2?: string): MeanMaxPower {
   const curve1Iter = curve1.CurvePoints.values()
   const curve2Iter = curve2.CurvePoints.values()
   let value1 = curve1Iter.next()

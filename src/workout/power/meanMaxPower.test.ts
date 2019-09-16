@@ -2,7 +2,7 @@ import { drop, range } from 'lodash'
 import { convertStravaToWorkoutMetrics } from '../converter/convertStravaToCyclingMetrics'
 import { MeanMaxPower } from './meanMaxPower'
 import { generateLogScale } from '../../common/generateLogScale'
-import { merge, mergeAll } from './meanMaxPowerMerge'
+import { getMergedCurveFromTwoCurves, getMeanMaxPowerFromCurves } from './meanMaxPowerMerge'
 import { data } from './meanMaxPowerTestData'
 
 describe('Power duration curve', () => {
@@ -107,7 +107,7 @@ describe('Power Average', () => {
   })
 })
 
-describe('Power curve merge', () => {
+describe('Power curve getMergedCurveFromTwoCurves', () => {
   const power1 = [130, 130, 130, 130, 130, 120, 120, 120, 120, 120]
   const power2 = [160, 150, 140, 130, 120, 110, 100, 100, 100, 100]
   const power3 = [125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1]
@@ -116,7 +116,7 @@ describe('Power curve merge', () => {
   const curve3 = new MeanMaxPower(power3, undefined, 'training3')
 
   test('gets max for each time point', () => {
-    const mergeCurve = merge(curve1, curve2)
+    const mergeCurve = getMergedCurveFromTwoCurves(curve1, curve2)
     if (mergeCurve) {
       expect(mergeCurve.get(1)!.power).toEqual(160)
       expect(mergeCurve.get(2)!.power).toEqual(155)
@@ -128,7 +128,7 @@ describe('Power curve merge', () => {
   })
 
   test('label segments according to source', () => {
-    const mergeCurve = merge(curve1, curve2)
+    const mergeCurve = getMergedCurveFromTwoCurves(curve1, curve2)
 
     expect(mergeCurve.get(1)!.label).toEqual('training2')
     expect(mergeCurve.get(2)!.label).toEqual('training2')
@@ -138,7 +138,7 @@ describe('Power curve merge', () => {
   })
 
   test('label can be over-ridden when merged', () => {
-    const mergeCurve = merge(curve1, curve2, 'curve1', 'curve2')
+    const mergeCurve = getMergedCurveFromTwoCurves(curve1, curve2, 'curve1', 'curve2')
 
     expect(mergeCurve.get(1)!.label).toEqual('curve2')
     expect(mergeCurve.get(2)!.label).toEqual('curve2')
@@ -146,15 +146,15 @@ describe('Power curve merge', () => {
     expect(mergeCurve.get(10)!.label).toEqual('curve1')
   })
 
-  test('can merge array of powerCurves', () => {
-    const mergeCurve = mergeAll([curve1, curve2, curve3])
+  test('can getMergedCurveFromTwoCurves array of powerCurves', () => {
+    const mergeCurve = getMeanMaxPowerFromCurves([curve1, curve2, curve3])
     expect(mergeCurve.get(1)!.label).toEqual('training2')
     expect(mergeCurve.get(9)!.label).toEqual('training1')
     expect(mergeCurve.get(10)!.label).toEqual('training3')
   })
 
   test('can override label while merging array', () => {
-    const mergeCurve = mergeAll([curve1, curve2, curve3], 'last week')
+    const mergeCurve = getMeanMaxPowerFromCurves([curve1, curve2, curve3], 'last week')
 
     expect(mergeCurve.get(1)!.label).toEqual('last week')
     expect(mergeCurve.get(9)!.label).toEqual('last week')
