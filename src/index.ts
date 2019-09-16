@@ -13,7 +13,7 @@ export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
   return getPowerDurationCurveSimple(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
 }
 
-export const getTrainingStress = (ftp: number, intervals:[[number,number,number]]): number => {
+export const getTrainingStress = (ftp: number, intervals:[number, number, number][]): number => {
   const segments = getWorkoutFromSegments(intervals).segments
   return ts.getTrainingStress(100, getSegmentsFromArray(segments))
 }
