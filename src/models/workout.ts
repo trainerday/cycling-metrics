@@ -1,9 +1,8 @@
-import _ from 'lodash'
-import { WorkoutInterval } from '../models/workoutInterval'
+import { WorkoutInterval } from './workoutInterval'
 
 export class Workout {
   // <start_second, end_second, segment> array
-  private readonly segments: [number, number, WorkoutInterval][]
+  public readonly segments: [number, number, WorkoutInterval][]
   private readonly _length: number
 
   public constructor(segments: WorkoutInterval[]) {
@@ -21,13 +20,4 @@ export class Workout {
 
   public length = (): number => this._length
 
-  public getSegments(): number[] {
-    const segmentsOut = []
-    for (let [, , interval] of this.segments) {
-      for (let i = 0; i < interval.seconds; i++) {
-        segmentsOut.push(interval.startPower + (i / interval.seconds) * (interval.endPower - interval.startPower))
-      }
-    }
-    return segmentsOut
-  }
 }

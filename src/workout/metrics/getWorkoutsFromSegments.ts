@@ -1,6 +1,6 @@
 import { map } from 'lodash'
 import { WorkoutInterval } from '../../models/workoutInterval'
-import { Workout } from '../../common/workout'
+import { Workout } from '../../models/workout'
 
 
 export const getWorkoutFromSegments = (segments: [number, number, number][]): Workout => {
