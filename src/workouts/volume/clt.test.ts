@@ -17,8 +17,16 @@ test('test2', () => {
   const res = getCtl(day,0, 80)
   const max:number = _.max(res)!
   expect(max).toBe(12.4)
+  expect(res[20]).toBe(9.9)
 })
 
+test('test2', () => {
+  const day = [70,0,70,0,70,0,0,130,0,130,0,130,0,0]
+  const res = getCtl(day,0, 80)
+  const max:number = _.max(res)!
+  expect(max).toBe(13)
+  expect(res[20]).toBe(10.3)
+})
 
 
 
