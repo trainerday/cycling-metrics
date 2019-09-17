@@ -1,5 +1,8 @@
 # Cycling Metrics
 
+BETA - BETA
+This is still in the testing and refactoring phases. We plan to have it ready for general consumption in Oct 2019
+
 Cycling power data analysis.  Includes both single workout analysis as well as multiple workout analysis.  Takes data directly from Strava API Stream array format. Created in Type Script. Al
 
 ## Getting Started
@@ -21,6 +24,14 @@ const intervals = [[30,100,100],[30,100,100]] // minutes, wattsStart, wattsEnd
 const trainingStress = cm.getTrainingStress(100, intervals) //ftp watts + intervals
 console.log(trainingStress)
 //100  60 minutes @100w with 100w ftp by definition is ts = 100
+
+
+If you look at the tests there are many other methods.  We will add more examples here.
+getIntensityFactor
+getPowerDurationCurve
+getMergedPDCurve - Will show a 7 day power curve best overlaying a 90 day power curve for example
+getCTL - Chronic Training Load
+getTSB - New and not finished yet
 
 
 ```
