@@ -1,21 +1,37 @@
 import * as _ from 'lodash/fp'
-import { getCtl, getCtlSingle } from './clt'
+import { getCtl, getSingleDayCtl, addZeroElementsToNumberArray } from './clt'
 import moment from 'moment'
 
-describe('getCtlSingle - 100', () => {
-  test('getCtlSingle', () => {
-    const res = getCtlSingle(100,0)
+describe('getSingleDayCtl', () => {
+  test('getSingleDayCtl - 100', () => {
+    const res = getSingleDayCtl(100,0)
     expect(res).toBe(2.4)
   })
-  test('getCtlSingle - 100-d2', () => {
-    const res = getCtlSingle(100,2.4)
+  test('getSingleDayCtl - 100-d2', () => {
+    const res = getSingleDayCtl(100,2.4)
     expect(res).toBe(4.7)
   })
-  test('getCtlSingle - 70', () => {
-    const res = getCtlSingle(70,0)
+  test('getSingleDayCtl - 70', () => {
+    const res = getSingleDayCtl(70,0)
     expect(res).toBe(1.7)
   })
+  test('getSingleDayCtl - 0', () => {
+    const res = getSingleDayCtl(0,50)
+    expect(res).toBe(48.8)
+  })
 })
+
+describe('addZeroElementsToNumberArray', () => {
+  test('test 0-1', () => {
+    const res = addZeroElementsToNumberArray([],1)
+    expect(res.length).toBe(1)
+  })
+  test('test 3-2', () => {
+    const res = addZeroElementsToNumberArray([1,2,3],2)
+    expect(res.length).toBe(5)
+  })
+})
+
 
 
 describe('Ctl', () => {
@@ -23,7 +39,6 @@ describe('Ctl', () => {
     const getDate = (dayNum: number) => moment('2019-09-30T00:00:00.000Z').add(dayNum, 'days').toDate()
     const getObj = (dayNum: number, tss: number) => ({date: getDate(dayNum), tss: tss})
     const twoWeekArr = _.map((ele: number)=>getObj(ele,70),[0,2,4,7,9,11])
-  //  console.log(twoWeekArr)
     expect(twoWeekArr![0].tss).toBe(70)
   })
 
@@ -35,17 +50,14 @@ describe('Ctl', () => {
     expect(res[20]).toBe(9.9)
   })
 
-  test('test2', () => {
+  test('test3', () => {
     const day = [70,0,70,0,70,0,0,130,0,130,0,130,0,0]
     const res = getCtl(day,0, 80)
     const max:number = _.max(res)!
     expect(max).toBe(13)
     expect(res[20]).toBe(10.3)
   })
-})
 
-
-describe('TSS', () => {
   test('21 days of 70tss should be 27.8 tss', () => {
     const days = 30
     const startCtl = 0
