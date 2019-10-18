@@ -4,10 +4,7 @@ export const getSingleDayCtl = (tss: number, yesterdayCtl:number) => Math.round(
 export const addZeroElementsToNumberArray = (arr: number[], elementsToAdd: number) => [...arr,..._.times(elementsToAdd, _.constant(0))]
 
 export const getCtl = (dailyTss: number[], ctlStart: number, dayCount: number, ) :number [] => {
-  const getCtlDays = (days: any, ctlIn: number) => {
-    let ctl = ctlIn
-    return _.map(days, tss => {ctl = getSingleDayCtl(tss,ctl); return ctl})
-  }
+  const getCtlDays = (days: any, ctlIn: number) => {let ctl = ctlIn; return _.map(days, tss => {ctl = getSingleDayCtl(tss,ctl); return ctl})}
 
   const daysToAdd = dayCount < dailyTss.length ? 0 : dayCount - dailyTss.length
   const allDays = addZeroElementsToNumberArray(dailyTss, daysToAdd)
