@@ -15,13 +15,13 @@ describe('TSS', () => {
   test('60min @ 20-100% of FTP should be 36 tss points', () => {
     const segments = getWorkoutIntervalsFromSegments([[60, 20, 100]])
     const res = getTrainingStress(100, getSegmentsFromArray(segments))
-    expect(res).toEqual(49)
+    expect(res).toEqual(50)
   })
   test('spinner workout should be 72', () => {
     const testData = getTestData()
     const segments = getWorkoutIntervalsFromSegments(testData)
     const res = getTrainingStress(100, getSegmentsFromArray(segments))
-    expect(res).toEqual(71)
+    expect(res).toEqual(72)
   })
 })
 
