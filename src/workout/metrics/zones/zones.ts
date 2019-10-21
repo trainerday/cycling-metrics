@@ -1,4 +1,15 @@
 import _ from 'lodash'
+import { ZoneTypes } from './types'
+
+export const zones = [
+  null,
+  ZoneTypes.RECOVERY,
+  ZoneTypes.ENDURANCE,
+  ZoneTypes.TEMPO,
+  ZoneTypes.THRESHOLD,
+  ZoneTypes.VO2MAX,
+  ZoneTypes.ANAEROBIC
+]
 
 export const getTimeInZone = (ftp: number, powerValues: number[]) => {
   const ftpPercents = _.map(powerValues, power => (power / ftp) * 100)
