@@ -11,7 +11,7 @@ describe('Index', () => {
   })
   test('training stress', () => {
     const intervals: [number, number, number] [] = [[60,200,200]] // minutes, wattsStart, wattsEnd
-    const trainingStress = getTrainingStress(200, intervals)
+    const trainingStress = getTrainingStress(intervals, 200)
     expect(trainingStress).toEqual(100)
   })
 })

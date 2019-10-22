@@ -14,32 +14,32 @@ export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
   return getPowerDurationCurveSimple(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
 }
 
-export const getTrainingStress = (ftp: number, intervals:[number, number, number][]): number => {
-  const ftpValue = ftp ? ftp : 100
-  const segments = getWorkoutIntervalsFromSegments(intervals)
-  return ts.getTrainingStress(ftpValue, getSegmentsFromArray(segments))
+export const getTrainingStress = (segments: [number, number, number][], ftp: number = 100): number => {
+  const intervals = getWorkoutIntervalsFromSegments(segments)
+  return ts.getTrainingStress(ftp, getSegmentsFromArray(intervals))
 }
 
-export const getIntensityFactor = (ftp: number, intervals:[number, number, number][]): number | null=> {
-  const ftpValue = ftp ? ftp : 100
-  const segments = getWorkoutIntervalsFromSegments(intervals)
-  const { if: intensityFactor = null } = ts.getIntensityFactor(ftpValue, getSegmentsFromArray(segments))
+export const getIntensityFactor = (segments: [number, number, number][], ftp: number = 100): number | null=> {
+  const intervals = getWorkoutIntervalsFromSegments(segments)
+  const { if: intensityFactor = null } = ts.getIntensityFactor(ftp, getSegmentsFromArray(intervals))
   return intensityFactor
 }
 
-export const getDominantZone = (ftp: number, intervals:[number, number, number][]): ZoneTypes | null => {
-  const ftpValue = ftp ? ftp : 100
-  const segments = getWorkoutIntervalsFromSegments(intervals)
-  const dominantZone = z.getDominantZone(ftpValue, getSegmentsFromArray(segments))
+export const getDominantZone = (segments: [number, number, number][], ftp: number = 100): ZoneTypes | null => {
+  const intervals = getWorkoutIntervalsFromSegments(segments)
+  const dominantZone = z.getDominantZone(ftp, getSegmentsFromArray(intervals))
   return z.zones[dominantZone]
 }
 
-import { getTimeInZone } from "./workout/metrics/zones/zones"
+export const getTimeInZone = (segments: [number, number, number][], ftp: number = 100): Object => {
+  const intervals = getWorkoutIntervalsFromSegments(segments)
+  return z.getTimeInZone(ftp, getSegmentsFromArray(intervals))
+}
+
 import { getWorkoutClassificationGroup } from "./workout/metrics/getWorkoutClassificationGroup"
 import { getTimeType } from "./workout/metrics/getTimeType"
 
 export {
-  getTimeInZone,
   getWorkoutClassificationGroup,
   getTimeType,
 }
