@@ -73,7 +73,6 @@ describe('Ctl', () => {
     const startCtl = 0
     const dailyTss = getDailyTssForTests()
     const res = getCtl(dailyTss, startCtl, days)
-    console.log(res.length)
     expect(res[29]).toBe(32.8)
   })
 

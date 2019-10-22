@@ -12,18 +12,28 @@ describe('getTimeInZone', () => {
 
 describe('getDominantZone', () => {
   test('Should return zone 4 for ftp ride', () => {
-    const segments = getWorkoutIntervalsFromSegments([[60, 200, 200]])
-    const results = getDominantZone(200, getSegmentsFromArray(segments))
+    const segments = getWorkoutIntervalsFromSegments([[60, 100, 100]])
+    const results = getDominantZone(100, getSegmentsFromArray(segments))
     expect(results).toEqual(4)
   })
+  test('Should return zone 4 for ftp ride', () => {
+    const segments = getWorkoutIntervalsFromSegments([[20, 100, 100]])
+    const results = getDominantZone(100, getSegmentsFromArray(segments))
+    expect(results).toEqual(4)
+  })
+  test('Should return zone 6', () => {
+    const segments = getWorkoutIntervalsFromSegments([[20, 160, 160]])
+    const results = getDominantZone(100, getSegmentsFromArray(segments))
+    expect(results).toEqual(6)
+  })
   test('Should ignore lower zones if time spent in higher is long enough', () => {
-    const segments = getWorkoutIntervalsFromSegments([[60, 120, 120], [1, 250, 250]])
-    const results = getDominantZone(200, getSegmentsFromArray(segments))
+    const segments = getWorkoutIntervalsFromSegments([[60, 60, 60], [3, 125, 125]])
+    const results = getDominantZone(100, getSegmentsFromArray(segments))
     expect(results).toEqual(6)
   })
   test('Should return zone2 if time spent in higher is small', () => {
-    const segments = getWorkoutIntervalsFromSegments([[60, 120, 120], [1, 230, 230]])
-    const results = getDominantZone(200, getSegmentsFromArray(segments))
+    const segments = getWorkoutIntervalsFromSegments([[60, 60, 60], [1, 100, 100]])
+    const results = getDominantZone(100, getSegmentsFromArray(segments))
     expect(results).toEqual(2)
   })
 })
