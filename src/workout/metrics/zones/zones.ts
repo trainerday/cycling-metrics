@@ -48,7 +48,14 @@ export const getDominantZone = (ftp: number, powerValues: number[]) => {
     zoneResults = _.filter(zoneResults, x => x.zone > 2)
   }
   // @ts-ignore
-  return _.maxBy(zoneResults, x => x.contrib).zone
+  console.log(zoneResults)
+  if (zoneResults && zoneResults.length > 0){
+    const res = _.maxBy(zoneResults, x => x.contrib)
+    if (res){
+      return res.zone
+    }
+  }
+  return 1
 }
 
 function getTimeMultiplier(ftpPercent: number) {
