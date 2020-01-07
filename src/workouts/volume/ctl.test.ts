@@ -1,5 +1,5 @@
 import * as _ from 'lodash/fp'
-import { getCtl, getSingleDayCtl, addZeroElementsToNumberArray } from './clt'
+import { getCtl, getSingleDayCtl, addZeroElementsToNumberArray } from './ctl'
 import moment from 'moment'
 
 describe('getSingleDayCtl', () => {

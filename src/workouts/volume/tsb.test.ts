@@ -1,10 +1,16 @@
 import { getTrainingStressBalance } from './tsb'
+import { convertWeeksToDays, getAtl } from './atl'
+import { getCtl } from './ctl'
 
-describe('Ctl', () => {
-  test.skip('should return array the same length as data', () => {
-    const data = [490, 580, 670, 410, 610, 420, 590, 680, 770, 510, 710, 800, 890, 630, 830, 920]
-    const startingStress = 400
-    const result = getTrainingStressBalance(startingStress, data)
-    expect(result).toHaveLength(16 * 7)
+describe('TSB', () => {
+  test('should return array the same length as data', () => {
+
+    const dailyTotals = convertWeeksToDays([70, 70, 70])
+    const ctl = getCtl(dailyTotals, 0,0)
+    const atl = getAtl(0, dailyTotals)
+    const result = getTrainingStressBalance(0, 0, ctl, atl)
+    //console.log(result)
+    expect(result).toHaveLength(26)
   })
+
 })

@@ -6,7 +6,7 @@ import * as ts from './workout/metrics/stress-intensity/trainingStressAndIntensi
 import { ZoneTypes } from "./workout/metrics/zones/types";
 import * as z from './workout/metrics/zones/zones'
 export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
-export { getCtl } from './workouts/volume/clt'
+export { getCtl } from './workouts/volume/ctl'
 export { getTrainingStressBalance } from './workouts/volume/tsb'
 
 export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
