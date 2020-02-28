@@ -2,9 +2,15 @@ import _ from 'lodash'
 import { PowerCurvePoint } from '../../models/powerCurvePoint'
 import { movingAverage } from '../../common/movingAverage'
 import { generateLogScale } from '../../common/generateLogScale'
+import { MeanMaxPower } from '../../models/meanMaxPower'
 
 export const getPowerDurationCurveSimple = (timePoints: number[], timeLength: number, curvePoints: PowerCurvePoint[]): number[] =>{
   return timePoints.map(x => getLastPowerCurvePoint(x, timeLength, curvePoints)!.power!)
+}
+
+export const getPowerDurationCurveSimpleMMP = (timePoints: number[], timeLength: number, curvePoints: PowerCurvePoint[]): MeanMaxPower =>{
+  const tp = timePoints.map(x => getLastPowerCurvePoint(x, timeLength, curvePoints)!.power!)
+  return new MeanMaxPower(tp)
 }
 
 export const getDefaultTimePoints = (timeLength: number):number[] => {

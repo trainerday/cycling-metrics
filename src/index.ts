@@ -1,17 +1,28 @@
 import { MeanMaxPower } from './models/meanMaxPower'
-import { getPowerDurationCurveSimple } from './workout/power/meanMaxPowerCurve'
+import { getPowerDurationCurveSimple, getPowerDurationCurveSimpleMMP } from './workout/power/meanMaxPowerCurve'
 import { getWorkoutIntervalsFromSegments } from './workout/metrics/getWorkoutsFromSegments'
 import { getSegmentsFromArray } from './workout/metrics/getSegmentsFromArray'
 import * as ts from './workout/metrics/stress-intensity/trainingStressAndIntensityFactor'
 import { ZoneTypes } from "./workout/metrics/zones/types";
 import * as z from './workout/metrics/zones/zones'
+import { getMergedCurveFromTwoCurves } from './workout/power/meanMaxPowerMerge'
+
 export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
 export { getCtl } from './workouts/volume/ctl'
-export { getTrainingStressBalance } from './workouts/volume/tsb'
 
 export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
   const mmp = new MeanMaxPower(powerPerSecond)
   return getPowerDurationCurveSimple(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
+}
+
+export const getMergedCurveFromTwo = (powerPerSecondCurve1: number[], powerPerSecondCurve2: number[]): MeanMaxPower => {
+    const mmp = new MeanMaxPower(powerPerSecondCurve1)
+    const mmp2 = new MeanMaxPower(powerPerSecondCurve2)
+
+    const curve1 = getPowerDurationCurveSimpleMMP(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
+    const curve2 = getPowerDurationCurveSimpleMMP(mmp2.timePoints, mmp2.timeLength, mmp2.powerCurvePoints)
+    const curveFinal = getMergedCurveFromTwoCurves(curve1, curve2)
+    return curveFinal
 }
 
 export const getTrainingStress = (segments: [number, number, number][], ftp: number = 100): number => {

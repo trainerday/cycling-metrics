@@ -10,7 +10,7 @@ describe('TSB', () => {
     const atl = getAtl(0, dailyTotals)
     const result = getTrainingStressBalance(0, 0, ctl, atl)
     //console.log(result)
-    expect(result).toHaveLength(26)
+    expect(result).toHaveLength(25)
   })
 
 })
