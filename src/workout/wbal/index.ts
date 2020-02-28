@@ -2,8 +2,9 @@ const tPrimeBalance = (power : number[], cp : number, until?: number) => {
   if (typeof until === "undefined") {
     until = power.length
   }
-  // todo Alex commented this out
-  let avg_power_below_cp = 1 // power.slice(0, until).reduce((prev, curr) => (curr < cp && prev + curr))
+  // todo should remove this ts-ignore
+  // @ts-ignore
+  let avg_power_below_cp = power.slice(0, until).reduce((prev, curr) => (curr < cp && prev + curr))
 
   if (Number.isNaN(avg_power_below_cp)) {
     avg_power_below_cp = 0
