@@ -5,7 +5,7 @@ import { getSegmentsFromArray } from './workout/metrics/getSegmentsFromArray'
 import * as ts from './workout/metrics/stress-intensity/trainingStressAndIntensityFactor'
 import { ZoneTypes } from "./workout/metrics/zones/types";
 import * as z from './workout/metrics/zones/zones'
-export * from './workouts/power/mergeCurve'
+import * as merge from './workouts/power/mergeCurve'
 
 export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
 export { getCtl } from './workouts/volume/ctl'
@@ -14,6 +14,34 @@ export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
   const mmp = new MeanMaxPower(powerPerSecond)
   return getPowerDurationCurveSimple(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
 }
+
+export const getMergedCurve = (curve1Seconds: number[], curve1Power:number[], curve2Seconds:number[], curve2Power: number[]): number[] => {
+  const power1 = insertMissingElementsInSequence(curve1Seconds, curve1Power)
+  const power2 = insertMissingElementsInSequence(curve2Seconds, curve2Power)
+  return merge.getMergedCurve(power1, power2)
+}
+
+export const getMergedCurveBests = (curve1Seconds: number[], curve1Power:number[], curve2Seconds:number[], curve2Power: number[]): number[] => {
+  const power1 = insertMissingElementsInSequence(curve1Seconds, curve1Power)
+  const power2 = insertMissingElementsInSequence(curve2Seconds, curve2Power)
+  return merge.getSecondCurveBests(power1, power2)
+}
+
+
+function insertMissing(secondsPower : [[number, number]]){
+  const out: number[] = []
+  let lastSecond = 0
+  secondsPower.forEach(item => {
+    const difference = item[0] - lastSecond
+    if (difference > 1){
+      for (let i = 0; i < difference-1; i++) {
+        out.push(0)
+      }
+    }
+    out.push(item[1])
+  })
+}
+
 
 export const getTrainingStress = (segments: [number, number, number][], ftp: number = 100): number => {
   const intervals = getWorkoutIntervalsFromSegments(segments)
@@ -39,6 +67,7 @@ export const getTimeInZone = (segments: [number, number, number][], ftp: number 
 
 import { getWorkoutClassificationGroup } from "./workout/metrics/getWorkoutClassificationGroup"
 import { getTimeType } from "./workout/metrics/getTimeType"
+import { insertMissingElementsInSequence } from './common/insertMissingElements'
 
 export {
   getWorkoutClassificationGroup,
