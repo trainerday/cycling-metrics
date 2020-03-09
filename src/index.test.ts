@@ -1,7 +1,5 @@
-import { MeanMaxPower } from './models/meanMaxPower'
-import { getPowerDurationCurveSimple } from './workout/power/meanMaxPowerCurve'
-import { getMeanMaxPowerCurve, getTrainingStress } from './index'
-
+import { getMeanMaxPowerCurve, getTrainingStress,getMergedCurve } from './index'
+import _ from 'lodash'
 
 describe('Index', () => {
   test('power duration curve', () => {
@@ -13,6 +11,14 @@ describe('Index', () => {
     const intervals: [number, number, number] [] = [[60,200,200]] // minutes, wattsStart, wattsEnd
     const trainingStress = getTrainingStress(intervals, 200)
     expect(trainingStress).toEqual(100)
+  })
+  test('mergedCurve', () => {
+    const sec1 = _.range(1,10000)
+    const pow1 = _.range(1,10000)
+    const sec2 = _.range(1,10000)
+    const pow2 = _.range(1,10000)
+    const curve = getMergedCurve(sec1, pow1, sec2, pow2)
+    expect(curve.length).toEqual(10000-1)
   })
 })
 
