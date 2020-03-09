@@ -13,11 +13,9 @@ describe('Index', () => {
     expect(trainingStress).toEqual(100)
   })
   test('mergedCurve', () => {
-    const sec1 = _.range(1,10000)
     const pow1 = _.range(1,10000)
-    const sec2 = _.range(1,10000)
     const pow2 = _.range(1,10000)
-    const curve = getMergedCurve(sec1, pow1, sec2, pow2)
+    const curve = getMergedCurve(pow1, pow2)
     expect(curve.length).toEqual(10000-1)
   })
 })

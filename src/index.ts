@@ -5,7 +5,8 @@ import { getSegmentsFromArray } from './workout/metrics/getSegmentsFromArray'
 import * as ts from './workout/metrics/stress-intensity/trainingStressAndIntensityFactor'
 import { ZoneTypes } from "./workout/metrics/zones/types";
 import * as z from './workout/metrics/zones/zones'
-import * as merge from './workouts/power/mergeCurve'
+export * from './workouts/power/mergeCurve'
+export {insertMissingElementsInSequence} from './common/insertMissingElements'
 
 export { convertStravaToCyclingMetrics } from './workout/converter/convertStravaToCyclingMetrics'
 export { getCtl } from './workouts/volume/ctl'
@@ -14,19 +15,6 @@ export const getMeanMaxPowerCurve = (powerPerSecond: number[]): number[] => {
   const mmp = new MeanMaxPower(powerPerSecond)
   return getPowerDurationCurveSimple(mmp.timePoints, mmp.timeLength, mmp.powerCurvePoints)
 }
-
-export const getMergedCurve = (curve1Seconds: number[], curve1Power:number[], curve2Seconds:number[], curve2Power: number[]): number[] => {
-  const power1 = insertMissingElementsInSequence(curve1Seconds, curve1Power)
-  const power2 = insertMissingElementsInSequence(curve2Seconds, curve2Power)
-  return merge.getMergedCurve(power1, power2)
-}
-
-export const getMergedCurveBests = (curve1Seconds: number[], curve1Power:number[], curve2Seconds:number[], curve2Power: number[]): number[] => {
-  const power1 = insertMissingElementsInSequence(curve1Seconds, curve1Power)
-  const power2 = insertMissingElementsInSequence(curve2Seconds, curve2Power)
-  return merge.getSecondCurveBests(power1, power2)
-}
-
 
 function insertMissing(secondsPower : [[number, number]]){
   const out: number[] = []
