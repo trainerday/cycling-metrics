@@ -2,7 +2,6 @@ import { drop, range } from 'lodash'
 import { convertStravaToWorkoutMetrics } from '../converter/convertStravaToCyclingMetrics'
 import { MeanMaxPower } from '../../models/meanMaxPower'
 import { generateLogScale } from '../../common/generateLogScale'
-import { getMergedCurveFromTwoCurves, getMeanMaxPowerFromCurves } from './meanMaxPowerMerge'
 import { getLastPowerCurvePoint, getPowerDurationCurveSimple } from './meanMaxPowerCurve'
 
 describe('Power duration curve', () => {
@@ -119,58 +118,6 @@ describe('Power Average', () => {
   })
 })
 
-describe('Power curve getMergedCurveFromTwoCurves', () => {
-  const power1 = [130, 130, 130, 130, 130, 120, 120, 120, 120, 120]
-  const power2 = [160, 150, 140, 130, 120, 110, 100, 100, 100, 100]
-  const power3 = [125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1, 125.1]
-  const curve1 = new MeanMaxPower(power1, undefined, 'training1')
-  const curve2 = new MeanMaxPower(power2, undefined, 'training2')
-  const curve3 = new MeanMaxPower(power3, undefined, 'training3')
-
-  test('gets max for each time point', () => {
-    const mmp = getMergedCurveFromTwoCurves(curve1, curve2)
-    if (mmp) {
-      expect(getLastPowerCurvePoint(1,mmp.timeLength,mmp.powerCurvePoints)!.power).toEqual(160)
-      expect(getLastPowerCurvePoint(2,mmp.timeLength,mmp.powerCurvePoints)!.power).toEqual(155)
-      expect(getLastPowerCurvePoint(4,mmp.timeLength,mmp.powerCurvePoints)!.power).toEqual(145)
-      expect(getLastPowerCurvePoint(10,mmp.timeLength,mmp.powerCurvePoints)!.power).toEqual(125)
-      expect(mmp.timePoints).toEqual(curve1.timePoints)
-      expect(mmp.timePoints).toEqual(curve2.timePoints)
-    }
-  })
-
-  test('label segments according to source', () => {
-    const mmp = getMergedCurveFromTwoCurves(curve1, curve2)
-
-    expect(getLastPowerCurvePoint(1,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training2')
-    expect(getLastPowerCurvePoint(2,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training2')
-    expect(getLastPowerCurvePoint(3,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training2')
-    expect(getLastPowerCurvePoint(4,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training2')
-    expect(getLastPowerCurvePoint(10,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training1')
-  })
-
-  test('label can be over-ridden when merged', () => {
-    const mmp = getMergedCurveFromTwoCurves(curve1, curve2, 'curve1', 'curve2')
-    expect(getLastPowerCurvePoint(1,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('curve2')
-    expect(getLastPowerCurvePoint(2,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('curve2')
-    expect(getLastPowerCurvePoint(4,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('curve2')
-    expect(getLastPowerCurvePoint(10,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('curve1')
-  })
-
-  test('can getMergedCurveFromTwoCurves array of powerCurves', () => {
-    const mmp = getMeanMaxPowerFromCurves([curve1, curve2, curve3])
-    expect(getLastPowerCurvePoint(1,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training2')
-    expect(getLastPowerCurvePoint(9,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training1')
-    expect(getLastPowerCurvePoint(10,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('training3')
-  })
-
-  test('can override label while merging array', () => {
-    const mmp = getMeanMaxPowerFromCurves([curve1, curve2, curve3], 'last week')
-    expect(getLastPowerCurvePoint(1,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('last week')
-    expect(getLastPowerCurvePoint(9,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('last week')
-    expect(getLastPowerCurvePoint(10,mmp.timeLength,mmp.powerCurvePoints)!.label).toEqual('last week')
-  })
-})
 
 
 function getTestData(): any[]{
