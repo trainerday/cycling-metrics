@@ -10,7 +10,7 @@ describe('getMergedCurve - Should be greatest of both', () => {
 describe('getSecondCurveBests - Should be only the bests in number 2', () => {
   test('simple', () => {
     const curve = getSecondCurveBests([1200, 500, 200], [1100, 499, 201, 199])
-    expect(curve).toEqual([201, 199])
+    expect(curve).toEqual([null, null, 201, 199])
   })
 })
 
