@@ -59,3 +59,4 @@ export const getTimeInZone = (
 import { getWorkoutClassificationGroup } from './workout/metrics/getWorkoutClassificationGroup'
 import { getTimeType } from './workout/metrics/getTimeType'
 export { getWorkoutClassificationGroup, getTimeType, TimeTypes }
+export { primeBalance } from './workout/wbal'

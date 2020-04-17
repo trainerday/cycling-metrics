@@ -12,7 +12,7 @@ export const zones = [
 ]
 
 export const getTimeInZone = (ftp: number, powerValues: number[]) => {
-  const ftpPercents = _.map(powerValues, power => (power / ftp) * 100)
+  const ftpPercents = _.map(powerValues, power => Math.round((power / ftp) * 100))
   const zonesContrib = getZoneContributions(ftpPercents)
   const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
   const getLength = (x: any) => (x === undefined ? 0 : x.length)
@@ -27,7 +27,7 @@ export const getTimeInZone = (ftp: number, powerValues: number[]) => {
 }
 
 export const getDominantZone = (ftp: number, powerValues: number[]) => {
-  const ftpPercents = _.map(powerValues, power => (power / ftp) * 100)
+  const ftpPercents = _.map(powerValues, power => Math.round((power / ftp) * 100))
   const zonesContrib = getZoneContributions(ftpPercents)
   const groupedContrib = _.groupBy(zonesContrib, x => x.zone)
   let zoneResults = _.map(groupedContrib, x => ({

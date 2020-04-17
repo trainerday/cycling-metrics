@@ -4,9 +4,10 @@ import { getSegmentsFromArray } from '../getSegmentsFromArray'
 
 describe('getTimeInZone', () => {
   test('should return 1h for ftp const ride', () => {
-    const segments = getWorkoutIntervalsFromSegments([[60, 200, 200]])
+    const segments = getWorkoutIntervalsFromSegments([[60, 110, 110]])
     const results = getTimeInZone(200, getSegmentsFromArray(segments))
-    expect(results.z4).toEqual(3600)
+    console.log(results)
+    expect(results.z1).toEqual(3600)
   })
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "@trainerday/cycling-metrics",
-  "version": "1.5.7",
+  "version": "1.6.0",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
