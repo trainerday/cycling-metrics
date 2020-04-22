@@ -56,7 +56,15 @@ export const getTimeInZone = (
   return z.getTimeInZone(ftp, getSegmentsFromArray(intervals))
 }
 
+export const getSegmentsPower = (segments: [number, number, number][]) => {
+  const intervals = getWorkoutIntervalsFromSegments(segments, TimeTypes.MINUTES)
+  return getSegmentsFromArray(intervals)
+}
+
 import { getWorkoutClassificationGroup } from './workout/metrics/getWorkoutClassificationGroup'
 import { getTimeType } from './workout/metrics/getTimeType'
 export { getWorkoutClassificationGroup, getTimeType, TimeTypes }
 export { primeBalance } from './workout/wbal'
+
+import wPrimeBalanceFroncioniSkibaClarke from './workout/wbal/w_prime_balance_froncioni_skiba_clarke'
+export { wPrimeBalanceFroncioniSkibaClarke }
