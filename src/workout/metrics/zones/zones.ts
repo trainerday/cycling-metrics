@@ -8,7 +8,7 @@ export const zones = [
   ZoneTypes.TEMPO,
   ZoneTypes.THRESHOLD,
   ZoneTypes.VO2MAX,
-  ZoneTypes.ANAEROBIC
+  ZoneTypes.ANAEROBIC,
 ]
 
 export const getTimeInZone = (ftp: number, powerValues: number[]) => {
@@ -48,9 +48,9 @@ export const getDominantZone = (ftp: number, powerValues: number[]) => {
     zoneResults = _.filter(zoneResults, x => x.zone > 2)
   }
   // @ts-ignore
-  if (zoneResults && zoneResults.length > 0){
+  if (zoneResults && zoneResults.length > 0) {
     const res = _.maxBy(zoneResults, x => x.contrib)
-    if (res){
+    if (res) {
       return res.zone
     }
   }

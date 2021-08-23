@@ -9,7 +9,7 @@
     "pretest": "tsc",
     "test": "jest",
     "prepare": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"dist/**/*.js\"",
+    "format": "prettier --write \"**/*.ts\" \"dist/**/*.js\"",
     "lint:list": "eslint */**/*.ts --fix",
     "lint": "eslint **/*.ts --fix"
   },

@@ -101,7 +101,7 @@ describe('Power curve intervals', () => {
   test('should return values for last segment', () => {
     const power = [120, 118, 116, 114, 112, 110, 108, 106, 104, 102, 100]
     const mmp = new MeanMaxPower(power, generateLogScale(2, power.length))
-    const value = getLastPowerCurvePoint(11,mmp.timeLength,mmp.powerCurvePoints)
+    const value = getLastPowerCurvePoint(11, mmp.timeLength, mmp.powerCurvePoints)
     expect(value).not.toBeUndefined()
   })
 })
@@ -118,9 +118,7 @@ describe('Power Average', () => {
   })
 })
 
-
-
-function getTestData(): any[]{
+function getTestData(): any[] {
   return [
     {
       type: 'heartrate',
@@ -9522,5 +9520,4 @@ function getTestData(): any[]{
       resolution: 'high',
     },
   ]
-
 }

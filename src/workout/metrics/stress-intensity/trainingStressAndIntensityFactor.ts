@@ -11,7 +11,7 @@ export function getTrainingStress(ftp: number, powerValues: number[]) {
 
 export function getIntensityFactor(ftp: number, powerValues: number[]) {
   const { np: NP, seconds: seconds } = getNormalizedPower(powerValues)
-  const IF = Math.round(NP / ftp * 100) / 100
+  const IF = Math.round((NP / ftp) * 100) / 100
   return { if: IF, seconds, np: NP }
 }
 

@@ -4,56 +4,57 @@ import moment from 'moment'
 
 describe('getSingleDayCtl', () => {
   test('getSingleDayCtl - 100', () => {
-    const res = getSingleDayCtl(100,0)
+    const res = getSingleDayCtl(100, 0)
     expect(res).toBe(2.4)
   })
   test('getSingleDayCtl - 100-d2', () => {
-    const res = getSingleDayCtl(100,2.4)
+    const res = getSingleDayCtl(100, 2.4)
     expect(res).toBe(4.7)
   })
   test('getSingleDayCtl - 70', () => {
-    const res = getSingleDayCtl(70,0)
+    const res = getSingleDayCtl(70, 0)
     expect(res).toBe(1.7)
   })
   test('getSingleDayCtl - 0', () => {
-    const res = getSingleDayCtl(0,50)
+    const res = getSingleDayCtl(0, 50)
     expect(res).toBe(48.8)
   })
 })
 
 describe('addZeroElementsToNumberArray', () => {
   test('test 0-1', () => {
-    const res = addZeroElementsToNumberArray([],1)
+    const res = addZeroElementsToNumberArray([], 1)
     expect(res.length).toBe(1)
   })
   test('test 3-2', () => {
-    const res = addZeroElementsToNumberArray([1,2,3],2)
+    const res = addZeroElementsToNumberArray([1, 2, 3], 2)
     expect(res.length).toBe(5)
   })
 })
 
-
-
 describe('Ctl', () => {
   test('test', () => {
-    const getDate = (dayNum: number) => moment('2019-09-30T00:00:00.000Z').add(dayNum, 'days').toDate()
-    const getObj = (dayNum: number, tss: number) => ({date: getDate(dayNum), tss: tss})
-    const twoWeekArr = _.map((ele: number)=>getObj(ele,70),[0,2,4,7,9,11])
+    const getDate = (dayNum: number) =>
+      moment('2019-09-30T00:00:00.000Z')
+        .add(dayNum, 'days')
+        .toDate()
+    const getObj = (dayNum: number, tss: number) => ({ date: getDate(dayNum), tss: tss })
+    const twoWeekArr = _.map((ele: number) => getObj(ele, 70), [0, 2, 4, 7, 9, 11])
     expect(twoWeekArr![0].tss).toBe(70)
   })
 
   test('test2', () => {
-    const day = [100,0,100,0,100,0,0,100,0,100,0,100,0,0]
-    const res = getCtl(day,0, 80)
-    const max:number = _.max(res)!
+    const day = [100, 0, 100, 0, 100, 0, 0, 100, 0, 100, 0, 100, 0, 0]
+    const res = getCtl(day, 0, 80)
+    const max: number = _.max(res)!
     expect(max).toBe(12.4)
     expect(res[20]).toBe(9.9)
   })
 
   test('test3', () => {
-    const day = [70,0,70,0,70,0,0,130,0,130,0,130,0,0]
-    const res = getCtl(day,0, 80)
-    const max:number = _.max(res)!
+    const day = [70, 0, 70, 0, 70, 0, 0, 130, 0, 130, 0, 130, 0, 0]
+    const res = getCtl(day, 0, 80)
+    const max: number = _.max(res)!
     expect(max).toBe(13)
     expect(res[20]).toBe(10.3)
   })
@@ -65,7 +66,6 @@ describe('Ctl', () => {
     const res = getCtl(dailyTss, startCtl, days)
     expect(res[20]).toBe(27.8)
     expect(res.length).toBe(days)
-
   })
 
   test('21 days of 70tss should be 32 tss on day 31', () => {

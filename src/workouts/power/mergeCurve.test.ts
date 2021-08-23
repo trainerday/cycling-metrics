@@ -13,5 +13,3 @@ describe('getSecondCurveBests - Should be only the bests in number 2', () => {
     expect(curve).toEqual([null, null, 201, 199])
   })
 })
-
-

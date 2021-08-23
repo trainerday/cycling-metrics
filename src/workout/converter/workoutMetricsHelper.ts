@@ -12,33 +12,33 @@ export const getPowerArray = (cycleMetrics: MetricsPoint[]): number[] => {
 
 export const interpolateMissingPowerValues = (cycleMetrics: MetricsPoint[]): void => {
   const headValueObj = _.find(cycleMetrics, (point: MetricsPoint) => point.power !== undefined)
-  const tailValueObj = _.findLast(cycleMetrics, (point:MetricsPoint) => point.power !== undefined)
+  const tailValueObj = _.findLast(cycleMetrics, (point: MetricsPoint) => point.power !== undefined)
   let headValue = 0
   let tailValue = 0
   if (headValueObj && headValueObj.power) headValue = headValueObj.power
-if (tailValueObj && tailValueObj.power) tailValue = tailValueObj.power
+  if (tailValueObj && tailValueObj.power) tailValue = tailValueObj.power
 
-// extrapolate on the edges to a const
-for (let i = 0; !cycleMetrics[i].power; i++) {
-  cycleMetrics[i].power = headValue
-}
-for (let i = cycleMetrics.length - 1; !cycleMetrics[i].power; i--) {
-  cycleMetrics[i].power = tailValue
-}
-// interpolate holes linearly
-for (let i = 1; i < cycleMetrics.length - 1; i++) {
-  if (!cycleMetrics[i].power) {
-    const lidX = i - 1
-    let ridX = i + 1
-    while (!cycleMetrics[ridX].power) {
-      ridX++
-    }
-    const lvalue = cycleMetrics[lidX].power
-    const rvalue = cycleMetrics[ridX].power
-    // @ts-ignore
-    cycleMetrics[i].power = lvalue + (rvalue - lvalue) / (ridX - lidX)
+  // extrapolate on the edges to a const
+  for (let i = 0; !cycleMetrics[i].power; i++) {
+    cycleMetrics[i].power = headValue
   }
-}
+  for (let i = cycleMetrics.length - 1; !cycleMetrics[i].power; i--) {
+    cycleMetrics[i].power = tailValue
+  }
+  // interpolate holes linearly
+  for (let i = 1; i < cycleMetrics.length - 1; i++) {
+    if (!cycleMetrics[i].power) {
+      const lidX = i - 1
+      let ridX = i + 1
+      while (!cycleMetrics[ridX].power) {
+        ridX++
+      }
+      const lvalue = cycleMetrics[lidX].power
+      const rvalue = cycleMetrics[ridX].power
+      // @ts-ignore
+      cycleMetrics[i].power = lvalue + (rvalue - lvalue) / (ridX - lidX)
+    }
+  }
 }
 
 export const interpolateMissingTimePoints = (cycleMetrics: MetricsPoint[]): MetricsPoint[] => {
