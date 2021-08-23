@@ -11,7 +11,7 @@
     "prepare": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"dist/**/*.js\"",
     "lint:list": "eslint */**/*.ts --fix",
-    "lint": "eslint src/**/*.ts --fix"
+    "lint": "eslint **/*.ts --fix"
   },
   "repository": {
     "type": "git",
